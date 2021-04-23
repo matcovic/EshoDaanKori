@@ -1,38 +1,474 @@
-.App {
+:root {
+  --alien-armpit: rgba(94, 218, 0, 1);
+  --black-haze: rgba(246, 246, 246, 1);
+  --dove-gray: rgba(110, 110, 110, 1);
+  --font-family-just_me_again_down_here: "Just Me Again Down Here", Helvetica;
+  --font-family-poppins: "Poppins", Helvetica;
+  --font-size-heading: 49px;
+  --font-size-subHeading: 28px;
+  --font-size-subHeading2: 1.094rem;
+  --font-size-body1: 21px;
+  --font-size-body2: 14.7px;
+  --font-size-title: 44.1px;
+  --font-weight-heading: 800;
+  --font-weight-subHeading: 800;
+  --font-weight-subHeading2: 700;
+  --font-weight-body1: 300;
+  --font-weight-body2: 400;
+  --font-weight-title: 400;
+  --jade: rgba(0, 173, 124, 1);
+  --quill-gray: rgba(213, 213, 213, 1);
+  --tundora: rgba(68, 68, 68, 1);
+  --white: rgba(255, 255, 255, 1);
+  --btn-hover-color : #B7FE81;
+  --padding-elements: 1rem 0.7rem 0.7rem 0.7rem;
+  --padding-section: 3% 7%;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+#container {
+  min-height: 100%;
+}
+
+#main {
+  overflow: auto;
+}
+
+/* See-More right below text */
+.below-right-text {
+  color: var(--dove-gray);
+  text-decoration: none;
+  font-family: var(--font-family-poppins);
+  font-size: var(--font-size-subHeading2);
+  font-weight: var(--font-weight-subHeading2);
+  display: block;
+  text-align: right;
+}
+
+/* font type-body2 */
+.font-body2 {
+  font-size: var(--font-size-body2);
+  font-weight: var(--font-weight-body2);
+}
+
+/* --------------------- Button Type-1 --------------------- */
+.btn-type1 {
+  background-color: var(--alien-armpit);
+  border-radius: 10px;
+  color: var(--white);
+  font-family: var(--font-family-poppins);
+  font-size: var(--font-size-subHeading2);
+  font-weight: var(--font-weight-subHeading2);
+  filter: drop-shadow(0px 4px 9px rgba(0, 0, 0, 0.25));
+  padding: 1rem 3rem;
+  margin: 0.5rem;
+}
+
+.btn-type1:hover {
+  background-color: var(--btn-hover-color);
+  color: var(--white);
+}
+
+.btn-type1:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* --------------------- Navigation Bar --------------------- */
+.navbar-container {
+    padding: 0 5% 0 2%;
+}
+
+.nav-bar-title {
+  color: var(--jade);
+  font-family: var(--font-family-just_me_again_down_here);
+  font-size: var(--font-size-title);
+  font-style: normal;
+  font-weight: var(--font-weight-title);
+}
+
+.nav-link {
+  color: var(--jade);
+  font-family: var(--font-family-poppins);
+  font-size: var(--font-size-body1);
+  font-style: normal;
+  font-weight: var(--font-weight-subHeading2);
+  margin: 5px 20px;
+}
+
+.navbar-btn {
+  color: var(--white);
+  background-color: var(--alien-armpit);
+  font-size: var(--font-size-subHeading2);
+  font-weight: var(--font-weight-subHeading2);
+  line-height: 37.5px;
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  border-radius: 10px;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding: 0.3rem 2.5rem;
 }
 
-.App-link {
-  color: #61dafb;
+.navbar-btn:hover {
+  background-color: var(--btn-hover-color);
+  color: var(--white);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.custom-toggler .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 173, 124, 1)' stroke-width='3' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+  outline: none;
+  box-shadow: none;
+}
+
+.custom-toggler.navbar-toggler {
+  border-color: var(--jade);
+} 
+
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* For Sign In/Up text in NavBar */
+.navbar-sign-in-up-text {
+font-size: var(--font-size-subHeading2);
+font-weight: var(--font-weight-body2);
+margin: 0;
+text-align: center;
+}
+
+/* --------------------- Intro Section --------------------- */
+#intro-section {
+padding: var(--padding-section);
+padding-bottom: 15%;
+position: relative;
+z-index: 1;
+}
+
+h1 {
+color: var(--jade);
+font-family: var(--font-family-poppins);
+font-size: var(--font-size-heading);
+font-weight: var(--font-weight-heading);
+padding: var(--padding-elements);
+}
+
+p {
+color: var(--jade);
+font-family: var(--font-family-poppins);
+font-size: var(--font-size-body1);
+font-weight: var(--font-weight-body1);
+text-align: justify;
+}
+
+#intro-section p {
+max-width: 720px;
+padding: var(--padding-elements);
+}
+
+.blob1 {
+position: absolute;
+height: 100%;
+left: 0;
+top: 20px;
+z-index: -1;
+overflow: hidden;
+}
+
+.blob2 {
+position: absolute;
+height: 100%;
+right: 0;
+top: 20px;
+z-index: -1;
+}
+
+
+.blob3 {
+position: absolute;
+height: 100%;
+left: 0;
+top: 20px;
+z-index: -1;
+overflow: hidden;
+}
+
+.blob4 {
+position: absolute;
+height: 100%;
+right: 0;
+top: 100px;
+z-index: -1;
+}
+
+
+/* --------------------- Our-Story Section --------------------- */
+#our-story-section {
+background-color: var(--black-haze);
+padding: var(--padding-section);
+position:relative;
+z-index: 0;
+}
+
+h2 {
+color: var(--jade);
+font-family: var(--font-family-poppins);
+font-size: var(--font-size-subHeading);
+font-weight: var(--font-weight-subHeading);
+padding: var(--padding-elements);
+min-width: 14%;
+}
+
+/* Common for horizontal lines in Landing page- starts*/
+.divider-custom {
+width: 100%;
+display: flex;
+align-items: center;
+padding-top: 2%;
+}
+
+.divider-custom .divider-custom-line {
+width: 85%;
+height: 0.2rem;
+border-radius: 2rem; 
+border: 1px solid #D8D8D8;
+box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+}
+/* Common for horizontal lines in Landing page- ends */
+
+#our-story-section p {
+padding: var(--padding-elements);
+width: 100%;
+}
+
+.btn-align-center {
+text-align: center;
+padding: var(--padding-elements);
+}
+
+/* --------------------- Our-Vision Section --------------------- */
+#our-vision-section {
+padding: var(--padding-section);
+position: relative;
+z-index: 1;
+}
+
+#our-vision-section p {
+padding: var(--padding-elements);
+width: 100%;
+}
+
+#our-vision-section .our-promise h2 {
+text-align: right;
+}
+
+/* --------------------- Why-Us Section --------------------- */
+#why-us-section {
+padding: var(--padding-section);
+padding-bottom: 8%;
+position: relative;
+}
+
+.why-us-grid {
+height: 100%;
+}
+
+.why-us-icon {
+float: left;
+width: 1.75rem;
+height: 1.75rem;
+margin: 0 1rem 1rem 0;
+}
+
+/* Sub-heading 2 */
+h3 {
+color: var(--jade);
+font-family: var(--font-family-poppins);
+font-size: var(--font-size-subHeading2);
+font-weight: var(--font-weight-subHeading2);
+text-align: justify;
+}
+
+#why-us-section .why-us-grid p {
+display: flex;
+text-align: left;
+}
+
+.row-flex {
+display: flex;
+flex-wrap: wrap;
+}
+
+#why-us-section [class*="col-"] {
+margin-bottom: 10px;
+padding: 2%;
+}
+
+/* --------------------- Top-FundRaisers Section --------------------- */
+#top-funds-section {
+background-color: var(--black-haze);
+padding: var(--padding-section);
+position: relative;
+z-index: 1;
+}
+
+#top-funds-section [class*="col-"] {
+margin: 0.4rem 0;
+padding: 2% 4%;
+}
+
+/* Fund Card- starts*/
+.fund-card-box {
+background-color: var(--black-haze);
+height: 100%;
+filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+border-radius: 10px;
+cursor: pointer;
+}
+
+.fund-card-box .card-img {
+overflow: hidden;
+border-top-left-radius: 10px;
+border-top-right-radius: 10px;
+}
+
+.fund-card-box .card-img img {
+width: 100%;
+height: 230px;
+display: block;
+}
+
+.fund-card-box .card-desc {
+padding: var(--padding-elements);
+}
+
+.fund-card-box .card-desc p{
+color: var(--dove-gray);
+}
+.fund-card-box .progress {
+margin: 0 0.7rem;
+height: 0.34rem;
+background-color: var(--quill-gray);
+}
+
+.fund-card-box .card-amount p {
+color: var(--tundora);
+font-size: var(--font-size-subHeading2);
+font-weight: 500;
+margin: 0;
+padding: var(--padding-elements);
+}
+/* Fund Card- ends*/
+
+
+/* --------------------- Footer Section --------------------- */
+#footer {
+background-color: var(--jade);
+font-family: var(--font-family-poppins);
+padding-top: 2.5%;
+position: relative;
+}
+
+#footer [class*="col-"] {
+text-align: center;
+}
+
+.footer-copyright h4 {
+color: var(--white);
+font-weight: 400;
+font-size: var(--font-size-subHeading2);
+}
+
+.footer-links a {
+text-decoration: none;
+color: var(--white);
+font-weight: 600;
+font-size: var(--font-size-body2);
+padding: 3%;
+}
+
+.footer-social-links {
+margin-bottom: 2rem;
+}
+
+.footer-social-links a {
+text-decoration: none;
+color: var(--white);
+display: inline-flex;    
+height: 2rem;
+width: 2rem;
+background-color: rgba(255,255,255,0.2);
+margin: 0 0.938rem 1.25rem;
+text-align: center;
+border: 2px solid #FFFFFF;
+box-sizing: border-box;
+border-radius: 20%;
+justify-content: center;
+align-items: center;
+}
+
+#footer .footer-links a:hover {
+color: var(--quill-gray);
+}
+
+#footer .footer-social-links a:hover {
+color: var(--white);
+background-color: var(--quill-gray);
+}
+
+@media screen and (max-width: 693px) {
+.footer-links a {
+  padding: 0;
+  display: flex;
+  margin: 0.625rem 0;
+  justify-content: center;
+}
+}
+
+@media screen and (max-width: 991px) {
+.footer-copyright {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 5px;
+}
+
+.footer-links {
+  padding: 1rem  0;
+}
+}
+
+
+/* --------------------- How to FunRaise Section --------------------- */
+#how-to-fundraise-section {
+padding: var(--padding-section);
+position: relative;
+z-index: 1;
+}
+
+#how-to-donate-section {
+padding: var(--padding-section);
+position: relative;
+z-index: 1;
+}
+
+.step-box p {
+color: var(--tundora);
+font-family: var(--font-family-poppins);
+font-size: var(--font-size-body1);
+font-weight: 500;
+}
+
+.input-icon {
+  height: 100%;
+  /* width: 2.67142857em; */
+  padding: 15%;
 }
