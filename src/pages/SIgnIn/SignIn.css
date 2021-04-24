@@ -1,0 +1,118 @@
+:root {
+  --alien-armpit: rgba(94, 218, 0, 1);
+  --black-haze: rgba(246, 246, 246, 1);
+  --dove-gray: rgba(110, 110, 110, 1);
+  --font-family-just_me_again_down_here: "Just Me Again Down Here", Helvetica;
+  --font-family-poppins: "Poppins", Helvetica;
+  --font-size-heading: 49px;
+  --font-size-subHeading: 28px;
+  --font-size-subHeading2: 1.094rem;
+  --font-size-body1: 21px;
+  --font-size-body2: 14.7px;
+  --font-size-title: 44.1px;
+  --font-weight-heading: 800;
+  --font-weight-subHeading: 800;
+  --font-weight-subHeading2: 700;
+  --font-weight-body1: 300;
+  --font-weight-body2: 400;
+  --font-weight-title: 400;
+  --jade: rgba(0, 173, 124, 1);
+  --quill-gray: rgba(213, 213, 213, 1);
+  --tundora: rgba(68, 68, 68, 1);
+  --white: rgba(255, 255, 255, 1);
+  --btn-hover-color: #b7fe81;
+  --padding-elements: 1rem 0.7rem 0.7rem 0.7rem;
+  --padding-section: 3% 7%;
+}
+
+/* ------------------------------------------------------SignIn Css------------------------------------------------------------------------------- */
+
+/* -------------SignIn background---------------- */
+
+.background-signup {
+  background-image: url(../../assets/images/background.svg);
+  background-size: cover;
+  padding-bottom: 30%;
+}
+
+/* ---------outer signIn div---------------------- */
+.sample {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  /* text-align: center;*/
+}
+
+/* --------------- SignIn white box------------------ */
+.signIn-box {
+  border-radius: 20px;
+  filter: drop-shadow(0px 4px 9px rgba(0, 0, 0, 0.25));
+  text-align: center;
+  background-color: white;
+  width: 40%;
+  /* margin-left: 30%; */
+  padding: 2% 5% 7% 5%;
+  margin-top: 72px;
+  /* margin-bottom: 20px; */
+  /* height: 100vh;*/
+}
+
+/* -----------------text box------------------- */
+/* .input-length {
+  width: 100%;
+  margin-top: 20px;
+} */
+
+#signIn-section p {
+  color: var(--dove-gray);
+  font-size: var(--font-size-body1);
+  font-weight: var(--font-size-body1);
+  margin-top: 20px;
+  padding: 12px;
+  font-family: var(--font-family-poppins);
+}
+
+#signIn-section .btn-type1,
+.input-length {
+  width: 100%;
+  height: 56.77px;
+  margin-left: 0;
+  margin-top: 20px;
+  font-size: var(--font-size-body1);
+  font-weight: 800px;
+}
+
+#signIn-section .divider-custom {
+  margin-top: 40px;
+  margin-bottom: 20px;
+  height: 0;
+}
+
+#signIn-section a {
+  color: var(--alien-armpit);
+  font-size: var(--font-size-body1);
+  font-weight: var(--font-size-body1);
+  font-family: var(--font-family-poppins);
+  color: var(--jade);
+}
+
+.logo {
+  height: 38.6px;
+  width: 38.6px;
+
+  margin-left: 17.15px;
+  margin-right: 17.15px;
+}
+
+@media screen and (max-width: 850px) {
+  .signIn-box-medium {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .signIn-box-small {
+    width: 90%;
+  }
+}
