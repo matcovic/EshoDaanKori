@@ -1,26 +1,33 @@
 import React from 'react';
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link,Switch } from "react-router-dom";
 import 'semantic-ui-css/semantic.min.css'
 import './App.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home'
+import  SignIn from './pages/SIgnIn'
 
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
 
       <div>
         <div id="container">
           <div id="main">
             <Navbar />
-            <Home />
+            <Switch>
+            <Route path="/" exact component={Home}/>
+            <Route path="/signIn" component={SignIn}/>
+           
+            </Switch>
+          
+           
           </div>
         </div>
         <Footer />
       </div>
 
-    </BrowserRouter>
+    </Router>
   );
 }
 
