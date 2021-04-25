@@ -9,6 +9,7 @@ import SignIn from "./pages/SIgnIn";
 import DiscoverPage from "./pages/DiscoverPage";
 import SignUp from "./pages/SignUp";
 import Verification from "./pages/Verification";
+import Registration from "./pages/Registration";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
               <Route path="/signIn" component={SignIn} />
               <Route path="/signUp" component={SignUp} />
               <Route path="/verification" component={Verification} />
+              <Route path="/registration" component={Registration} />
             </Switch>
           
            
