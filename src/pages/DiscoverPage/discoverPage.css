@@ -1,0 +1,111 @@
+:root {
+  --alien-armpit: rgba(94, 218, 0, 1);
+  --black-haze: rgba(246, 246, 246, 1);
+  --dove-gray: rgba(110, 110, 110, 1);
+  --font-family-just_me_again_down_here: "Just Me Again Down Here", Helvetica;
+  --font-family-poppins: "Poppins", Helvetica;
+  --font-size-heading: 49px;
+  --font-size-subHeading: 28px;
+  --font-size-subHeading2: 1.094rem;
+  --font-size-body1: 21px;
+  --font-size-body2: 14.7px;
+  --font-size-title: 44.1px;
+  --font-weight-heading: 800;
+  --font-weight-subHeading: 800;
+  --font-weight-subHeading2: 700;
+  --font-weight-body1: 300;
+  --font-weight-body2: 400;
+  --font-weight-title: 400;
+  --jade: rgba(0, 173, 124, 1);
+  --quill-gray: rgba(213, 213, 213, 1);
+  --tundora: rgba(68, 68, 68, 1);
+  --white: rgba(255, 255, 255, 1);
+  --btn-hover-color: #b7fe81;
+  --padding-elements: 1rem 0.7rem 0.7rem 0.7rem;
+  --padding-section: 3% 7%;
+}
+
+/* --------------------- Pagination Component starts ------------------- */
+
+.ui.secondary.pointing.menu {
+  border-bottom: none;
+}
+
+.ui.secondary.pointing.menu li {
+  border-bottom-color: transparent;
+  border-bottom-style: solid;
+  border-radius: 0;
+  -ms-flex-item-align: end;
+  align-self: flex-end;
+  margin: 0 0 -2px;
+  padding: 0.85714286em 1.14285714em;
+  -webkit-transition: color 0.1s ease;
+  transition: color 0.1s ease;
+  border-bottom-width: 6px;
+  border-bottom: 2px solid rgba(34, 36, 38, 0.15);
+}
+
+.ui.secondary.pointing.menu .paginationActive {
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-color: var(--alien-armpit);
+  font-weight: 700;
+  color: var(--alien-armpit);
+}
+
+.ui.secondary.pointing.menu {
+  display: flex;
+  justify-content: center;
+  color: var(--dove-gray);
+  font-family: var(--font-family-poppins);
+  font-size: var(--font-size-subHeading2);
+  font-weight: 600;
+}
+
+.previousBttn,
+.nextBttn {
+  color: var(--dove-gray);
+}
+
+.previousBttn:hover,
+.previousBttn:focus,
+.nextBttn:hover,
+.nextBttn:focus {
+  color: var(--jade);
+}
+/* --------------------- Pagination Component ends ------------------- */
+
+/* --------------------- Discover Section ------------------- */
+#discover-section {
+  background-color: var(--black-haze);
+  padding: var(--padding-section);
+  font-family: var(--font-family-poppins);
+}
+
+#discover-section [class*="col-"] {
+  margin: 0.4rem 0;
+  padding: 1% 3%;
+}
+
+/* box of lists of funds */
+.list-of-funds {
+  background-color: var(--white);
+  padding: 3% 3%;
+  border-radius: 14px;
+  width: 100%;
+  /* height: 100vh; */
+}
+
+/* result text of list of funds*/
+.list-of-funds p {
+  font-size: var(--font-size-body1);
+  font-weight: var(--font-weight-body2);
+  color: var(--dove-gray);
+  margin-bottom: 0;
+}
+
+/* custom line for discover page */
+#discover-section .list-of-funds .divider-custom {
+  padding-top: 1%;
+}
