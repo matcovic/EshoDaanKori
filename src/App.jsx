@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import SignIn from "./pages/SIgnIn";
 import SignUp from "./pages/SignUp";
+import Verification from "./pages/Verification";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
               <Route path="/" exact component={Home} />
               <Route path="/signIn" component={SignIn} />
               <Route path="/signUp" component={SignUp} />
+              <Route path="/verification" component={Verification} />
             </Switch>
           </div>
         </div>
