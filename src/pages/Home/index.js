@@ -4,16 +4,6 @@ import why_us from "./why_us";
 import FundCardView from "../../components/FundCardView";
 import fund_card from "../../components/FundCardView/fund_card";
 
-import { Input } from "semantic-ui-react";
-
-import icoEasySetup from "../../assets/icons/ico-easy-setup.svg";
-
-const CustomIcon = (
-  <i className="icon">
-    <img className="input-icon" width={37.39} height={38} src={icoEasySetup} />
-  </i>
-);
-
 // function for mapping why-us boxes
 function createWhyUsEntry(whyUsBox) {
   return (
@@ -181,12 +171,6 @@ function Home() {
             LEARN HOW IT WORKS
           </a>
         </div>
-        <Input
-          icon={CustomIcon}
-          size="massive"
-          iconPosition="left"
-          placeholder="placeholder"
-        />
       </section>
 
       {/* <!-- --------------------- Top-FundRaisers Section --------------------- --> */}
