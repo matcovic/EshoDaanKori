@@ -71,6 +71,7 @@
   margin-top: 20px;
   padding: 12px;
   font-family: var(--font-family-poppins);
+  text-align: center;
 }
 
 #signIn-section .btn-type1,

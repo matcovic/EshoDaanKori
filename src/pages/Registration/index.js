@@ -1,19 +1,31 @@
 import React from "react";
 import { Input } from "semantic-ui-react";
 import "../../pages/SIgnIn/SignIn.css";
-import mailIcon from "../../assets/icons/ico-email.svg";
-import keyIcon from "../../assets/icons/ico-key.svg";
+import profileicon from "../../assets/icons/ico-profile.svg";
+import phoneicon from "../../assets/icons/ico-phone.svg";
+import calendaricon from "../../assets/icons/ico-calendar.svg";
+import nidicon from "../../assets/icons/ico-nid.svg";
 import threeDots from "../../assets/icons/ico-3dots3.svg";
 
-const EmailIcon = (
+const profileIcon = (
   <i className="icon">
-    <img className="input-icon" width={37.39} height={38} src={mailIcon} />
+    <img className="input-icon" width={37.39} height={38} src={profileicon} />
   </i>
 );
 
-const KeyIcon = (
+const PhoneIcon = (
   <i className="icon">
-    <img className="input-icon" width={37.39} height={38} src={keyIcon} />
+    <img className="input-icon" width={37.39} height={38} src={phoneicon} />
+  </i>
+);
+const CalendarIcon = (
+  <i className="icon">
+    <img className="input-icon" width={37.39} height={38} src={calendaricon} />
+  </i>
+);
+const NidIcon = (
+  <i className="icon">
+    <img className="input-icon" width={37.39} height={38} src={nidicon} />
   </i>
 );
 
@@ -28,41 +40,41 @@ const Registration = () => {
             <form>
               <div>
                 <Input
-                  icon={EmailIcon}
+                  icon={profileIcon}
                   iconPosition="left"
-                  placeholder="Email Address"
+                  placeholder="Enter your full name"
                   className="input-length"
                 />
               </div>
 
               <div>
                 <Input
-                  icon={KeyIcon}
+                  icon={PhoneIcon}
                   iconPosition="left"
-                  placeholder="Password"
+                  placeholder="Enter your phone number"
                   className="input-length"
                 />
               </div>
               <div>
                 <Input
-                  icon={KeyIcon}
+                  icon={CalendarIcon}
                   iconPosition="left"
-                  placeholder="Confirm Password"
+                  placeholder="Enter date of birth"
                   className="input-length"
                 />
               </div>
 
               <div>
                 <Input
-                  icon={EmailIcon}
+                  icon={NidIcon}
                   iconPosition="left"
-                  placeholder="Email Address"
+                  placeholder="Enter your NID or birth certificate number (optional)"
                   className="input-length"
                 />
               </div>
 
               <div>
-                <button className=" btn btn-type1">SIGN IN</button>
+                <button className=" btn btn-type1">CONTINUE</button>
               </div>
             </form>
 
