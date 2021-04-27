@@ -10,11 +10,11 @@ import DiscoverPage from "./pages/DiscoverPage";
 import SignUp from "./pages/SignUp";
 import Verification from "./pages/Verification";
 import Registration from "./pages/Registration";
+import RegistrationComplete from "./pages/Registration-complete";
 
 function App() {
   return (
     <Router>
-
       <div>
         <div id="container">
           <div id="main">
@@ -26,14 +26,15 @@ function App() {
               <Route path="/signUp" component={SignUp} />
               <Route path="/verification" component={Verification} />
               <Route path="/registration" component={Registration} />
+              <Route
+                path="/registration-complete"
+                component={RegistrationComplete}
+              />
             </Switch>
-          
-           
           </div>
         </div>
         <Footer />
       </div>
-
     </Router>
   );
 }
