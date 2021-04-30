@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import WhyUs from "./WhyUs";
 import why_us from "./why_us";
 import FundCardView from "../../components/FundCardView";
 import fund_card from "../../components/FundCardView/fund_card";
+import axios from 'axios'
 
 // function for mapping why-us boxes
 function createWhyUsEntry(whyUsBox) {
@@ -31,7 +32,23 @@ function topFunds(topFundsBox) {
   );
 }
 
+async function sendReqToServer(){
+  const {data} = await axios.get('/api/products')
+  console.log("response from server")
+  console.log(data)
+  return data
+}
+
+
 function Home() {
+  // this is called as soon as the components load up.
+  useEffect(() => {
+    // when the component loads up, send a req to the server
+    console.log("sending req to server")
+    const fetch = sendReqToServer()
+    
+  });
+
   return (
     <div>
       {/* <!-- --------------------- Intro Section --------------------- --> */}
