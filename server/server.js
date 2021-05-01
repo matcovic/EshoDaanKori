@@ -21,7 +21,7 @@ function startServer() {
       console.log(err);
     } else {
       console.log(
-        `server running in ${process.env.NODE_ENV} mode on port ${PORT}`
+        `server running in ${process.env.NODE_ENV} mode on port ${PORT}: http://localhost:${PORT}`
       );
     }
   });
