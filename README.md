@@ -10,10 +10,10 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.
 
 
-### ``npm run server`
+### ``npm run server``
 
 Launches the server only 
 
-### ``npm run client`
+### ``npm run client``
 
 Launches the client only and opens it in the browser in port 3000
