@@ -1,6 +1,6 @@
 import React from "react";
 import { Input } from "semantic-ui-react";
-import "../../pages/SIgnIn/SignIn.css";
+import "../SIgnInPage/SignIn.css";
 import mailIcon from "../../assets/icons/ico-email.svg";
 import keyIcon from "../../assets/icons/ico-key.svg";
 import threeDots from "../../assets/icons/ico-3dots1.svg";

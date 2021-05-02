@@ -1,5 +1,5 @@
 import React from "react";
-import "../../pages/SIgnIn/SignIn.css";
+import "../SIgnInPage/SignIn.css";
 
 const RegistrationComplete = () => {
   return (

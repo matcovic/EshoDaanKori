@@ -1,6 +1,6 @@
 import React from "react";
 import { Input } from "semantic-ui-react";
-import "../../pages/SIgnIn/SignIn.css";
+import "../SIgnInPage/SignIn.css";
 import profileicon from "../../assets/icons/ico-profile.svg";
 import phoneicon from "../../assets/icons/ico-phone.svg";
 import calendaricon from "../../assets/icons/ico-calendar.svg";

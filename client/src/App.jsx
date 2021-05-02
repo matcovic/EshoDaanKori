@@ -5,12 +5,13 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import LandingPage from "./pages/LandingPage";
-import SignIn from "./pages/SIgnIn";
+import SignIn from "./pages/SIgnInPage";
 import DiscoverPage from "./pages/DiscoverPage";
-import SignUp from "./pages/SignUp";
-import Verification from "./pages/Verification";
-import Registration from "./pages/Registration";
-import RegistrationComplete from "./pages/Registration-complete";
+import SignUp from "./pages/SignUpPage";
+import Verification from "./pages/VerificationPage";
+import Registration from "./pages/RegistrationPage";
+import RegistrationComplete from "./pages/RegistrationCompletePage";
+import NewCampaign from "./pages/NewCampaignPage";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
                 path="/registration-complete"
                 component={RegistrationComplete}
               />
+              <Route path="/new-campaign" component={NewCampaign} />
             </Switch>
           </div>
         </div>
