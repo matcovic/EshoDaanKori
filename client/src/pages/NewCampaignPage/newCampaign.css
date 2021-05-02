@@ -1,0 +1,154 @@
+:root {
+  --alien-armpit: rgba(94, 218, 0, 1);
+  --black-haze: rgba(246, 246, 246, 1);
+  --dove-gray: rgba(110, 110, 110, 1);
+  --font-family-just_me_again_down_here: "Just Me Again Down Here", Helvetica;
+  --font-family-poppins: "Poppins", Helvetica;
+  --font-size-heading: 49px;
+  --font-size-subHeading: 28px;
+  --font-size-subHeading2: 1.094rem;
+  --font-size-body1: 21px;
+  --font-size-body2: 14.7px;
+  --font-size-title: 44.1px;
+  --font-weight-heading: 800;
+  --font-weight-subHeading: 800;
+  --font-weight-subHeading2: 700;
+  --font-weight-body1: 300;
+  --font-weight-body2: 400;
+  --font-weight-title: 400;
+  --jade: rgba(0, 173, 124, 1);
+  --quill-gray: rgba(213, 213, 213, 1);
+  --tundora: rgba(68, 68, 68, 1);
+  --white: rgba(255, 255, 255, 1);
+  --btn-hover-color: #b7fe81;
+  --padding-elements: 1rem 0.7rem 0.7rem 0.7rem;
+  --padding-section: 3% 7%;
+}
+
+Form {
+  text-align: start;
+}
+
+.body-background {
+  padding-bottom: 30%;
+}
+
+/* --------------------------change semantic Input background---------------------------------- */
+
+.ui.form input:not([type]),
+.ui.form input[type="date"],
+.ui.form input[type="datetime-local"],
+.ui.form input[type="email"],
+.ui.form input[type="file"],
+.ui.form input[type="number"],
+.ui.form input[type="password"],
+.ui.form input[type="search"],
+.ui.form input[type="tel"],
+.ui.form input[type="text"],
+.ui.form input[type="time"],
+.ui.form input[type="url"] {
+  border-radius: 5px;
+  background-color: var(--black-haze);
+  font-family: var(--font-family-poppins);
+  font-size: var(--font-size-body2);
+  font-weight: var(--font-size-body1);
+  height: 56.77px;
+}
+
+.ui.form .field > label {
+  color: var(--dove-gray);
+}
+
+.ui.form [class*="equal width"].fields > .field,
+.ui[class*="equal width"].form .fields > .field {
+  width: 50%;
+  flex: 1 1 auto;
+}
+
+.btn-type5 {
+  padding-top: 8%;
+  border: 1px var(--tundora) dashed;
+  width: 100%;
+  height: 105.7px;
+  text-align: center;
+  color: var(--dove-gray);
+  background-color: var(--black-haze);
+  border-radius: 10px;
+}
+
+.ui.selection.dropdown {
+  border-radius: 5px;
+  background-color: var(--black-haze);
+  font-family: var(--font-family-poppins);
+  font-size: var(--font-size-body2);
+  font-weight: var(--font-size-body1);
+  height: 56.77px;
+  width: 50%;
+}
+
+.ui.form textarea {
+  background-color: var(--black-haze);
+  border-radius: 5px;
+}
+
+/* label {
+  color: var(--dove-gray);
+} */
+
+.picture-upload {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------outer signIn div---------------------- */
+.sample {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  /* text-align: center;*/
+}
+
+/* --------------- SignIn white box------------------ */
+.signIn-box {
+  border-radius: 20px;
+  filter: drop-shadow(0px 4px 9px rgba(0, 0, 0, 0.25));
+  text-align: center;
+  background-color: white;
+  width: 45%;
+  /* margin-left: 30%; */
+  padding: 2% 5% 7% 5%;
+  margin-top: 72px;
+  /* margin-bottom: 20px; */
+  /* height: 100vh;*/
+}
+
+#campaign-section .ui.selection.dropdown {
+  min-width: 0;
+}
+
+#campaign-section .btn-type1 {
+  width: 100%;
+  height: 56.77px;
+  margin-left: 0;
+  margin-top: 20px;
+  font-size: var(--font-size-body2);
+  font-weight: 800;
+}
+
+#campaign-section .ui[class*="left icon"].input > input {
+  padding-left: 3rem !important;
+}
+
+@media screen and (max-width: 850px) {
+  .signIn-box-medium {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .signIn-box-small {
+    width: 90%;
+  }
+}
