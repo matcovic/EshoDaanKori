@@ -22,7 +22,7 @@
   --white: rgba(255, 255, 255, 1);
   --btn-hover-color: #b7fe81;
   --padding-elements: 1rem 0.7rem 0.7rem 0.7rem;
-  --padding-section: 3% 7%;
+  --padding-section: 3% 4%;
 }
 
 /* --------------------- Pagination Component starts ------------------- */
@@ -83,29 +83,82 @@
   font-family: var(--font-family-poppins);
 }
 
-#discover-section [class*="col-"] {
+#discover-section .list-of-funds [class*="col-"] {
   margin: 0.4rem 0;
-  padding: 1% 3%;
+  padding: 1% 2%;
 }
 
-/* box of lists of funds */
-.list-of-funds {
+/* discover section white container */
+.white-container {
   background-color: var(--white);
-  padding: 3% 3%;
+  padding: 1rem;
   border-radius: 14px;
   width: 100%;
-  /* height: 100vh; */
+  margin: 10px 0;
 }
 
 /* result text of list of funds*/
-.list-of-funds p {
+.white-container p {
   font-size: var(--font-size-body1);
   font-weight: var(--font-weight-body2);
   color: var(--dove-gray);
   margin-bottom: 0;
+  text-align: left;
 }
 
 /* custom line for discover page */
-#discover-section .list-of-funds .divider-custom {
+#discover-section .white-container .divider-custom {
   padding-top: 1%;
+}
+
+.query-box {
+  padding: 1.5rem;
+}
+
+/* query box title */
+.query-box h4 {
+  color: var(--jade);
+  font-family: var(--font-family-poppins);
+  font-size: var(--font-size-body1);
+  font-style: normal;
+  font-weight: var(--font-weight-subHeading2);
+}
+
+/* query box list */
+.query-box ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.query-box li a {
+  font-size: var(--font-size-subHeading2);
+  font-weight: var(--font-weight-subHeading2);
+  color: var(--dove-gray);
+}
+
+.query-box li a:hover,
+.query-box li a:focus {
+  color: var(--jade);
+}
+
+.query-box li {
+  padding: 0.8rem 0;
+}
+
+@media only screen and (max-width: 360px) {
+}
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+}
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+}
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+}
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
 }
