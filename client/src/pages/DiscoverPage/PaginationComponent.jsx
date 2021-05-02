@@ -31,7 +31,7 @@ const PaginationComponent = () => {
     .slice(pagesVisited, pagesVisited + fundCardPerPage)
     .map((fundCard) => {
       return (
-        <div className="col-lg-4 col-6" key={fundCard.id}>
+        <div className="col-lg-3 col-md-4 col-6" key={fundCard.id}>
           <FundCardView
             imgURL={fundCard.imgURL}
             title={fundCard.title}
@@ -56,9 +56,6 @@ const PaginationComponent = () => {
       <div className="container-fluid">
         <div className="row row-flex">{displayFundCardItem}</div>
       </div>
-      {/* <div className="divider-custom">
-        <div className="divider-custom-line"></div>
-      </div> */}
       <ReactPaginate
         previousLabel={"<"}
         nextLabel={">"}

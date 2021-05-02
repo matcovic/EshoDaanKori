@@ -5,9 +5,9 @@ import Intro from "./components/Intro";
 import OurStory from "./components/OurStory";
 import OurVision from "./components/OurVision";
 import AvailFundraisers from "./components/AvaiFundraisers";
-import {landingPageInitialContent} from "./data/data"
+import { landingPageInitialContent } from "./data/data";
 
-function Home() {
+function LandingPage() {
   const [content, setContent] = useState(landingPageInitialContent);
   // this is called as soon as the components load up.
   useEffect(() => {
@@ -41,4 +41,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default LandingPage;
