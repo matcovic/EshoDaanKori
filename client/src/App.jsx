@@ -12,6 +12,7 @@ import Verification from "./pages/VerificationPage";
 import Registration from "./pages/RegistrationPage";
 import RegistrationComplete from "./pages/RegistrationCompletePage";
 import NewCampaign from "./pages/NewCampaignPage";
+import PaymentOptions from "./pages/PaymentOptionPage";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
                 component={RegistrationComplete}
               />
               <Route path="/new-campaign" component={NewCampaign} />
+              <Route path="/payment" component={PaymentOptions} />
             </Switch>
           </div>
         </div>
