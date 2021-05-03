@@ -1,12 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { NavHashLink } from "react-router-hash-link";
 
 const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-md bg-white">
       <div className="container-fluid navbar-container">
-        <a className="navbar-brand abs nav-bar-title" href="#">
+        <Link className="navbar-brand abs nav-bar-title" to="/">
           AshoDaanKori
-        </a>
+        </Link>
         <button
           className="navbar-toggler ms-auto custom-toggler"
           type="button"
@@ -18,34 +20,23 @@ const Navbar = () => {
         <div className="navbar-collapse collapse" id="collapseNavbar">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item active">
-              <a
+              <NavHashLink
+                smooth
+                to="/#our-story-section"
                 className="nav-link"
-                href=""
-                data-bs-target="#myModal"
-                data-bs-toggle="modal"
               >
                 About
-              </a>
+              </NavHashLink>
             </li>
             <li className="nav-item active">
-              <a
-                className="nav-link"
-                href=""
-                data-bs-target="#myModal"
-                data-bs-toggle="modal"
-              >
+              <NavHashLink to="/how-it-works" className="nav-link">
                 How it works
-              </a>
+              </NavHashLink>
             </li>
           </ul>
-          <a
-            className="nav-link navbar-btn"
-            href=""
-            data-bs-target="#myModal"
-            data-bs-toggle="modal"
-          >
-            Sign In
-          </a>
+          <NavHashLink to="/sign-in" className="nav-link navbar-btn">
+            START CAMPAIGN
+          </NavHashLink>
         </div>
       </div>
     </nav>

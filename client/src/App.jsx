@@ -1,5 +1,10 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import React, { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
 import "semantic-ui-css/semantic.min.css";
 import "./App.css";
 import Navbar from "./components/Navbar";
@@ -12,8 +17,30 @@ import Verification from "./pages/VerificationPage";
 import Registration from "./pages/RegistrationPage";
 import RegistrationComplete from "./pages/RegistrationCompletePage";
 import NewCampaign from "./pages/NewCampaignPage";
+import axios from "axios";
 
 function App() {
+  const [isAuthenticated, setAuthenticationStatus] = useState(false);
+
+  /**
+   * @GET request
+   * Checks if the user is authenticated already. IF so, then redirect user to their homepage
+   */
+  try {
+    axios
+      .get("/api/auth/is-authenticated", {
+        withCredentials: true,
+      })
+      .then(({ data }) => {
+        console.log(data);
+        data.status === 1
+          ? setAuthenticationStatus(true)
+          : setAuthenticationStatus(false);
+      });
+  } catch (error) {
+    console.log(error);
+  }
+
   return (
     <Router>
       <div>
@@ -21,17 +48,22 @@ function App() {
           <div id="main">
             <Navbar />
             <Switch>
-              <Route path="/" exact component={LandingPage} />
-              <Route path="/discover" component={DiscoverPage} />
-              <Route path="/signIn" component={SignIn} />
-              <Route path="/signUp" component={SignUp} />
-              <Route path="/verification" component={Verification} />
-              <Route path="/registration" component={Registration} />
               <Route
+                path="/"
+                exact
+                component={isAuthenticated ? Registration : LandingPage}
+              />
+              <Route path="/discover" exact component={DiscoverPage} />
+              <Route path="/sign-in" exact component={SignIn} />
+              <Route path="/sign-up" exact component={SignUp} />
+              <Route path="/verification" exact component={Verification} />
+              <Route path="/registration" exact component={Registration} />
+              <Route
+                exact
                 path="/registration-complete"
                 component={RegistrationComplete}
               />
-              <Route path="/new-campaign" component={NewCampaign} />
+              <Route exact path="/new-campaign" component={NewCampaign} />
             </Switch>
           </div>
         </div>
