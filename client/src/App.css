@@ -103,6 +103,8 @@ body {
   font-style: normal;
   font-weight: var(--font-weight-subHeading2);
   margin: 5px 20px;
+  text-transform: uppercase;
+  text-align: center;
 }
 
 .navbar-btn {
@@ -140,7 +142,7 @@ body {
 }
 
 /* For Sign In/Up text in NavBar */
-.navbar-sign-in-up-text {
+.navbar-access-text {
   font-size: var(--font-size-subHeading2);
   font-weight: var(--font-weight-body2);
   margin: 0;
@@ -313,14 +315,14 @@ h3 {
 }
 
 /* --------------------- Top-FundRaisers Section --------------------- */
-#top-funds-section {
+#available-funds-section {
   background-color: var(--black-haze);
   padding: var(--padding-section);
   position: relative;
   z-index: 1;
 }
 
-#top-funds-section [class*="col-"] {
+#available-funds-section [class*="col-"] {
   margin: 0.4rem 0;
   padding: 2% 3%;
 }
