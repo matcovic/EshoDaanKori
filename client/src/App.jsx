@@ -22,7 +22,7 @@ function App() {
           <div id="main">
             <PublicNavbar />
             <Switch>
-              <Route path="/" exact component={LandingPage} />
+              <Route exact path="/" component={LandingPage} />
               <Route path="/discover" component={DiscoverPage} />
               <Route path="/signIn" component={SignIn} />
               <Route path="/signUp" component={SignUp} />
