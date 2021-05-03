@@ -24,7 +24,7 @@ const NewCampaign = () => {
     <div className="body-background">
       <section id="campaign-section">
         <div className="sample">
-          <div className="signIn-box signIn-box-medium signIn-box-small">
+          <div className="campaign-box campaign-box-medium campaign-box-small">
             <h2>START A NEW CAMPAIGN</h2>
             <Form>
               <Form.Group widths="equal">
