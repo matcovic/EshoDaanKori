@@ -17,6 +17,9 @@ mongoose
   })
   .catch((err) => console.log(err));
 
+// we need to set it to false to remove the deprecated warning
+mongoose.set("useFindAndModify", false);
+
 function startServer() {
   app.listen(PORT, (err) => {
     if (err) {

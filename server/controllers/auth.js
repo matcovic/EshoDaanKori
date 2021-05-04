@@ -1,29 +1,18 @@
-import { config } from "dotenv";
-import { genPassword } from "../util/util.js";
-import User from "../models/user.js";
+import { isUserAvailable, createNewUser, updateUserInfo } from "../util/dao.js";
 
-if (process.env.NODE_ENV !== "production") {
-  config();
-}
-
-function registerController(req, res, next) {
+async function registerController(req, res, next) {
   log("req received: ");
   log(req.body);
-  const saltHash = genPassword(req.body.password);
-  const salt = saltHash.salt;
-  const hash = saltHash.hash;
-  const newUser = new User({
-    username: req.body.username,
-    hash: hash,
-    salt: salt,
-    fullname: "new user sucker",
-  });
-
-  newUser.save().then((user) => {
-    console.log(user);
-  });
-
-  res.cookie("cookie", "val"), res.redirect("/login");
+  const a = await isUserAvailable(req.body.username);
+  if (!a) {
+    log("creating new user");
+    const user = await createNewUser(req.body);
+    res.cookie("userId", user._id.toString());
+    res.json({ status: 1 });
+  } else {
+    log("not creating new user");
+    res.json({ status: -1 });
+  }
 }
 
 function authenticationController(req, res) {
@@ -37,8 +26,14 @@ function authenticationController(req, res) {
   }
 }
 
+async function registerInfoController(req, res) {
+  const userId = req.cookies.userId;
+  const status = await updateUserInfo(req.body, userId);
+  res.json(status);
+}
+
 function log(msg) {
   console.log(msg);
 }
 
-export { registerController, authenticationController };
+export { registerController, authenticationController, registerInfoController };

@@ -16,7 +16,12 @@ const SignUp = () => {
 
     const registerUser = async () => {
       const { data } = await axios.post("/api/auth/register-email", form);
-      console.log(data);
+      if (data.status) {
+        console.log("user created. Fill up info now");
+        window.location.replace("/registration");
+      } else {
+        console.log("user exists already");
+      }
     };
 
     registerUser();

@@ -13,13 +13,10 @@ passport.use(
   new LocalStrategy(function (username, password, cb) {
     User.findOne({ username: username })
       .then((user) => {
-        log("user found");
         if (!user) {
           log("user not found");
           return cb(null, false);
         }
-
-        // Function defined at bottom of app.js
         const isValid = validPassword(password, user.hash, user.salt);
         log("password validation: " + isValid);
         if (isValid) {

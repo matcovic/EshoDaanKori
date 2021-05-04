@@ -6,6 +6,11 @@ import passport from "./config/passport-config.js";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import MongoStore from "connect-mongo";
+import { config } from "dotenv";
+
+if (process.env.NODE_ENV !== "production") {
+  config();
+}
 
 const app = express();
 

@@ -1,28 +1,77 @@
 import mailIcon from "./icons/ico-email.svg";
 import keyIcon from "./icons/ico-key.svg";
+import profileicon from "./icons/ico-profile.svg";
+import phoneicon from "./icons/ico-phone.svg";
+import calendaricon from "./icons/ico-calendar.svg";
+import nidicon from "./icons/ico-nid.svg";
 
 const EmailIcon = (
-    <i className="icon">
-      <img
-        alt="emailIcon"
-        className="input-icon"
-        width={38}
-        height={38}
-        src={mailIcon}
-      />
-    </i>
-  );
+  <i className="icon">
+    <img
+      alt="emailIcon"
+      className="input-icon"
+      width={38}
+      height={38}
+      src={mailIcon}
+    />
+  </i>
+);
 
-  const KeyIcon = (
-    <i className="icon">
-      <img
-        alt="keyIcon"
-        className="input-icon"
-        width={38}
-        height={38}
-        src={keyIcon}
-      />
-    </i>
-  );
+const KeyIcon = (
+  <i className="icon">
+    <img
+      alt="keyIcon"
+      className="input-icon"
+      width={38}
+      height={38}
+      src={keyIcon}
+    />
+  </i>
+);
 
-export {EmailIcon, KeyIcon}
+const ProfileIcon = (
+  <i className="icon">
+    <img
+      className="input-icon"
+      width={37.39}
+      height={38}
+      src={profileicon}
+      alt="profileIcon"
+    />
+  </i>
+);
+
+const PhoneIcon = (
+  <i className="icon">
+    <img
+      className="input-icon"
+      width={37.39}
+      height={38}
+      src={phoneicon}
+      alt="phoneIcon"
+    />
+  </i>
+);
+const CalendarIcon = (
+  <i className="icon">
+    <img
+      className="input-icon"
+      width={37.39}
+      height={38}
+      src={calendaricon}
+      alt="CalenderIcon"
+    />
+  </i>
+);
+const NidIcon = (
+  <i className="icon">
+    <img
+      className="input-icon"
+      width={37.39}
+      height={38}
+      src={nidicon}
+      alt="NidIcon"
+    />
+  </i>
+);
+export { EmailIcon, KeyIcon, NidIcon, CalendarIcon, PhoneIcon, ProfileIcon };

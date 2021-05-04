@@ -20,9 +20,9 @@ const userSchema = new Schema(
     username: String,
     hash: String,
     salt: String,
-    fullname: {
+    fullName: {
       type: String,
-      required: true,
+      required: false,
     },
     phoneNumber: {
       type: String,
