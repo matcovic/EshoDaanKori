@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { NavHashLink } from "react-router-hash-link";
 import "./utilities/navBarHide";
 
 const PublicNavbar = () => {
   return (
     <nav className="autohide navbar navbar-expand-lg bg-white">
       <div className="container-fluid navbar-container">
-        <Link className="navbar-brand abs nav-bar-title" to="/#">
+        <Link className="navbar-brand abs nav-bar-title" to="/">
           AshoDaanKori
         </Link>
         <button
@@ -22,23 +23,18 @@ const PublicNavbar = () => {
         <div className="collapse navbar-collapse" id="main_nav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item active">
-              <Link
-                to="/#"
+              <NavHashLink
+                smooth
+                to="/#our-story-section"
                 className="nav-link"
-                data-bs-target="#myModal"
-                data-bs-toggle="modal"
               >
                 About
-              </Link>
+              </NavHashLink>
             </li>
             <li className="nav-item active">
-              <Link
-                to="/#"
-                className="nav-link"
-                data-bs-target="#myModal"
-                data-bs-toggle="modal"
-              >
+              <NavHashLink to="/how-it-works" className="nav-link">
                 How it works
+              </NavHashLink>
               </Link>
             </li>
             <li className="nav-item active">
@@ -52,14 +48,9 @@ const PublicNavbar = () => {
               </Link>
             </li>
           </ul>
-          <Link
-            to="/#"
-            className="nav-link navbar-btn"
-            data-bs-target="#myModal"
-            data-bs-toggle="modal"
-          >
-            Start Campaign
-          </Link>
+          <NavHashLink to="/sign-in" className="nav-link navbar-btn">
+            START CAMPAIGN
+          </NavHashLink>
         </div>
       </div>
     </nav>

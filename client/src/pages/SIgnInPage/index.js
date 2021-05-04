@@ -1,43 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import { Input } from "semantic-ui-react";
 import facebookLogo from "../../assets/images/facebookLogo.svg";
 import googleLogo from "../../assets/images/googleLogo.svg";
-import mailIcon from "../../assets/icons/ico-email.svg";
-import keyIcon from "../../assets/icons/ico-key.svg";
 import "./SignIn.css";
-
-const EmailIcon = (
-  <i className="icon">
-    <img
-      className="input-icon"
-      width={37.39}
-      height={38}
-      src={mailIcon}
-      alt="email-icon"
-    />
-  </i>
-);
-
-const KeyIcon = (
-  <i className="icon">
-    <img
-      className="input-icon"
-      width={37.39}
-      height={38}
-      src={keyIcon}
-      alt="key-icon"
-    />
-  </i>
-);
+import { EmailIcon, KeyIcon } from "../../assets/assets.js";
+import axios from "axios";
 
 const SignIn = () => {
+  const [form, setFormContent] = useState({});
+
+  function onSignInClick(event) {
+    event.preventDefault();
+    setFormContent(form);
+    console.log("sign in clicked");
+    console.log(form);
+
+    const loginUser = async () => {
+      const { data } = await axios.post("/api/auth/login-email", form);
+      console.log(data);
+    };
+
+    loginUser();
+  }
+
+  function handleChange(event) {
+    const { value, name } = event.target;
+
+    setFormContent((prevContent) => {
+      if (name === "username") {
+        return {
+          username: value,
+          password: prevContent.password,
+        };
+      } else if (name === "password") {
+        return {
+          username: prevContent.username,
+          password: value,
+        };
+      }
+    });
+  }
+
   return (
     <div className="background-signup">
       <section id="signIn-section">
         <div className="sample">
           <div className="signIn-box signIn-box-medium signIn-box-small">
             <h1>SIGN IN</h1>
-
             <a>
               <img className="logo" src={facebookLogo} alt="Facebook Logo" />
             </a>
@@ -52,7 +61,9 @@ const SignIn = () => {
             <form>
               <div>
                 <Input
+                  name="username"
                   icon={EmailIcon}
+                  onChange={handleChange}
                   iconPosition="left"
                   placeholder="Email Address"
                   className="input-length"
@@ -61,6 +72,8 @@ const SignIn = () => {
 
               <div>
                 <Input
+                  name="password"
+                  onChange={handleChange}
                   icon={KeyIcon}
                   iconPosition="left"
                   placeholder="Password"
@@ -68,7 +81,9 @@ const SignIn = () => {
                 />
               </div>
               <div>
-                <button className=" btn btn-type1">SIGN IN</button>
+                <button onClick={onSignInClick} className=" btn btn-type1">
+                  SIGN IN
+                </button>
               </div>
             </form>
             <div className="divider-custom">

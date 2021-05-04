@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function OurVision(props) {
   return (
@@ -32,9 +33,9 @@ function OurVision(props) {
       <p>{props.ourPromise}</p>
 
       <div className="btn-align-center">
-        <a className="btn btn-type1" href="#">
+        <Link to="/how-it-works" className="btn btn-type1">
           LEARN HOW IT WORKS
-        </a>
+        </Link>
       </div>
     </section>
   );
