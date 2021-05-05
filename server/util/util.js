@@ -1,4 +1,5 @@
-import crypto from 'crypto'
+import crypto from "crypto";
+import { transporter } from "../config/config.js";
 
 /**
  *
@@ -38,5 +39,30 @@ function genPassword(password) {
   };
 }
 
+async function sendVerificationEmail(to, userId, verification_token) {
+  var mailOptions = {
+    from: process.env.ADMIN_EMAIL,
+    to: to,
+    subject: "Verify your email | Fund Raiser",
+    text: `Please click on the link to verify yourself: ${process.env.SERVER_HOST}/verify/${verification_token}/${userId}`,
+  };
 
-export {genPassword, validPassword}
+  try {
+    const info = await transporter.sendMail(mailOptions);
+    log("Email sent: " + info.response);
+    return { status: 1 };
+  } catch (error) {
+    log(error);
+    return { status: -1 };
+  }
+}
+
+function respond(status, message) {
+  return { status, message };
+}
+
+function log(msg) {
+  console.log(msg);
+}
+
+export { genPassword, validPassword, sendVerificationEmail, respond };

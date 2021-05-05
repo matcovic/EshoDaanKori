@@ -3,20 +3,28 @@ import {
   registerController,
   authenticationController,
   registerInfoController,
+  verificationController,
+  loginSuccessController,
+  loginFailureController,
+  signOutController,
 } from "../controllers/auth.js";
-import passport from "../config/passport-config.js";
+import { passport } from "../config/config.js";
 
-const router = express.Router();
+const authRouter = express.Router();
 
-router.post("/register-email", registerController);
-router.post(
+authRouter.post("/register-email", registerController);
+authRouter.post(
   "/login-email",
   passport.authenticate("local", {
-    failureRedirect: "/login-failure",
-    successRedirect: "/login-success",
+    failureRedirect: "/api/auth/login-failure",
+    successRedirect: "/api/auth/login-success",
   })
 );
-router.post("/register-info", registerInfoController);
-router.get("/is-authenticated", authenticationController);
+authRouter.post("/register-info", registerInfoController);
+authRouter.post("/sign-out", signOutController);
+authRouter.get("/is-authenticated", authenticationController);
+authRouter.get("/verify/:token/:userid", verificationController);
+authRouter.get("/login-success", loginSuccessController);
+authRouter.get("/login-failure", loginFailureController);
 
-export default router;
+export default authRouter;

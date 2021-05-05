@@ -1,16 +1,15 @@
 import React from "react";
 import { Input } from "semantic-ui-react";
 import "../SIgnInPage/SignIn.css";
-import keyIcon from "../../assets/icons/ico-key.svg";
 import threeDots from "../../assets/icons/ico-3dots2.svg";
+import {KeyIcon} from "../../assets/assets.js";
+import { Redirect } from "react-router";
 
-const KeyIcon = (
-  <i className="icon">
-    <img className="input-icon" width={37.39} height={38} src={keyIcon} />
-  </i>
-);
+const Verification = ({ isAuthenticated }) => {
+  if (isAuthenticated) {
+    return <Redirect to="/" />;
+  }
 
-const Verification = () => {
   return (
     <div className="background-signup">
       <section id="signIn-section">
@@ -37,7 +36,7 @@ const Verification = () => {
             </form>
 
             <i>
-              <img className="three-dots" src={threeDots} />
+              <img alt ="three dots" className="three-dots" src={threeDots} />
             </i>
           </div>
         </div>

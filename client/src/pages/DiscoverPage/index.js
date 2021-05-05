@@ -1,8 +1,10 @@
 import React from "react";
 import PaginationComponent from "./PaginationComponent";
 import "../DiscoverPage/discoverPage.css";
+import axios from "axios";
 
 const DiscoverPage = () => {
+
   return (
     <section id="discover-section">
       <div className="container-fluid">

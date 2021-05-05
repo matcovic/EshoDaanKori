@@ -2,6 +2,12 @@ import passport from "passport";
 import User from "../models/user.js";
 import LocalStrategy from "passport-local";
 import { validPassword } from "../util/util.js";
+import { createTransport } from "nodemailer";
+import { config } from "dotenv";
+
+if (process.env.NODE_ENV !== "production") {
+  config();
+}
 /**
  * This function is called when the `passport.authenticate()` method is called.
  *
@@ -61,4 +67,12 @@ function log(msg) {
   console.log(msg);
 }
 
-export default passport;
+var transporter = createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.ADMIN_EMAIL,
+    pass: process.env.ADMIN_PASS,
+  },
+});
+
+export { transporter, passport };

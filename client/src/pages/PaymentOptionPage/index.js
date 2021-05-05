@@ -6,6 +6,7 @@ import Nagad from "../../assets/icons/ico-nagad.svg";
 import Rocket from "../../assets/icons/ico-rocket.svg";
 import NumberLists from "./components/ListofNumbers";
 import twoDots from "../../assets/icons/ico-2dots2.svg";
+import { Redirect } from "react-router";
 
 const MobileBankingOptions = [
   {
@@ -36,7 +37,11 @@ const MobileBankingOptions = [
   },
 ];
 
-const PaymentOptions = () => {
+const PaymentOptions = ({ isAuthenticated }) => {
+  if (isAuthenticated) {
+    return <Redirect to="/" />;
+  }
+
   return (
     <div className="payment-background">
       <section id="payment-section">

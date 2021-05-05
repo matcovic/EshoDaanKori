@@ -9,9 +9,14 @@ import {
   ProfileIcon,
 } from "../../assets/assets";
 import axios from "axios";
+import { Redirect } from "react-router";
 
-const Registration = () => {
+const Registration = ({isAuthenticated}) => {
   const [form, setFormContent] = useState({});
+
+  if (isAuthenticated) {
+    return <Redirect to="/" />;
+  } 
 
   function onContinueClick(event) {
     event.preventDefault();
@@ -21,11 +26,11 @@ const Registration = () => {
 
     const registerUser = async () => {
       const { data } = await axios.post("/api/auth/register-info", form);
-      if (data.status) {
+      if (data.status === 1) {
         console.log("verify yourself now");
-       // window.location.replace("/verification");
+        window.location.replace("/registration-complete");
       } else {
-        console.log("Something went wrong. Please refresh and try again");
+        console.log(data.message);
       }
     };
 

@@ -1,7 +1,12 @@
 import React from "react";
+import { Redirect } from "react-router";
 import "../SIgnInPage/SignIn.css";
 
-const RegistrationComplete = () => {
+const RegistrationComplete = ({ isAuthenticated }) => {
+  if (isAuthenticated) {
+    return <Redirect to="/" />;
+  }
+
   return (
     <div className="background-signup">
       <section id="signIn-section">
