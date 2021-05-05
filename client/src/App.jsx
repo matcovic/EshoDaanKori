@@ -81,6 +81,7 @@ function App() {
                 exact
                 component={() => <SignUp isAuthenticated={isAuthenticated} />}
               />
+
               <Route
                 path="/verification"
                 exact
