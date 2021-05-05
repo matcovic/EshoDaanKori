@@ -5,9 +5,14 @@ import googleLogo from "../../assets/images/googleLogo.svg";
 import "./SignIn.css";
 import { EmailIcon, KeyIcon } from "../../assets/assets.js";
 import axios from "axios";
+import { Redirect } from "react-router";
 
-const SignIn = () => {
+const SignIn = ({ isAuthenticated }) => {
   const [form, setFormContent] = useState({});
+
+  if (isAuthenticated) {
+    return <Redirect to="/" />;
+  } 
 
   function onSignInClick(event) {
     event.preventDefault();
@@ -17,7 +22,12 @@ const SignIn = () => {
 
     const loginUser = async () => {
       const { data } = await axios.post("/api/auth/login-email", form);
-      console.log(data);
+      if (data.status === 1) {
+        window.location.replace("/");
+      } else {
+        console.log(data.status);
+        console.log(data.message);
+      }
     };
 
     loginUser();

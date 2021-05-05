@@ -28,7 +28,9 @@ async function isUserAvailable(email) {
   }
 }
 
-async function updateUserInfo(form, id) {
+async function updateUserInfo(form, id, token) {
+  form.token = token;
+  form.verified = true;
   var query = { _id: id };
   try {
     const doc = await User.findOneAndUpdate(query, form);
@@ -40,7 +42,23 @@ async function updateUserInfo(form, id) {
   }
 }
 
+async function verifyUser(id, token) {
+  const user = await User.findOne({ _id: id });
+  if (user) {
+    log("user found. Checking token now");
+    if (user.token === token) {
+      log("token matched!!");
+      return { status: 1 };
+    } else {
+      log("token didnt match!!");
+      return { status: -1 };
+    }
+  }
+  log("no user found!");
+  return { status: -2 };
+}
+
 function log(msg) {
   console.log(msg);
 }
-export { isUserAvailable, createNewUser, updateUserInfo };
+export { isUserAvailable, createNewUser, updateUserInfo, verifyUser };

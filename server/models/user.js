@@ -32,6 +32,15 @@ const userSchema = new Schema(
       type: String,
       required: false,
     },
+    verified: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    token: {
+      type: String,
+      required: false,
+    },
     dob: {
       type: String,
       required: false,

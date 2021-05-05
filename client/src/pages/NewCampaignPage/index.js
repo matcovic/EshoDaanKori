@@ -1,23 +1,7 @@
 import React from "react";
-import {
-  Button,
-  Checkbox,
-  Form,
-  Input,
-  Radio,
-  Select,
-  TextArea,
-} from "semantic-ui-react";
-// import "../../pages/SIgnIn/SignIn.css";
-import keyIcon from "../../assets/icons/ico-key.svg";
+import { Checkbox, Form, Input, Select, TextArea } from "semantic-ui-react";
 import threeDots from "../../assets/icons/ico-3dots2.svg";
 import "./newCampaign.css";
-
-const KeyIcon = (
-  <i className="icon">
-    <img className="input-icon" width={37.39} height={38} src={keyIcon} />
-  </i>
-);
 
 const NewCampaign = () => {
   return (

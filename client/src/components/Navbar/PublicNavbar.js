@@ -23,11 +23,7 @@ const PublicNavbar = () => {
         <div className="collapse navbar-collapse" id="main_nav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item active">
-              <NavHashLink
-                smooth
-                to="/#our-story-section"
-                className="nav-link"
-              >
+              <NavHashLink smooth to="/#our-story-section" className="nav-link">
                 About
               </NavHashLink>
             </li>
@@ -35,17 +31,11 @@ const PublicNavbar = () => {
               <NavHashLink to="/how-it-works" className="nav-link">
                 How it works
               </NavHashLink>
-              </Link>
             </li>
             <li className="nav-item active">
-              <Link
-                to="/#"
-                className="nav-link"
-                data-bs-target="#myModal"
-                data-bs-toggle="modal"
-              >
+              <NavHashLink to="/discover" className="nav-link">
                 Discover
-              </Link>
+              </NavHashLink>
             </li>
           </ul>
           <NavHashLink to="/sign-in" className="nav-link navbar-btn">

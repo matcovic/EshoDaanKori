@@ -2,7 +2,9 @@ import express from "express";
 import landingPageRouter from "./routes/landing.js";
 import testRouter from "./routes/test.js";
 import authRouter from "./routes/auth.js";
-import passport from "./config/passport-config.js";
+import dataRouter from "./routes/data.js";
+
+import { passport } from "./config/config.js";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import MongoStore from "connect-mongo";
@@ -45,16 +47,10 @@ app.use(passport.session());
 
 app.use("/api", landingPageRouter);
 app.use("/api", testRouter);
+
 app.use("/api/auth", authRouter);
-app.use("/api/auth/is-authenticated", authRouter);
+app.use(authRouter);
 
-app.get("/login-success", (req, res) => {
-  console.log(req.user);
-  res.send("private page");
-});
-
-app.get("/login-failure", (req, res) => {
-  res.send("login failuure");
-});
+app.use("/api/data", dataRouter)
 
 export default app;

@@ -4,9 +4,14 @@ import "../SIgnInPage/SignIn.css";
 import threeDots from "../../assets/icons/ico-3dots1.svg";
 import { EmailIcon, KeyIcon } from "../../assets/assets.js";
 import axios from "axios";
+import { Redirect } from "react-router";
 
-const SignUp = () => {
+const SignUp = ({ isAuthenticated }) => {
   const [form, setFormContent] = useState({});
+
+  if (isAuthenticated) {
+    return <Redirect to="/" />;
+  }
 
   function onSignUpClick(event) {
     event.preventDefault();
@@ -16,11 +21,12 @@ const SignUp = () => {
 
     const registerUser = async () => {
       const { data } = await axios.post("/api/auth/register-email", form);
-      if (data.status) {
+      console.log("register user: " + data);
+      if (data.status === 1) {
         console.log("user created. Fill up info now");
         window.location.replace("/registration");
       } else {
-        console.log("user exists already");
+        console.log(data.message);
       }
     };
 
