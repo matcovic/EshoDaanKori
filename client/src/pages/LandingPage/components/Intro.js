@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Intro(props) {
   return (
@@ -34,9 +35,9 @@ function Intro(props) {
       <h1>{props.slogan}</h1>
       <p>{props.sloganDescription}</p>
 
-      <a className="btn btn-type1" href="#">
-        GET STARTED
-      </a>
+      <Link className="btn btn-type1" to="/fundraisers">
+        START DONATING
+      </Link>
     </section>
   );
 }

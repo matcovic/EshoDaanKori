@@ -1,35 +1,78 @@
-import React from "react";
+import React, { useState } from "react";
 import { Input } from "semantic-ui-react";
 import "../SIgnInPage/SignIn.css";
-import profileicon from "../../assets/icons/ico-profile.svg";
-import phoneicon from "../../assets/icons/ico-phone.svg";
-import calendaricon from "../../assets/icons/ico-calendar.svg";
-import nidicon from "../../assets/icons/ico-nid.svg";
 import threeDots from "../../assets/icons/ico-3dots3.svg";
+import {
+  CalendarIcon,
+  NidIcon,
+  PhoneIcon,
+  ProfileIcon,
+} from "../../assets/assets";
+import axios from "axios";
+import { Redirect } from "react-router";
 
-const profileIcon = (
-  <i className="icon">
-    <img className="input-icon" width={37.39} height={38} src={profileicon} />
-  </i>
-);
+const Registration = ({isAuthenticated}) => {
+  const [form, setFormContent] = useState({});
 
-const PhoneIcon = (
-  <i className="icon">
-    <img className="input-icon" width={37.39} height={38} src={phoneicon} />
-  </i>
-);
-const CalendarIcon = (
-  <i className="icon">
-    <img className="input-icon" width={37.39} height={38} src={calendaricon} />
-  </i>
-);
-const NidIcon = (
-  <i className="icon">
-    <img className="input-icon" width={37.39} height={38} src={nidicon} />
-  </i>
-);
+  if (isAuthenticated) {
+    return <Redirect to="/" />;
+  } 
 
-const Registration = () => {
+  function onContinueClick(event) {
+    event.preventDefault();
+    setFormContent(form);
+    console.log("on continue click");
+    console.log(form);
+
+    const registerUser = async () => {
+      const { data } = await axios.post("/api/auth/register-info", form);
+      if (data.status === 1) {
+        console.log("verify yourself now");
+        window.location.replace("/registration-complete");
+      } else {
+        console.log(data.message);
+      }
+    };
+
+    registerUser();
+  }
+
+  function handleChange(event) {
+    const { value, name } = event.target;
+
+    setFormContent((prevContent) => {
+      if (name === "fullName") {
+        return {
+          fullName: value,
+          phoneNumber: prevContent.phoneNumber,
+          dob: prevContent.dob,
+          nid: prevContent.nid,
+        };
+      } else if (name === "phoneNumber") {
+        return {
+          fullName: prevContent.fullName,
+          phoneNumber: value,
+          dob: prevContent.dob,
+          nid: prevContent.nid,
+        };
+      } else if (name === "dob") {
+        return {
+          fullName: prevContent.fullName,
+          phoneNumber: prevContent.phoneNumber,
+          dob: value,
+          nid: prevContent.nid,
+        };
+      } else if (name === "nid") {
+        return {
+          fullName: prevContent.fullName,
+          phoneNumber: prevContent.phoneNumber,
+          dob: prevContent.dob,
+          nid: value,
+        };
+      }
+    });
+  }
+
   return (
     <div className="background-signup">
       <section id="signIn-section">
@@ -40,7 +83,9 @@ const Registration = () => {
             <form>
               <div>
                 <Input
-                  icon={profileIcon}
+                  name="fullName"
+                  onChange={handleChange}
+                  icon={ProfileIcon}
                   iconPosition="left"
                   placeholder="Enter your full name"
                   className="input-length"
@@ -49,6 +94,8 @@ const Registration = () => {
 
               <div>
                 <Input
+                  name="phoneNumber"
+                  onChange={handleChange}
                   icon={PhoneIcon}
                   iconPosition="left"
                   placeholder="Enter your phone number"
@@ -57,6 +104,8 @@ const Registration = () => {
               </div>
               <div>
                 <Input
+                  name="dob"
+                  onChange={handleChange}
                   icon={CalendarIcon}
                   iconPosition="left"
                   placeholder="Enter date of birth"
@@ -66,6 +115,8 @@ const Registration = () => {
 
               <div>
                 <Input
+                  name="nid"
+                  onChange={handleChange}
                   icon={NidIcon}
                   iconPosition="left"
                   placeholder="Enter your NID or birth certificate number (optional)"
@@ -74,12 +125,14 @@ const Registration = () => {
               </div>
 
               <div>
-                <button className=" btn btn-type1">CONTINUE</button>
+                <button onClick={onContinueClick} className=" btn btn-type1">
+                  CONTINUE
+                </button>
               </div>
             </form>
 
             <i>
-              <img className="three-dots" src={threeDots} />
+              <img alt="three-dots" className="three-dots" src={threeDots} />
             </i>
           </div>
         </div>

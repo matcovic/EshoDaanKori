@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   Button,
   Checkbox,
@@ -8,8 +8,6 @@ import {
   Select,
   TextArea,
 } from "semantic-ui-react";
-// import "../../pages/SIgnIn/SignIn.css";
-import keyIcon from "../../assets/icons/ico-key.svg";
 import threeDots from "../../assets/icons/ico-3dots2.svg";
 import "./newCampaign.css";
 

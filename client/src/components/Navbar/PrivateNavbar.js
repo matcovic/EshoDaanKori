@@ -1,41 +1,68 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { NavHashLink } from "react-router-hash-link";
 import "./privateNavBar.css";
+import "./utilities/navBarHide";
+
+function onSignOutClick(event) {
+  event.preventDefault();
+  console.log("sign out clicked");
+
+  const signOut = async () => {
+    const { data } = await axios.post("/api/auth/sign-out");
+    if (data.status === 1) {
+      console.log(data.message);
+      window.location.replace("/");
+    } else {
+      console.log(data.message);
+    }
+  };
+
+  signOut();
+}
 
 const PrivateNavbar = () => {
+  const [userInfo, setUserInfo] = useState({});
+/* 
+  const fetchContent = async () => {
+    const { data } = await axios.get("/api/data/user-profile", {
+      withCredentials: true,
+    });
+    if (data.status === -1) {
+      console.log(data.message);
+    } else {
+      console.log(data);
+      setUserInfo(data);
+    }
+  };
+  fetchContent(); */
+
   return (
-    <nav className="navbar navbar-expand-lg bg-white private-navbar">
+    <nav className="autohide navbar navbar-expand-lg bg-white private-navbar">
       <div className="container-fluid navbar-container">
-        <Link className="navbar-brand abs nav-bar-title" to="/#">
+        <NavHashLink className="navbar-brand abs nav-bar-title" to="/">
           AshoDaanKori
-        </Link>
+        </NavHashLink>
         <button
           className="navbar-toggler ms-auto custom-toggler"
           type="button"
           data-bs-toggle="collapse"
-          data-bs-target="#collapseNavbar"
+          data-bs-target="#main_nav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="navbar-collapse collapse" id="collapseNavbar">
+        <div className="collapse navbar-collapse" id="main_nav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item active">
-              <Link
-                to="/#"
-                className="nav-link"
-                data-bs-target="#myModal"
-                data-bs-toggle="modal"
-              >
+              <NavHashLink to="/my-fundraisers" className="nav-link">
                 My fundraisers
-              </Link>
+              </NavHashLink>
             </li>
           </ul>
-          <Link
-            to="/courses?sort=name"
-            className="nav-link navbar-btn"
-            data-bs-target="#myModal"
-            data-bs-toggle="modal"
-          >
+          <Link to="/start-campaign" className="nav-link navbar-btn">
             Start a new campaign
           </Link>
 
@@ -60,16 +87,16 @@ const PrivateNavbar = () => {
                     color: "#6E6E6E",
                   }}
                 >
-                  Tashfiq Khanki
+                  {userInfo.fullName || "User"}
                 </h3>
               </li>
               <li>
                 <hr className="dropdown-divider" />{" "}
               </li>
               <li>
-                <Link className="dropdown-item" to="/#">
+                <NavHashLink className="dropdown-item" to="/#">
                   My Donations
-                </Link>
+                </NavHashLink>
               </li>
               <li>
                 <Link className="dropdown-item" to="/#">
@@ -77,7 +104,7 @@ const PrivateNavbar = () => {
                 </Link>
               </li>
               <li>
-                <Link className="dropdown-item" to="/#">
+                <Link onClick={onSignOutClick} className="dropdown-item" to="#">
                   Sign Out
                 </Link>
               </li>
