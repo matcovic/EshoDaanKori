@@ -59,6 +59,10 @@ Form {
   color: var(--dove-gray);
 }
 
+.ui.form input[type="text"]:focus {
+  background-color: var(--black-haze);
+}
+
 .ui.form [class*="equal width"].fields > .field,
 .ui[class*="equal width"].form .fields > .field {
   width: 50%;
@@ -66,10 +70,10 @@ Form {
 }
 
 .btn-type5 {
-  padding-top: 8%;
-  border: 1px var(--tundora) dashed;
+  /* padding-top: 8%; */
+  border: 1px var(--quill-gray) dashed;
   width: 100%;
-  height: 105.7px;
+  min-height: 105.7px;
   text-align: center;
   color: var(--dove-gray);
   background-color: var(--black-haze);
@@ -89,6 +93,26 @@ Form {
 .ui.form textarea {
   background-color: var(--black-haze);
   border-radius: 5px;
+  font-family: var(--font-family-poppins);
+  font-size: var(--font-size-body2);
+  font-weight: var(--font-size-body1);
+}
+
+element.style {
+}
+.ui.form textarea {
+  background-color: var(--black-haze);
+  border-radius: 5px;
+  font-family: var(--font-family-poppins);
+  font-size: var(--font-size-body2);
+  font-weight: var(--font-size-body1);
+}
+.ui.form input[type="checkbox"],
+.ui.form textarea {
+  vertical-align: top;
+}
+.ui.form textarea:focus {
+  background-color: var(--black-haze);
 }
 
 /* label {
@@ -137,6 +161,21 @@ Form {
   font-weight: 800;
 }
 
+#campaign-section label {
+  font-family: var(--font-family-poppins);
+  font-size: var(--font-size-body2);
+  font-weight: var(--font-size-body1);
+}
+
+#campaign-section span {
+  font-family: var(--font-family-poppins);
+  font-size: var(--font-size-body2);
+  font-weight: var(--font-size-body1);
+}
+.ui.dropdown > .text {
+  margin-top: 6px;
+}
+
 #campaign-section .ui[class*="left icon"].input > input {
   padding-left: 3rem !important;
 }
@@ -151,4 +190,23 @@ Form {
   .campaign-box-small {
     width: 90%;
   }
+}
+
+.photo-thumbnail {
+  width: 100%;
+
+  margin-top: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  background-size: cover;
+}
+
+.other-photo-thumbnail {
+  width: 100px;
+  height: 100px;
+  margin-top: 0;
+  margin-left: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  background-size: cover;
 }
