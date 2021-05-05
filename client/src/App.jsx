@@ -6,7 +6,7 @@ import PublicNavbar from "./components/Navbar/PublicNavbar";
 import PrivateNavbar from "./components/Navbar/PrivateNavbar";
 import Footer from "./components/Footer";
 import LandingPage from "./pages/LandingPage";
-import SignIn from "./pages/SIgnInPage";
+import SignIn from "./pages/SignInPage";
 import DiscoverPage from "./pages/DiscoverPage";
 import SignUp from "./pages/SignUpPage";
 import Verification from "./pages/VerificationPage";
@@ -16,6 +16,7 @@ import NewCampaign from "./pages/NewCampaignPage";
 import axios from "axios";
 import PaymentOptions from "./pages/PaymentOptionPage";
 import Loading from "react-fullscreen-loading";
+import ErrorPage from "./pages/ErrorPage";
 
 function App() {
   const [isAuthenticated, setAuthenticationStatus] = useState(false);

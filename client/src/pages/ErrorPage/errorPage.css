@@ -1,0 +1,39 @@
+.error-box h2 {
+  font-size: 8.32rem;
+  font-weight: 700;
+  padding: 0;
+}
+
+.error-box h3 {
+  font-size: 2.23rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.error-box p::before {
+  content: "😔";
+}
+
+@media screen and (max-width: 1200px) {
+  .error-box h2 {
+    font-size: 7.32rem;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .error-box h2 {
+    font-size: 6.32rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .error-box h2 {
+    font-size: 5.32rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .error-box h2 {
+    font-size: 4.32rem;
+  }
+}
