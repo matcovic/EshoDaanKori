@@ -1,6 +1,6 @@
 import React from "react";
 import { Input } from "semantic-ui-react";
-import "../SIgnInPage/SignIn.css";
+import "../SignInPage/SignIn.css";
 import threeDots from "../../assets/icons/ico-3dots2.svg";
 import {KeyIcon} from "../../assets/assets.js";
 import { Redirect } from "react-router";
