@@ -1,6 +1,7 @@
 import React from "react";
 import fund_card from "../../../components/FundCardView/fundCard";
 import FundCardView from "../../../components/FundCardView";
+import { Link } from "react-router-dom";
 
 //function for mapping top-funds
 function availFunds(availFundsBox) {
@@ -24,9 +25,9 @@ function AvailFundraisers(props) {
       <div className="container">
         <div className="row row-flex">{fund_card.map(availFunds)}</div>
       </div>
-      <a className="below-right-text" href="#">
+      <Link className="below-right-text" to="/discover">
         SEE MORE {`>`}
-      </a>
+      </Link>
     </section>
   );
 }

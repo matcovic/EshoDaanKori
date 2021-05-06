@@ -20,6 +20,8 @@ import ErrorPage from "./pages/ErrorPage";
 
 function App() {
   const [isAuthenticated, setAuthenticationStatus] = useState(false);
+  const [registrationStatus, setRegistrationStatus] = useState(1);
+
   const [dataChange, onDataChange] = useState(false);
 
   console.log("App.jsx");
@@ -32,15 +34,13 @@ function App() {
 
     const checkAuthenticationStatus = async () => {
       try {
-        const { data } = await axios.get("/api/auth/is-authenticated", {
-          withCredentials: true,
-        });
+        const { data } = await axios.get("/api/auth/is-authenticated");
+        console.log(data);
+
         if (isMounted) {
           onDataChange(true);
-          console.log(data);
-          data.status === 1
-            ? setAuthenticationStatus(true)
-            : setAuthenticationStatus(false);
+          setRegistrationStatus(data.registrationStatus);
+          setAuthenticationStatus(data.status);
         }
       } catch (error) {
         console.log(error);
@@ -51,6 +51,16 @@ function App() {
       isMounted = false;
     }; // use effect cleanup to set flag false, if unmounted
   }, []);
+
+  /*   if (!dataChange) {
+    return (
+      <Loading
+        loading={dataChange ? false : true}
+        background="#00AD7C"
+        loaderColor="#B7FE81"
+      />
+    );
+  } */
 
   return (
     <Router>
@@ -80,30 +90,35 @@ function App() {
               <Route
                 path="/sign-up"
                 exact
-                component={() => <SignUp isAuthenticated={isAuthenticated} />}
+                component={() => <SignUp isAuthenticated={isAuthenticated}
+                                         registrationStatus={registrationStatus} />}
               />
 
-              <Route
-                path="/verification"
-                exact
-                component={() => (
-                  <Verification isAuthenticated={isAuthenticated} />
-                )}
-              />
               <Route
                 path="/registration"
                 exact
                 component={() => (
-                  <Registration isAuthenticated={isAuthenticated} />
+                  <Registration
+                    isAuthenticated={isAuthenticated}
+                    registrationStatus={registrationStatus}
+                  />
                 )}
               />
               <Route
                 path="/registration-complete"
                 component={() => (
-                  <RegistrationComplete isAuthenticated={isAuthenticated} />
+                  <RegistrationComplete
+                    isAuthenticated={isAuthenticated}
+                  />
                 )}
               />
-              <Route exact path="/start-campaign" component={NewCampaign} />
+              <Route
+                exact
+                path="/start-campaign"
+                component={() => (
+                  <NewCampaign isAuthenticated={isAuthenticated} />
+                )}
+              />
               <Route
                 exact
                 path="/payment"

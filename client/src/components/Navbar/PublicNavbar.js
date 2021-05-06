@@ -7,9 +7,9 @@ const PublicNavbar = () => {
   return (
     <nav className="autohide navbar navbar-expand-lg bg-white">
       <div className="container-fluid navbar-container">
-        <Link className="navbar-brand abs nav-bar-title" to="/">
+        <NavHashLink className="navbar-brand abs nav-bar-title" to="/">
           AshoDaanKori
-        </Link>
+        </NavHashLink>
         <button
           className="navbar-toggler ms-auto custom-toggler"
           type="button"
