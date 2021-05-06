@@ -60,13 +60,20 @@ async function sendVerificationEmail(to, subject, text) {
   }
 }
 
+function generateHashPassword(password) {
+  const saltHash = genPassword(password);
+  const salt = saltHash.salt;
+  const hash = saltHash.hash;
+  return { salt, hash };
+}
+
 function clearCookies(res) {
   res.clearCookie("cookiename");
   res.clearCookie("userEmail");
   res.clearCookie("connect.sid");
   res.clearCookie("userId");
   res.clearCookie("registrationStatus");
-  log("cookies cleared")
+  log("cookies cleared");
 }
 
 function respond(status, message) {
@@ -83,4 +90,5 @@ export {
   sendVerificationEmail,
   respond,
   clearCookies,
+  generateHashPassword,
 };

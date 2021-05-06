@@ -6,13 +6,14 @@ import "./SignIn.css";
 import { EmailIcon, KeyIcon } from "../../assets/assets.js";
 import axios from "axios";
 import { Redirect } from "react-router";
+import { Link } from "react-router-dom";
 
 const SignIn = ({ isAuthenticated }) => {
   const [form, setFormContent] = useState({});
 
   if (isAuthenticated) {
     return <Redirect to="/" />;
-  } 
+  }
 
   function onSignInClick(event) {
     event.preventDefault();
@@ -99,7 +100,7 @@ const SignIn = ({ isAuthenticated }) => {
             <div className="divider-custom">
               <div className="divider-custom-line"></div>
             </div>
-            <a href="/">FORGOT YOUR PASSWORD?</a>
+            <Link to="/forgot-password">FORGOT YOUR PASSWORD?</Link>
           </div>
         </div>
       </section>

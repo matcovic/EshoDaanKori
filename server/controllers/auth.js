@@ -4,9 +4,16 @@ import {
   updateUserInfo,
   verifyUser,
   setUserToken,
+  findUserByEmail,
+  changeUserPassword,
 } from "../util/dao.js";
 import randomstring from "randomstring";
-import { respond, sendVerificationEmail, clearCookies } from "../util/util.js";
+import {
+  respond,
+  sendVerificationEmail,
+  clearCookies,
+  generateHashPassword,
+} from "../util/util.js";
 import e from "express";
 
 async function registerController(req, res, next) {
@@ -66,7 +73,7 @@ async function registerInfoController(req, res) {
   });
 
   const status = await updateUserInfo(req.body, userId, verification_token);
-  if (status.status) {
+  if (status.status === 1) {
     // send a verification email
     const result = await sendVerificationEmail(
       userEmail,
@@ -78,10 +85,18 @@ async function registerInfoController(req, res) {
     }
     res.json(result);
   } else {
+    clearCookies(res);
     res.json(status);
   }
 }
 
+/**
+ *
+ * @GET
+ * After user clicks on the verify link from their email,
+ * this is triggered.
+ * Verifies the user
+ */
 async function verificationController(req, res) {
   const userId = req.params.userid;
   const token = req.params.token;
@@ -134,6 +149,11 @@ function registrationStatusController(req, res) {
   }
 }
 
+/**
+ *
+ * @POST
+ * Sends a password reset link to the email address provided
+ */
 async function forgotPasswordController(req, res) {
   const email = req.body.email;
   const userId = await findUserByEmail(email);
@@ -149,24 +169,45 @@ async function forgotPasswordController(req, res) {
       const result = await sendVerificationEmail(
         email,
         `Reset your Password`,
-        `Please click on the link to reset your password: ${process.env.SERVER_HOST}/verify/reset-password/${verification_token}/${userId}`
+        `Please click on the link to reset your password: ${process.env.CLIENT_HOST}/reset-password/${verification_token}/${userId}`
       );
       res.json(result);
     } else {
       res.json(status);
     }
+  } else {
+    res.json({
+      status: -1,
+      message:
+        "A user with the given email does not exist in our database. Are you sure you are providing the correct email?",
+    });
   }
 }
 
 async function resetPasswordController(req, res) {
-  const userId = req.params.userid;
-  const token = req.params.token;
+  const path = req.body.location.split("/");
+  const token = path[2];
+  const uid = path[3];
 
   // check if token matches the user.
   // if it does, then redirect the user to reset password page
-  const result = await verifyUser(userId, token);
-  res.setHeader("resetPasswordStatus", "true");
-  res.redirect(`${process.env.CLIENT_HOST}/reset-password`);
+  const result = await verifyUser(uid, token);
+  if (result.status === 1) {
+    if (req.body.password === req.body.confirmPassword) {
+      log("new pass: " + req.body.password);
+      const pass = generateHashPassword(req.body.password);
+      log(`uid: ${uid}`);
+      const result = await changeUserPassword(uid, pass.salt, pass.hash);
+      if (result.status === 1) {
+        result.redirectUrl = "/sign-in";
+      }
+      res.json(result);
+    } else {
+      console.log("Passwords do not match");
+    }
+  } else {
+    res.json(result);
+  }
 }
 
 function log(msg) {
@@ -182,6 +223,6 @@ export {
   loginFailureController,
   signOutController,
   registrationStatusController,
-  resetPasswordController,
   forgotPasswordController,
+  resetPasswordController,
 };

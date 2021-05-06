@@ -23,6 +23,7 @@ function onSignOutClick(event) {
 }
 
 const PrivateNavbar = () => {
+  
   const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
@@ -36,23 +37,21 @@ const PrivateNavbar = () => {
         console.log(data.message);
       } else {
         console.log(data);
-        if(isMounted)
-        setUserInfo(data);
+        if (isMounted) setUserInfo(data);
       }
     };
-    fetchContent(); 
-  
+    fetchContent();
+
     return () => {
       isMounted = false;
     };
   }, []);
 
-
   return (
     <nav className="autohide navbar navbar-expand-lg bg-white private-navbar">
       <div className="container-fluid navbar-container">
         <NavHashLink className="navbar-brand abs nav-bar-title" to="/">
-          AshoDaanKori
+         AshoDaanKori
         </NavHashLink>
         <button
           className="navbar-toggler ms-auto custom-toggler"
@@ -103,7 +102,7 @@ const PrivateNavbar = () => {
               <li>
                 <hr className="dropdown-divider" />{" "}
               </li>
-              
+
               <li>
                 <Link className="dropdown-item" to="/account">
                   Account Settings

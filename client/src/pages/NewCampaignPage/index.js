@@ -1,13 +1,9 @@
 import React from "react";
 import { Redirect } from "react-router";
-import { Checkbox, Form, Input, Select, TextArea } from "semantic-ui-react";
-import React, { useEffect } from "react";
 import {
-  Button,
   Checkbox,
   Form,
   Input,
-  Radio,
   Select,
   TextArea,
 } from "semantic-ui-react";
