@@ -24,7 +24,7 @@ function onSignOutClick(event) {
 
 const PrivateNavbar = () => {
   const [userInfo, setUserInfo] = useState({});
-/* 
+  /* 
   const fetchContent = async () => {
     const { data } = await axios.get("/api/data/user-profile", {
       withCredentials: true,
@@ -74,6 +74,7 @@ const PrivateNavbar = () => {
               data-bs-toggle="dropdown"
               data-bs-display="static"
               aria-expanded="false"
+              style={{ padding: "0" }}
             >
               <i aria-hidden="true" className="user circle huge icon"></i>
             </button>
