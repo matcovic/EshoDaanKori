@@ -78,6 +78,7 @@ const SignIn = ({ isAuthenticated }) => {
                   iconPosition="left"
                   placeholder="Email Address"
                   className="input-length"
+                  required
                 />
               </div>
 
@@ -89,7 +90,11 @@ const SignIn = ({ isAuthenticated }) => {
                   iconPosition="left"
                   placeholder="Password"
                   className="input-length"
+                  required
                 />
+              </div>
+              <div className="signIn-forgot-text">
+                <a href="/">FORGOT YOUR PASSWORD?</a>
               </div>
               <div>
                 <button onClick={onSignInClick} className=" btn btn-type1">
@@ -97,8 +102,8 @@ const SignIn = ({ isAuthenticated }) => {
                 </button>
               </div>
             </form>
-            <div className="divider-custom">
-              <div className="divider-custom-line"></div>
+            <div className="signIn-dont-text">
+              <span>DON’T HAVE AN ACCOUNT?</span> <a href="/sign-up">SIGN UP</a>
             </div>
             <Link to="/forgot-password">FORGOT YOUR PASSWORD?</Link>
           </div>
