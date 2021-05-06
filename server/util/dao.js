@@ -35,10 +35,10 @@ async function updateUserInfo(form, id, token) {
   try {
     const doc = await User.findOneAndUpdate(query, form);
     log("success. Updated values");
-    return { status: 1 };
+    return { status: 1, message: "user info added" };
   } catch (err) {
     log(err);
-    return { status: -1 };
+    return { status: -1, message: err.message };
   }
 }
 
@@ -53,12 +53,41 @@ async function verifyUser(id, token) {
       log("token didnt match!!");
       return { status: -1 };
     }
+  } else {
+    log("no user found!");
+    return { status: -2 };
   }
-  log("no user found!");
-  return { status: -2 };
+}
+
+async function findUserByEmail(email) {
+  const user = await User.findOne({ username: email });
+  if (user) {
+    log(`user found: ${user._id}`);
+    return user._id;
+  } else {
+    return null;
+  }
+}
+
+async function setUserToken(id, token) {
+  try {
+    var query = { _id: id };
+    const doc = await User.findOneAndUpdate(query, { token });
+    log("success. Inserted token");
+    return { status: 1, message: "Token saved successfully" };
+  } catch (err) {
+    return { status: -1, message: err.message };
+  }
 }
 
 function log(msg) {
   console.log(msg);
 }
-export { isUserAvailable, createNewUser, updateUserInfo, verifyUser };
+export {
+  isUserAvailable,
+  createNewUser,
+  updateUserInfo,
+  verifyUser,
+  findUserByEmail,
+  setUserToken,
+};

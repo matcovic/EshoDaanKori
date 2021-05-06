@@ -3,9 +3,11 @@ import {
   createNewUser,
   updateUserInfo,
   verifyUser,
+  setUserToken,
 } from "../util/dao.js";
 import randomstring from "randomstring";
-import { respond, sendVerificationEmail } from "../util/util.js";
+import { respond, sendVerificationEmail, clearCookies } from "../util/util.js";
+import e from "express";
 
 async function registerController(req, res, next) {
   log("req received: ");
@@ -16,6 +18,7 @@ async function registerController(req, res, next) {
     const user = await createNewUser(req.body);
     res.cookie("userId", user._id.toString());
     res.cookie("userEmail", user.username);
+    res.cookie("registrationStatus", false.toString());
 
     res.json(respond(1, "User created!"));
   } else {
@@ -30,14 +33,27 @@ async function registerController(req, res, next) {
 }
 
 function authenticationController(req, res) {
-  res.header("Access-Control-Allow-Credentials", "true");
+  var result;
+  // checking authentication status
   if (req.isAuthenticated()) {
     log("user logged in! Authenticated");
-    res.json(respond(1, "User is logged in already"));
+    result = { status: 1, message: "User is logged in already" };
   } else {
     log("user not logged in! NOT Authenticated");
-    res.json(respond(-1, "User not logged in"));
+    result = { status: 0, message: "User is not logged in" };
   }
+
+  // checking registration status
+  // registrationStatus = true means user can access the signup page
+  if (req.cookies.registrationStatus === "false") {
+    result.registrationStatus = 0;
+  } else if (req.cookies.registrationStatus === "true") {
+    result.registrationStatus = 1;
+  } else {
+    result.registrationStatus = 1;
+  }
+
+  res.json(result);
 }
 
 async function registerInfoController(req, res) {
@@ -46,7 +62,7 @@ async function registerInfoController(req, res) {
   const userEmail = req.cookies.userEmail;
 
   var verification_token = randomstring.generate({
-    length: 64,
+    length: 15,
   });
 
   const status = await updateUserInfo(req.body, userId, verification_token);
@@ -54,16 +70,15 @@ async function registerInfoController(req, res) {
     // send a verification email
     const result = await sendVerificationEmail(
       userEmail,
-      userId,
-      verification_token
+      `Verify your account`,
+      `Please click on the link to verify yourself: ${process.env.SERVER_HOST}/verify/${verification_token}/${userId}`
     );
-    res.json(
-      respond(1, "A verification email has been sent. Please check your email.")
-    );
+    if (result.status === 1) {
+      clearCookies(res);
+    }
+    res.json(result);
   } else {
-    res.json(
-      respond(-1, "Information couldn't be updated at the moment. Try again!")
-    );
+    res.json(status);
   }
 }
 
@@ -96,12 +111,62 @@ function loginSuccessController(req, res) {
 
 function loginFailureController(req, res) {
   log("login failed");
-  res.json(respond(-1, "Login failed. Incorrect credentials."));
+  res.json(
+    respond(
+      -1,
+      "Login failed. Incorrect credentials entered or your email has not been verified yet"
+    )
+  );
 }
 
 function signOutController(req, res) {
   req.logout();
   res.json(respond(1, "Successfully logged out. Redirecting..."));
+}
+
+function registrationStatusController(req, res) {
+  const cookies = req.cookies;
+  log(cookies);
+  if (cookies.registrationStatus === "false") {
+    res.json(respond("false", "Complete where you left of..."));
+  } else {
+    res.json(respond("true", "Something is wrong."));
+  }
+}
+
+async function forgotPasswordController(req, res) {
+  const email = req.body.email;
+  const userId = await findUserByEmail(email);
+  if (userId !== null) {
+    // generate a token and send an email to the user
+    var verification_token = randomstring.generate({
+      length: 64,
+    });
+
+    const status = await setUserToken(userId, verification_token);
+    if (status.status === 1) {
+      // send a verification email
+      const result = await sendVerificationEmail(
+        email,
+        `Reset your Password`,
+        `Please click on the link to reset your password: ${process.env.SERVER_HOST}/verify/reset-password/${verification_token}/${userId}`
+      );
+      res.json(result);
+    } else {
+      res.json(status);
+    }
+  }
+}
+
+async function resetPasswordController(req, res) {
+  const userId = req.params.userid;
+  const token = req.params.token;
+
+  // check if token matches the user.
+  // if it does, then redirect the user to reset password page
+  const result = await verifyUser(userId, token);
+  res.setHeader("resetPasswordStatus", "true");
+  res.redirect(`${process.env.CLIENT_HOST}/reset-password`);
 }
 
 function log(msg) {
@@ -116,4 +181,7 @@ export {
   loginSuccessController,
   loginFailureController,
   signOutController,
+  registrationStatusController,
+  resetPasswordController,
+  forgotPasswordController,
 };

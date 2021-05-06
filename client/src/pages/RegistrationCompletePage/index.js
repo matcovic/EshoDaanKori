@@ -6,7 +6,6 @@ const RegistrationComplete = ({ isAuthenticated }) => {
   if (isAuthenticated) {
     return <Redirect to="/" />;
   }
-
   return (
     <div className="background-signup">
       <section id="signIn-section">

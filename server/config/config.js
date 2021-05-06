@@ -25,7 +25,7 @@ passport.use(
         }
         const isValid = validPassword(password, user.hash, user.salt);
         log("password validation: " + isValid);
-        if (isValid) {
+        if (isValid && user.verified) {
           return cb(null, user);
         } else {
           return cb(null, false);

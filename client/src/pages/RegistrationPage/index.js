@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Input } from "semantic-ui-react";
 import "../SIgnInPage/SignIn.css";
 import threeDots from "../../assets/icons/ico-3dots3.svg";
@@ -10,27 +10,38 @@ import {
 } from "../../assets/assets";
 import axios from "axios";
 import { Redirect } from "react-router";
+import LoadingBar from "react-top-loading-bar";
 
-const Registration = ({isAuthenticated}) => {
+const Registration = ({ isAuthenticated, registrationStatus }) => {
+  const ref = useRef(null);
+  console.log(isAuthenticated);
+
   const [form, setFormContent] = useState({});
 
   if (isAuthenticated) {
     return <Redirect to="/" />;
-  } 
+  }
+
+  if (registrationStatus) {
+    return <Redirect to="/sign-up" />;
+  }
 
   function onContinueClick(event) {
     event.preventDefault();
     setFormContent(form);
     console.log("on continue click");
     console.log(form);
+    ref.current.continuousStart();
 
     const registerUser = async () => {
       const { data } = await axios.post("/api/auth/register-info", form);
       if (data.status === 1) {
-        console.log("verify yourself now");
+        ref.current.complete();
+        console.log(data.message);
         window.location.replace("/registration-complete");
       } else {
         console.log(data.message);
+        ref.current.complete();
       }
     };
 
@@ -75,6 +86,8 @@ const Registration = ({isAuthenticated}) => {
 
   return (
     <div className="background-signup">
+      <LoadingBar color="#FF641A" ref={ref} shadow={true} height={3} />
+
       <section id="signIn-section">
         <div className="sample">
           <div className="signIn-box signIn-box-medium signIn-box-small">

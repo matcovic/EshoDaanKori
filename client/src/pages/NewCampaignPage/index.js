@@ -1,9 +1,13 @@
 import React from "react";
+import { Redirect } from "react-router";
 import { Checkbox, Form, Input, Select, TextArea } from "semantic-ui-react";
 import threeDots from "../../assets/icons/ico-3dots2.svg";
 import "./newCampaign.css";
 
-const NewCampaign = () => {
+const NewCampaign = ({isAuthenticated}) => {
+  if (!isAuthenticated) {
+    return <Redirect to="/" />;
+  }
   return (
     <div className="body-background">
       <section id="campaign-section">
