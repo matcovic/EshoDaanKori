@@ -29,10 +29,10 @@ authRouter.post("/sign-out", signOutController);
 authRouter.get("/login-success", loginSuccessController);
 authRouter.get("/login-failure", loginFailureController);
 authRouter.get("/registration-status", registrationStatusController);
-authRouter.post("/reset-password", forgotPasswordController);
+authRouter.post("/reset-password-link", forgotPasswordController);
+authRouter.post("/reset-password", resetPasswordController);
 
 /**@path verify/ */
 authRouter.get("/:token/:userid", verificationController);
-authRouter.get("/reset-password/:token/:userid", resetPasswordController);
 
 export default authRouter;

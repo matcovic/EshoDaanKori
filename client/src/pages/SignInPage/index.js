@@ -6,6 +6,7 @@ import "./SignIn.css";
 import { EmailIcon, KeyIcon } from "../../assets/assets.js";
 import axios from "axios";
 import { Redirect } from "react-router";
+import { Link } from "react-router-dom";
 
 const SignIn = ({ isAuthenticated }) => {
   const [form, setFormContent] = useState({});
@@ -104,6 +105,7 @@ const SignIn = ({ isAuthenticated }) => {
             <div className="signIn-dont-text">
               <span>DON’T HAVE AN ACCOUNT?</span> <a href="/sign-up">SIGN UP</a>
             </div>
+            <Link to="/forgot-password">FORGOT YOUR PASSWORD?</Link>
           </div>
         </div>
       </section>
