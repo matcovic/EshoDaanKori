@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Input } from "semantic-ui-react";
-import "../SIgnInPage/SignIn.css";
+import "../SignInPage/SignIn.css";
 import threeDots from "../../assets/icons/ico-3dots3.svg";
 import {
   CalendarIcon,

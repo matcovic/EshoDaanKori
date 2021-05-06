@@ -16,6 +16,7 @@ import NewCampaign from "./pages/NewCampaignPage";
 import axios from "axios";
 import PaymentOptions from "./pages/PaymentOptionPage";
 import Loading from "react-fullscreen-loading";
+import ErrorPage from "./pages/ErrorPage";
 
 function App() {
   const [isAuthenticated, setAuthenticationStatus] = useState(false);
@@ -89,13 +90,10 @@ function App() {
               <Route
                 path="/sign-up"
                 exact
-                component={() => (
-                  <SignUp
-                    isAuthenticated={isAuthenticated}
-                    registrationStatus={registrationStatus}
-                  />
-                )}
+                component={() => <SignUp isAuthenticated={isAuthenticated}
+                                         registrationStatus={registrationStatus} />}
               />
+
               <Route
                 path="/registration"
                 exact

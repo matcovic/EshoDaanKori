@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router";
-import "../SIgnInPage/SignIn.css";
+import "../SignInPage/SignIn.css";
 
 const RegistrationComplete = ({ isAuthenticated }) => {
   if (isAuthenticated) {
