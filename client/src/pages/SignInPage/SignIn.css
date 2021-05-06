@@ -52,7 +52,7 @@
   background-color: white;
   width: 35%;
   /* margin-left: 30%; */
-  padding: 2% 5% 7% 5%;
+  padding: 2% 5% 2% 5%;
   margin-top: 72px;
   /* margin-bottom: 20px; */
   /* height: 100vh;*/
@@ -98,6 +98,14 @@
   color: var(--jade);
 }
 
+.signIn-forgot-text {
+  text-align: end;
+  margin-top: 21px;
+}
+.signIn-forgot-text a {
+  font-size: var(--font-size-body2) !important;
+  font-weight: var(--font-size-body2) !important;
+}
 .logo {
   height: 38.6px;
   width: 38.6px;
@@ -123,4 +131,21 @@
   margin-top: 50px;
   width: 66.5px;
   height: 14.7px;
+}
+
+.Forgot-reset-btn .btn-type1 {
+  margin-top: 40px !important;
+}
+.signIn-dont-text {
+  margin-top: 86px;
+}
+.signIn-dont-text a {
+  font-weight: bold !important;
+}
+span {
+  color: var(--alien-armpit);
+  font-size: var(--font-size-body1);
+  font-weight: var(--font-size-body1);
+  font-family: var(--font-family-poppins);
+  color: var(--jade);
 }

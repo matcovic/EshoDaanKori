@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { NavHashLink } from "react-router-hash-link";
 import "./privateNavBar.css";
@@ -23,8 +23,30 @@ function onSignOutClick(event) {
 }
 
 const PrivateNavbar = () => {
+
   const [userInfo, setUserInfo] = useState({});
-  /* 
+
+  useEffect(() => {
+    let isMounted = true;
+    // when the component loads up, send a req to the server
+    const fetchContent = async () => {
+      const { data } = await axios.get("/api/data/user-profile", {
+        withCredentials: true,
+      });
+      if (data.status === -1) {
+        console.log(data.message);
+      } else {
+        console.log(data);
+        if (isMounted) setUserInfo(data);
+      }
+    };
+    fetchContent();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+  /*
   const fetchContent = async () => {
     const { data } = await axios.get("/api/data/user-profile", {
       withCredentials: true,
@@ -95,12 +117,7 @@ const PrivateNavbar = () => {
                 <hr className="dropdown-divider" />{" "}
               </li>
               <li>
-                <NavHashLink className="dropdown-item" to="/#">
-                  My Donations
-                </NavHashLink>
-              </li>
-              <li>
-                <Link className="dropdown-item" to="/#">
+                <Link className="dropdown-item" to="/account">
                   Account Settings
                 </Link>
               </li>

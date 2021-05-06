@@ -9,7 +9,6 @@ import LandingPage from "./pages/LandingPage";
 import SignIn from "./pages/SignInPage";
 import DiscoverPage from "./pages/DiscoverPage";
 import SignUp from "./pages/SignUpPage";
-import Verification from "./pages/VerificationPage";
 import Registration from "./pages/RegistrationPage";
 import RegistrationComplete from "./pages/RegistrationCompletePage";
 import NewCampaign from "./pages/NewCampaignPage";
@@ -17,9 +16,12 @@ import axios from "axios";
 import PaymentOptions from "./pages/PaymentOptionPage";
 import Loading from "react-fullscreen-loading";
 import ErrorPage from "./pages/ErrorPage";
+import ForgotPassword from "./pages/ForgotPasswordPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 function App() {
   const [isAuthenticated, setAuthenticationStatus] = useState(false);
+  const [registrationStatus, setRegistrationStatus] = useState(1);
   const [dataChange, onDataChange] = useState(false);
 
   console.log("App.jsx");
@@ -32,15 +34,13 @@ function App() {
 
     const checkAuthenticationStatus = async () => {
       try {
-        const { data } = await axios.get("/api/auth/is-authenticated", {
-          withCredentials: true,
-        });
+        const { data } = await axios.get("/api/auth/is-authenticated");
+        console.log(data);
+
         if (isMounted) {
           onDataChange(true);
-          console.log(data);
-          data.status === 1
-            ? setAuthenticationStatus(true)
-            : setAuthenticationStatus(false);
+          setRegistrationStatus(data.registrationStatus);
+          setAuthenticationStatus(data.status);
         }
       } catch (error) {
         console.log(error);
@@ -51,6 +51,16 @@ function App() {
       isMounted = false;
     }; // use effect cleanup to set flag false, if unmounted
   }, []);
+  /* 
+  if (!dataChange) {
+    return (
+      <Loading
+        loading={dataChange ? false : true}
+        background="#00AD7C"
+        loaderColor="#B7FE81"
+      />
+    );
+  } */
 
   return (
     <Router>
@@ -62,16 +72,24 @@ function App() {
               background="#00AD7C"
               loaderColor="#B7FE81"
             />
-            {isAuthenticated
-              ? (console.log("hello"), (<PrivateNavbar />))
-              : (console.log("ggg"), (<PublicNavbar />))}
+            {isAuthenticated ? (
+              <PrivateNavbar />
+            ) : (
+              <PublicNavbar isAuthenticated={isAuthenticated} />
+            )}
             <Switch>
               <Route
                 path="/"
                 exact
                 component={isAuthenticated ? DiscoverPage : LandingPage}
               />
-              <Route path="/discover" exact component={DiscoverPage} />
+              <Route
+                path="/discover"
+                exact
+                component={() => (
+                  <DiscoverPage isAuthenticated={isAuthenticated} />
+                )}
+              />
               <Route
                 path="/sign-in"
                 exact
@@ -80,20 +98,22 @@ function App() {
               <Route
                 path="/sign-up"
                 exact
-                component={() => <SignUp isAuthenticated={isAuthenticated} />}
-              />
-              <Route
-                path="/verification"
-                exact
                 component={() => (
-                  <Verification isAuthenticated={isAuthenticated} />
+                  <SignUp
+                    isAuthenticated={isAuthenticated}
+                    registrationStatus={registrationStatus}
+                  />
                 )}
               />
+
               <Route
                 path="/registration"
                 exact
                 component={() => (
-                  <Registration isAuthenticated={isAuthenticated} />
+                  <Registration
+                    isAuthenticated={isAuthenticated}
+                    registrationStatus={registrationStatus}
+                  />
                 )}
               />
               <Route
@@ -102,7 +122,13 @@ function App() {
                   <RegistrationComplete isAuthenticated={isAuthenticated} />
                 )}
               />
-              <Route exact path="/start-campaign" component={NewCampaign} />
+              <Route
+                exact
+                path="/start-campaign"
+                component={() => (
+                  <NewCampaign isAuthenticated={isAuthenticated} />
+                )}
+              />
               <Route
                 exact
                 path="/payment"
@@ -110,7 +136,23 @@ function App() {
                   <PaymentOptions isAuthenticated={isAuthenticated} />
                 )}
               />
-              {/* @todo: show an error screen here  <Route exact path="*" component={LandingPage} /> */}
+
+              <Route
+                exact
+                path="/forgot-password"
+                component={() => (
+                  <ForgotPassword isAuthenticated={isAuthenticated} />
+                )}
+              />
+
+              <Route
+                exact
+                path="/reset-password/:token/:id"
+                component={() => (
+                  <ResetPasswordPage isAuthenticated={isAuthenticated} />
+                )}
+              />
+              <Route path="*" component={ErrorPage} />
             </Switch>
           </div>
         </div>

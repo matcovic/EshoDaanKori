@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 import { NavHashLink } from "react-router-hash-link";
 import "./utilities/navBarHide";
 
-const PublicNavbar = () => {
+const PublicNavbar = ({ isAuthenticated }) => {
+  console.log("navbar: " + isAuthenticated);
   return (
     <nav className="autohide navbar navbar-expand-lg bg-white">
       <div className="container-fluid navbar-container">
-        <Link className="navbar-brand abs nav-bar-title" to="/">
-          AshoDaanKori
-        </Link>
+        <NavHashLink className="navbar-brand abs nav-bar-title" to="/">
+          {isAuthenticated ? "AshoDaanKori" : "AshoDaanKori"}
+        </NavHashLink>
         <button
           className="navbar-toggler ms-auto custom-toggler"
           type="button"

@@ -39,22 +39,41 @@ function genPassword(password) {
   };
 }
 
-async function sendVerificationEmail(to, userId, verification_token) {
+async function sendVerificationEmail(to, subject, text) {
   var mailOptions = {
     from: process.env.ADMIN_EMAIL,
     to: to,
-    subject: "Verify your email | Fund Raiser",
-    text: `Please click on the link to verify yourself: ${process.env.SERVER_HOST}/verify/${verification_token}/${userId}`,
+    subject: subject,
+    text: text,
   };
 
   try {
     const info = await transporter.sendMail(mailOptions);
     log("Email sent: " + info.response);
-    return { status: 1 };
+    return {
+      status: 1,
+      message: "A verification email has been sent. Please check your email.",
+    };
   } catch (error) {
-    log(error);
-    return { status: -1 };
+    log(error.message);
+    return { status: -1, message: error.message };
   }
+}
+
+function generateHashPassword(password) {
+  const saltHash = genPassword(password);
+  const salt = saltHash.salt;
+  const hash = saltHash.hash;
+  return { salt, hash };
+}
+
+function clearCookies(res) {
+  res.clearCookie("cookiename");
+  res.clearCookie("userEmail");
+  res.clearCookie("connect.sid");
+  res.clearCookie("userId");
+  res.clearCookie("registrationStatus");
+  log("cookies cleared");
 }
 
 function respond(status, message) {
@@ -65,4 +84,11 @@ function log(msg) {
   console.log(msg);
 }
 
-export { genPassword, validPassword, sendVerificationEmail, respond };
+export {
+  genPassword,
+  validPassword,
+  sendVerificationEmail,
+  respond,
+  clearCookies,
+  generateHashPassword,
+};

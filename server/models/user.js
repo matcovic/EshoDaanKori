@@ -35,7 +35,7 @@ const userSchema = new Schema(
     verified: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     token: {
       type: String,
@@ -54,6 +54,16 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
+/**
+ * the following operation creates an index on the user collection's 
+ * createdAt field and specifies the expireAfterSeconds value of 3600 
+ * to set the expiration time to be one hour after the time specified by createdAt.
+ */
+/* userSchema.index(
+  { "createdAt": 1 },
+  { expireAfterSeconds: 7200, partialFilterExpression: { verified: false } }
+);
+ */
 /**
  * @param name the singular/plural name of the Model
  * @param the schema associated with the model
