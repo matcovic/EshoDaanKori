@@ -94,7 +94,7 @@ const SignIn = ({ isAuthenticated }) => {
                 />
               </div>
               <div className="signIn-forgot-text">
-                <a href="/">FORGOT YOUR PASSWORD?</a>
+                <Link to="/forgot-password">FORGOT YOUR PASSWORD?</Link>
               </div>
               <div>
                 <button onClick={onSignInClick} className=" btn btn-type1">
@@ -105,7 +105,6 @@ const SignIn = ({ isAuthenticated }) => {
             <div className="signIn-dont-text">
               <span>DON’T HAVE AN ACCOUNT?</span> <a href="/sign-up">SIGN UP</a>
             </div>
-            <Link to="/forgot-password">FORGOT YOUR PASSWORD?</Link>
           </div>
         </div>
       </section>

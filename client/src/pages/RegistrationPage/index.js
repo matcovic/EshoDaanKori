@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Input } from "semantic-ui-react";
 import "../SignInPage/SignIn.css";
-import threeDots from "../../assets/icons/ico-3dots3.svg";
 import {
   CalendarIcon,
   NidIcon,
