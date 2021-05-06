@@ -23,7 +23,7 @@ function onSignOutClick(event) {
 }
 
 const PrivateNavbar = () => {
-  
+
   const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
@@ -46,12 +46,25 @@ const PrivateNavbar = () => {
       isMounted = false;
     };
   }, []);
+  /*
+  const fetchContent = async () => {
+    const { data } = await axios.get("/api/data/user-profile", {
+      withCredentials: true,
+    });
+    if (data.status === -1) {
+      console.log(data.message);
+    } else {
+      console.log(data);
+      setUserInfo(data);
+    }
+  };
+  fetchContent(); */
 
   return (
     <nav className="autohide navbar navbar-expand-lg bg-white private-navbar">
       <div className="container-fluid navbar-container">
         <NavHashLink className="navbar-brand abs nav-bar-title" to="/">
-         AshoDaanKori
+          AshoDaanKori
         </NavHashLink>
         <button
           className="navbar-toggler ms-auto custom-toggler"
@@ -83,6 +96,7 @@ const PrivateNavbar = () => {
               data-bs-toggle="dropdown"
               data-bs-display="static"
               aria-expanded="false"
+              style={{ padding: "0" }}
             >
               <i aria-hidden="true" className="user circle huge icon"></i>
             </button>
@@ -102,7 +116,6 @@ const PrivateNavbar = () => {
               <li>
                 <hr className="dropdown-divider" />{" "}
               </li>
-
               <li>
                 <Link className="dropdown-item" to="/account">
                   Account Settings
