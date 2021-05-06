@@ -39,7 +39,7 @@ const MobileBankingOptions = [
 
 const PaymentOptions = ({ isAuthenticated }) => {
   if (isAuthenticated) {
-    return <Redirect to="/" />;
+    return <Redirect to="/access-denied" />;
   }
 
   return (
