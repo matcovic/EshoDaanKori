@@ -1,3 +1,6 @@
+import React from "react";
+import { Redirect } from "react-router";
+import { Checkbox, Form, Input, Select, TextArea } from "semantic-ui-react";
 import React, { useEffect } from "react";
 import {
   Button,
@@ -11,73 +14,17 @@ import {
 import threeDots from "../../assets/icons/ico-3dots2.svg";
 import "./newCampaign.css";
 
+
 const options = [
   { key: "m", text: "Male", value: "male" },
   { key: "f", text: "Female", value: "female" },
   { key: "o", text: "Other", value: "other" },
 ];
 
-const NewCampaign = () => {
-  // ------- Effect Hook-------
-  useEffect(() => {
-    // ---------------java script for cover image----------------------
-    document.querySelectorAll("#userCoverPhoto").forEach((inputElement) => {
-      const dropZoneElement = inputElement.closest(".btn-type5");
-
-      dropZoneElement.addEventListener("click", (e) => {
-        inputElement.click();
-      });
-
-      inputElement.addEventListener("change", (e) => {
-        if (inputElement.files.length) {
-          updateThumbnail(dropZoneElement, inputElement.files[0]);
-        }
-      });
-
-      dropZoneElement.addEventListener("dragover", (e) => {
-        e.preventDefault();
-      });
-
-      dropZoneElement.addEventListener("drop", (e) => {
-        e.preventDefault();
-        if (e.dataTransfer.files.length) {
-          inputElement.files = e.dataTransfer.files;
-          updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
-        }
-        // console.log(e.dataTransfer.files);
-      });
-    });
-
-    // ---------------java script for aditional image----------------------
-
-    document.querySelectorAll("#userOptionalPhotos").forEach((inputElement) => {
-      const dropZoneElement = inputElement.closest(".btn-type5");
-
-      dropZoneElement.addEventListener("click", (e) => {
-        inputElement.click();
-      });
-
-      inputElement.addEventListener("change", (e) => {
-        if (inputElement.files.length) {
-          updateOptionalThumbnail(dropZoneElement, inputElement.files);
-        }
-      });
-
-      dropZoneElement.addEventListener("dragover", (e) => {
-        e.preventDefault();
-      });
-
-      dropZoneElement.addEventListener("drop", (e) => {
-        e.preventDefault();
-        if (e.dataTransfer.files.length) {
-          inputElement.files = e.dataTransfer.files;
-          updateOptionalThumbnail(dropZoneElement, e.dataTransfer.files);
-        }
-        console.log(e.dataTransfer.files);
-      });
-    });
-  });
-
+const NewCampaign = ({isAuthenticated}) => {
+  if (!isAuthenticated) {
+    return <Redirect to="/" />;
+  }
   return (
     <div className="body-background">
       <section id="campaign-section">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input } from "semantic-ui-react";
 import "../SignInPage/SignIn.css";
 import threeDots from "../../assets/icons/ico-3dots1.svg";
@@ -6,11 +6,15 @@ import { EmailIcon, KeyIcon } from "../../assets/assets.js";
 import axios from "axios";
 import { Redirect } from "react-router";
 
-const SignUp = ({ isAuthenticated }) => {
+const SignUp = ({ isAuthenticated, registrationStatus }) => {
   const [form, setFormContent] = useState({});
 
   if (isAuthenticated) {
     return <Redirect to="/" />;
+  }
+
+  if (!registrationStatus) {
+    return <Redirect to="/registration" />;
   }
 
   function onSignUpClick(event) {
@@ -32,6 +36,7 @@ const SignUp = ({ isAuthenticated }) => {
 
     registerUser();
   }
+  
 
   function handleChange(event) {
     const { value, name } = event.target;

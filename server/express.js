@@ -49,8 +49,8 @@ app.use("/api", landingPageRouter);
 app.use("/api", testRouter);
 
 app.use("/api/auth", authRouter);
-app.use(authRouter);
+app.use("/verify", authRouter);
 
-app.use("/api/data", dataRouter)
+app.use("/api/data", dataRouter);
 
 export default app;
