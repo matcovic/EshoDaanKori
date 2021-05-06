@@ -11,12 +11,12 @@ import {
 import axios from "axios";
 import { Redirect } from "react-router";
 
-const Registration = ({isAuthenticated}) => {
+const Registration = ({ isAuthenticated }) => {
   const [form, setFormContent] = useState({});
 
   if (isAuthenticated) {
     return <Redirect to="/" />;
-  } 
+  }
 
   function onContinueClick(event) {
     event.preventDefault();
@@ -130,10 +130,6 @@ const Registration = ({isAuthenticated}) => {
                 </button>
               </div>
             </form>
-
-            <i>
-              <img alt="three-dots" className="three-dots" src={threeDots} />
-            </i>
           </div>
         </div>
       </section>

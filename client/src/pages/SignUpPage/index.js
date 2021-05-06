@@ -104,9 +104,10 @@ const SignUp = ({ isAuthenticated }) => {
               </div>
             </form>
 
-            <i>
-              <img className="three-dots" alt="three dots" src={threeDots} />
-            </i>
+            <div className="signIn-dont-text">
+              <span>Already have an account?</span>
+              <a href="/sign-in">SIGN IN</a>
+            </div>
           </div>
         </div>
       </section>
