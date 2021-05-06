@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { Input } from "semantic-ui-react";
 import "../SignInPage/SignIn.css";
 import threeDots from "../../assets/icons/ico-3dots3.svg";
@@ -143,10 +143,6 @@ const Registration = ({ isAuthenticated, registrationStatus }) => {
                 </button>
               </div>
             </form>
-
-            <i>
-              <img alt="three-dots" className="three-dots" src={threeDots} />
-            </i>
           </div>
         </div>
       </section>
