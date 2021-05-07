@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router";
 import {
-  Button,
-  Checkbox,
   Form,
   Input,
   Radio,
@@ -20,78 +18,58 @@ const options = [
   { key: "o", text: "Other", value: "other" },
 ];
 
-const NewCampaign = ({ isAuthenticated }) => {
-  const [value, setValue] = useState(null);
+var coverImage;
+var optionalImages = [];
+
+const NewCampaign = (props) => {
+  console.log(props);
+  if (!(props.location && props.location.state)) {
+    console.log("unauthorized. Redirecting to signing page...");
+    window.location = "/";
+  }
+
+  const [fundraisingFor, setFundraisingFor] = useState(null);
+  const [form, setFormContent] = useState({});
+  const [redirect, setRedirect] = useState(false);
+
+  // handles radio button changes
   const handleChange = (event, { value }) => {
-    setValue(value);
-    console.log(value);
+    setFundraisingFor(value);
   };
 
-  const [form, setFormContent] = useState({});
-
+  // handles input field changes
   function onChange(event) {
     const { value, name } = event.target;
-    console.log("hello");
+    console.log(value + " " + name);
 
-    setFormContent((prevContent) => {
-      if (name === "title") {
-        return {
-          title: value,
-          location: prevContent.location,
-          fundraisingGoal: prevContent.fundraisingGoal,
-          story: prevContent.story,
-          coverPhoto: prevContent.coverPhoto,
-          optionalPhotos: prevContent.optionalPhotos,
-        };
-      } else if (name === "location") {
-        return {
-          title: prevContent.title,
-          location: value,
-          fundraisingGoal: prevContent.fundraisingGoal,
-          story: prevContent.story,
-          coverPhoto: prevContent.coverPhoto,
-          optionalPhotos: prevContent.optionalPhotos,
-        };
-      } else if (name === "fundraisingGoal") {
-        return {
-          title: prevContent.title,
-          location: prevContent.location,
-          fundraisingGoal: value,
-          story: prevContent.story,
-          coverPhoto: prevContent.coverPhoto,
-          optionalPhotos: prevContent.optionalPhotos,
-        };
-      } else if (name === "story") {
-        return {
-          title: prevContent.title,
-          location: prevContent.location,
-          fundraisingGoal: prevContent.fundraisingGoal,
-          story: value,
-          coverPhoto: prevContent.coverPhoto,
-          optionalPhotos: prevContent.optionalPhotos,
-        };
-      } else if (name === "coverPhoto") {
-        return {
-          title: prevContent.title,
-          location: prevContent.location,
-          fundraisingGoal: prevContent.fundraisingGoal,
-          story: prevContent.story,
-          coverPhoto: event.target.files[0],
-          optionalPhotos: prevContent.optionalPhotos,
-        };
-      } else if (name === "optionalPhotos") {
-        console.log("previousContent: ");
-        console.log(prevContent.optionalPhotos);
-        return {
-          title: prevContent.title,
-          location: prevContent.location,
-          fundraisingGoal: prevContent.fundraisingGoal,
-          story: prevContent.story,
-          coverPhoto: prevContent.coverPhoto,
-          optionalPhotos: event.target.files,
-        };
-      }
+    setFormContent((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  }
+
+  // handles image upload changes
+  function onImageChange(event) {
+    const { name } = event.target;
+
+    if (name === "coverPhoto") {
+      coverImage = event.target.files[0];
+      console.log(coverImage);
+    } else if (name === "optionalPhotos") {
+      optionalImages = parseFiles(event.target.files);
+    }
+  }
+
+  function parseFiles(files) {
+    Array.from(files).forEach((file) => {
+      console.log(`pushing file::: files size-${files.length}`);
+      optionalImages.push(file);
     });
+
+    console.log("new content");
+    console.log(optionalImages);
+
+    return optionalImages;
   }
 
   function onButtonClick(event) {
@@ -99,11 +77,15 @@ const NewCampaign = ({ isAuthenticated }) => {
     //  form.coverPhoto = coverPhoto;
     //  form.otherImages = images;
     console.log("on continue click");
+    form.coverPhoto = coverImage;
+    form.optionalPhotos = optionalImages;
+    form.fundraisingFor = fundraisingFor;
     console.log(form);
-    console.log("iother mages: ");
+    setRedirect(true);
 
+    /* 
     //  console.log(images);
-    /*   const registerUser = async () => {
+       const registerUser = async () => {
       const { data } = await axios.post("/api/auth/register-info", form);
       if (data.status === 1) {
         console.log(data.message);
@@ -113,7 +95,7 @@ const NewCampaign = ({ isAuthenticated }) => {
       }
     };
 
-    registerUser(); */
+    registerUser();  */
   }
 
   useEffect(() => {
@@ -229,8 +211,15 @@ const NewCampaign = ({ isAuthenticated }) => {
     }
   }
 
-  if (!isAuthenticated) {
-    // return <Redirect to="/" />;
+  if (redirect) {
+    return (
+      <Redirect
+        to={{
+          pathname: "/payment",
+          state: form,
+        }}
+      />
+    );
   }
 
   return (
@@ -265,6 +254,8 @@ const NewCampaign = ({ isAuthenticated }) => {
                   control={Select}
                   label="What is the fundraiser for?"
                   placeholder="Choose a category"
+                  onChange={onChange}
+                  name="category"
                   options={options}
                 />
 
@@ -294,7 +285,7 @@ const NewCampaign = ({ isAuthenticated }) => {
                   <input
                     type="file"
                     name="coverPhoto"
-                    onChange={onChange}
+                    onChange={onImageChange}
                     className="picture-upload"
                     id="userCoverPhoto"
                   />
@@ -315,7 +306,7 @@ const NewCampaign = ({ isAuthenticated }) => {
                   <input
                     type="file"
                     multiple="multiple"
-                    onChange={onChange}
+                    onChange={onImageChange}
                     className="picture-upload"
                     name="optionalPhotos"
                     id="userOptionalPhotos"
@@ -340,7 +331,7 @@ const NewCampaign = ({ isAuthenticated }) => {
                     label="Yourself"
                     name="radioGroup"
                     value="Yourself"
-                    checked={value === "Yourself"}
+                    checked={fundraisingFor === "Yourself"}
                     onChange={handleChange}
                   />
                 </Form.Field>
@@ -349,7 +340,7 @@ const NewCampaign = ({ isAuthenticated }) => {
                     label="Someone else"
                     name="radioGroup"
                     value="Someone else"
-                    checked={value === "Someone else"}
+                    checked={fundraisingFor === "Someone else"}
                     onChange={handleChange}
                   />
                 </Form.Field>

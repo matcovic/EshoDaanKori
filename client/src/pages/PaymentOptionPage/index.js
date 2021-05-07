@@ -38,11 +38,18 @@ const MobileBankingOptions = [
   },
 ];
 
-const PaymentOptions = ({ isAuthenticated }) => {
-  if (!isAuthenticated) {
+const PaymentOptions = (props) => {
+  /*   if (!isAuthenticated) {
     return <Redirect to="/access-denied" />;
   }
+ */
 
+  if (!(props.location && props.location.state)) {
+    console.log("unauthorized. Redirecting to signing page...");
+    window.location = "/";
+  }
+
+  console.log(props.location);
   function getPhoneNumbers(e) {
     console.log(e.target.value);
   }
