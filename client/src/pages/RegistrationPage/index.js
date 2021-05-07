@@ -11,36 +11,44 @@ import axios from "axios";
 import { Redirect } from "react-router";
 import LoadingBar from "react-top-loading-bar";
 
-const Registration = ({ isAuthenticated, registrationStatus }) => {
-  const ref = useRef(null);
-  console.log(isAuthenticated);
-
+const Registration = (props) => {
   const [form, setFormContent] = useState({});
 
-  if (isAuthenticated) {
-    return <Redirect to="/" />;
-  }
+  const ref = useRef(null); // for loading bar
+  console.log("props: ");
+  console.log(props);
 
-  if (registrationStatus) {
-    return <Redirect to="/sign-up" />;
+  if (!(props.location && props.location.state)) {
+    console.log("unauthorized. Redirecting to signing page...");
+    return <Redirect to="/sign-in" />;
   }
+  const { username, password, confirmPassword } =
+    (props.location && props.location.state) || {};
 
   function onContinueClick(event) {
     event.preventDefault();
-    setFormContent(form);
+
+    form.username = username;
+    form.password = password;
+    form.confirmPassword = confirmPassword;
+
     console.log("on continue click");
     console.log(form);
     ref.current.continuousStart();
 
     const registerUser = async () => {
-      const { data } = await axios.post("/api/auth/register-info", form);
+      const { data } = await axios.post("/api/auth/register-user", form);
       if (data.status === 1) {
         ref.current.complete();
         console.log(data.message);
         window.location.replace("/registration-complete");
+        // return <Redirect to="/registration-complete" />;
       } else {
         console.log(data.message);
         ref.current.complete();
+        window.location.replace("/error?");
+
+        // return <Redirect to="/error?" />;
       }
     };
 
@@ -50,37 +58,10 @@ const Registration = ({ isAuthenticated, registrationStatus }) => {
   function handleChange(event) {
     const { value, name } = event.target;
 
-    setFormContent((prevContent) => {
-      if (name === "fullName") {
-        return {
-          fullName: value,
-          phoneNumber: prevContent.phoneNumber,
-          dob: prevContent.dob,
-          nid: prevContent.nid,
-        };
-      } else if (name === "phoneNumber") {
-        return {
-          fullName: prevContent.fullName,
-          phoneNumber: value,
-          dob: prevContent.dob,
-          nid: prevContent.nid,
-        };
-      } else if (name === "dob") {
-        return {
-          fullName: prevContent.fullName,
-          phoneNumber: prevContent.phoneNumber,
-          dob: value,
-          nid: prevContent.nid,
-        };
-      } else if (name === "nid") {
-        return {
-          fullName: prevContent.fullName,
-          phoneNumber: prevContent.phoneNumber,
-          dob: prevContent.dob,
-          nid: value,
-        };
-      }
-    });
+    setFormContent((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   }
 
   return (
