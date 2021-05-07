@@ -1,10 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
   try {
     var el_autohide = document.querySelector(".autohide");
-
     // add padding-top to bady (if necessary)
     var navbar_height = document.querySelector(".navbar").offsetHeight;
-    //    var navbar_height = 50;
     console.log(`navbar height: ${navbar_height}`);
 
     document.body.style.paddingTop = navbar_height + "px";

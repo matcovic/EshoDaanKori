@@ -3,7 +3,7 @@ import { Redirect } from "react-router";
 import "../SignInPage/SignIn.css";
 import "./errorPage.css";
 
-const Error = () => {
+const Error = (props) => {
   return (
     <div className="background-signup">
       <section id="signIn-section">
