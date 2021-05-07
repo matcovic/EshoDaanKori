@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Checkbox,
@@ -18,6 +18,12 @@ const options = [
 ];
 
 const NewCampaign = () => {
+  const [value, setValue] = useState(null);
+  const handleChange = (event, { value }) => {
+    setValue(value);
+    console.log(value);
+  };
+
   // ------- Effect Hook-------
   useEffect(() => {
     // ---------------java script for cover image----------------------
@@ -163,10 +169,29 @@ const NewCampaign = () => {
                   </div>
                 </div>
               </Form.Field>
+
               <Form.Group>
-                <label>who are you fundraising for?</label>
-                <Form.Field control={Checkbox} label="Yourself" />
-                <Form.Field control={Checkbox} label="Someone else" />
+                <Form.Field>
+                  <label>Who are you fundraising for?</label>
+                </Form.Field>
+                <Form.Field>
+                  <Radio
+                    label="Yourself"
+                    name="radioGroup"
+                    value="Yourself"
+                    checked={value === "Yourself"}
+                    onChange={handleChange}
+                  />
+                </Form.Field>
+                <Form.Field>
+                  <Radio
+                    label="Someone else"
+                    name="radioGroup"
+                    value="Someone else"
+                    checked={value === "Someone else"}
+                    onChange={handleChange}
+                  />
+                </Form.Field>
               </Form.Group>
               <Form.Field>
                 <button className="btn btn-type1">
