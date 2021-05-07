@@ -4,6 +4,7 @@ import LocalStrategy from "passport-local";
 import { validPassword } from "../util/util.js";
 import { createTransport } from "nodemailer";
 import { config } from "dotenv";
+import cloudinary from "cloudinary";
 
 if (process.env.NODE_ENV !== "production") {
   config();
@@ -75,4 +76,10 @@ var transporter = createTransport({
   },
 });
 
-export { transporter, passport };
+cloudinary.config({
+  cloud_name: "pixieum-studios",
+  api_key: "785915163718651",
+  api_secret: "dc4c8-evSVqEKnev6JsZ1nkAZ74",
+});
+
+export { transporter, passport, cloudinary };

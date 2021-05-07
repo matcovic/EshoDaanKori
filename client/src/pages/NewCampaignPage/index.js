@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router";
-import {
-  Form,
-  Input,
-  Radio,
-  Select,
-  TextArea,
-} from "semantic-ui-react";
+import { Form, Input, Radio, Select, TextArea } from "semantic-ui-react";
 import threeDots from "../../assets/icons/ico-3dots2.svg";
+import { convertMultipleImagesToB64, getBase64 } from "../../util/util";
 import "./newCampaign.css";
 
 // https://stackoverflow.com/questions/64208697/uploading-a-file-using-only-the-input-field-react-hook-form
@@ -72,15 +67,13 @@ const NewCampaign = (props) => {
     return optionalImages;
   }
 
-  function onButtonClick(event) {
+  async function onButtonClick(event) {
     event.preventDefault();
-    //  form.coverPhoto = coverPhoto;
-    //  form.otherImages = images;
     console.log("on continue click");
-    form.coverPhoto = coverImage;
-    form.optionalPhotos = optionalImages;
     form.fundraisingFor = fundraisingFor;
     console.log(form);
+    form.coverPhoto = await getBase64(coverImage);
+    form.optionalPhotos = await convertMultipleImagesToB64(optionalImages);
     setRedirect(true);
 
     /* 

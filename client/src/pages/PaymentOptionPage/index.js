@@ -7,6 +7,8 @@ import Rocket from "../../assets/icons/ico-rocket.svg";
 import NumberLists from "./components/ListofNumbers";
 import twoDots from "../../assets/icons/ico-2dots2.svg";
 import { Redirect } from "react-router";
+import axios from "axios";
+import { getBase64 } from "../../util/util";
 import { useState } from "react";
 
 const MobileBankingOptions = [
@@ -44,9 +46,40 @@ const PaymentOptions = (props) => {
   }
  */
 
+  const [payment, setPayment] = useState("");
+  console.log(props.location);
+
   if (!(props.location && props.location.state)) {
     console.log("unauthorized. Redirecting to signing page...");
-    // window.location = "/";
+    window.location = "/";
+
+  }
+
+  function onClick(event) {
+    event.preventDefault();
+    setPayment("")
+    console.log("start campaign clicked");
+    console.log(props.location.state);
+
+    const startCampaign = async () => {
+      const { data } = await axios.post(
+        "/api/campaign/new-campaign",
+        props.location.state
+      );
+
+      if (data.status === 1) {
+        console.log(data.message);
+        // window.location.replace("/registration-complete");
+        // return <Redirect to="/registration-complete" />;
+      } else {
+        console.log(data.message);
+        //window.location.replace("/error?");
+
+        // return <Redirect to="/error?" />;
+      }
+    };
+
+    startCampaign();
   }
 
   // const [number, setNumbers] = useState();
@@ -149,11 +182,17 @@ const PaymentOptions = (props) => {
                 it from your profile
               </p>
               <form>
-                <button className="btn btn-type1">START CAMPAIGN</button>
+                <button onClick={onClick} className="btn btn-type1">
+                  START CAMPAIGN
+                </button>
               </form>
             </div>
             <i>
-              <img className="three-dots" src={twoDots} />
+              <img
+                alt="start campaign button"
+                className="three-dots"
+                src={twoDots}
+              />
             </i>
           </div>
         </div>

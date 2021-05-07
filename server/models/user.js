@@ -1,17 +1,10 @@
 import mongoose from "mongoose";
+import imageSchema from "./image.js";
 
 //https://www.geeksforgeeks.org/upload-and-retrieve-image-on-mongodb-using-mongoose/
 
 const Schema = mongoose.Schema;
 
-var imageSchema = new Schema({
-  name: String,
-  desc: String,
-  img: {
-    data: Buffer,
-    contentType: String,
-  },
-});
 
 // Creates simple schema for a User.  The hash
 // and salt are derived from the user's given password when they register
