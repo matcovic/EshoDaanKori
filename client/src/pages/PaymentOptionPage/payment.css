@@ -152,6 +152,9 @@
   height: 33px;
   padding: 0;
 }
+.ui.button:focus {
+  background-color: var(--dove-gray);
+}
 .delet-icon {
   width: 16.8px;
   height: 16.8px;
