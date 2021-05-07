@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "semantic-ui-css/semantic.min.css";
 import "./App.css";
-import PublicNavbar from "./components/Navbar/PublicNavbar";
-import PrivateNavbar from "./components/Navbar/PrivateNavbar";
+import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import LandingPage from "./pages/LandingPage";
 import SignIn from "./pages/SignInPage";
@@ -72,11 +71,7 @@ function App() {
               background="#00AD7C"
               loaderColor="#B7FE81"
             />
-            {isAuthenticated ? (
-              <PrivateNavbar />
-            ) : (
-              <PublicNavbar isAuthenticated={isAuthenticated} />
-            )}
+            {<Navbar isAuthenticated={isAuthenticated} />}
             <Switch>
               <Route
                 path="/"
