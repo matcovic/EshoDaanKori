@@ -7,6 +7,7 @@ import Rocket from "../../assets/icons/ico-rocket.svg";
 import NumberLists from "./components/ListofNumbers";
 import twoDots from "../../assets/icons/ico-2dots2.svg";
 import { Redirect } from "react-router";
+import { useState } from "react";
 
 const MobileBankingOptions = [
   {
@@ -42,6 +43,10 @@ const PaymentOptions = ({ isAuthenticated }) => {
     return <Redirect to="/access-denied" />;
   }
 
+  function getPhoneNumbers(e) {
+    console.log(e.target.value);
+  }
+
   return (
     <div className="payment-background">
       <section id="payment-section">
@@ -66,6 +71,7 @@ const PaymentOptions = ({ isAuthenticated }) => {
                 <Input
                   className="input-length"
                   placeholder="Enter your number. Ex- 19XXXXXXXX"
+                  onChange={getPhoneNumbers}
                 />
               </div>
               <button className="btn btn-type1">ADD MORE</button>
