@@ -213,3 +213,7 @@ element.style {
   border-radius: 10px;
   background-size: cover;
 }
+
+.drag-drop-text {
+  margin-top: 35px;
+}

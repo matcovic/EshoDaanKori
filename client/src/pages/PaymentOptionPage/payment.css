@@ -84,6 +84,18 @@
     width: 90%;
   }
 }
+@media screen and (max-width: 1076px) {
+  .ui.dropdown > .text > .image,
+  .ui.dropdown > .text > img {
+    padding: 0 !important;
+    margin-left: 2px;
+    padding-top: 5px;
+  }
+}
+
+.ui.dropdown > .dropdown.icon:before {
+  color: var(--quill-gray) !important;
+}
 
 #payment-section .input-length {
   width: 80%;
@@ -153,7 +165,7 @@
   height: 1.5em;
 }
 .campaign-start .btn-type1 {
-  background-color: var(--alien-armpit) !important;
+  background-color: var(--dove-gray) !important;
 }
 .campaign-start {
   margin-top: 20px;

@@ -1,7 +1,7 @@
 import User from "../models/user.js";
 import { genPassword } from "../util/util.js";
 
-async function createNewUser(form) {
+async function createNewUser(form, token) {
   const saltHash = genPassword(form.password);
   const salt = saltHash.salt;
   const hash = saltHash.hash;
@@ -9,10 +9,14 @@ async function createNewUser(form) {
     username: form.username,
     hash: hash,
     salt: salt,
+    fullName: form.fullName,
+    phoneNumber: form.phoneNumber,
+    dob: form.dob,
+    nid: form.nid,
+    token: token,
   });
 
   const user = await newUser.save();
-  log(user);
   return user;
 }
 
@@ -74,7 +78,10 @@ async function verifyUser(id, token) {
       }
     } else {
       log("token didnt match!!");
-      return { status: -1, message: "Unauthorized access. Token didn't match!" };
+      return {
+        status: -1,
+        message: "Unauthorized access. Token didn't match!",
+      };
     }
   } else {
     log("no user found!");

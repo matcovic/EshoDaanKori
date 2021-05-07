@@ -67,14 +67,6 @@ function generateHashPassword(password) {
   return { salt, hash };
 }
 
-function clearCookies(res) {
-  res.clearCookie("cookiename");
-  res.clearCookie("userEmail");
-  res.clearCookie("connect.sid");
-  res.clearCookie("userId");
-  res.clearCookie("registrationStatus");
-  log("cookies cleared");
-}
 
 function respond(status, message) {
   return { status, message };
@@ -89,6 +81,5 @@ export {
   validPassword,
   sendVerificationEmail,
   respond,
-  clearCookies,
   generateHashPassword,
 };

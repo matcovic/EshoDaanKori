@@ -2,12 +2,10 @@ import express from "express";
 import {
   registerController,
   authenticationController,
-  registerInfoController,
   verificationController,
   loginSuccessController,
   loginFailureController,
   signOutController,
-  registrationStatusController,
   resetPasswordController,
   forgotPasswordController,
 } from "../controllers/auth.js";
@@ -15,7 +13,8 @@ import { passport } from "../config/config.js";
 
 const authRouter = express.Router();
 
-authRouter.post("/register-email", registerController);
+authRouter.post("/register-user", registerController);
+
 authRouter.post(
   "/login-email",
   passport.authenticate("local", {
@@ -24,11 +23,9 @@ authRouter.post(
   })
 );
 authRouter.get("/is-authenticated", authenticationController);
-authRouter.post("/register-info", registerInfoController);
 authRouter.post("/sign-out", signOutController);
 authRouter.get("/login-success", loginSuccessController);
 authRouter.get("/login-failure", loginFailureController);
-authRouter.get("/registration-status", registrationStatusController);
 authRouter.post("/reset-password-link", forgotPasswordController);
 authRouter.post("/reset-password", resetPasswordController);
 
