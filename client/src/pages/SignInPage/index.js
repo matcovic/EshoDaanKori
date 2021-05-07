@@ -37,19 +37,10 @@ const SignIn = ({ isAuthenticated }) => {
   function handleChange(event) {
     const { value, name } = event.target;
 
-    setFormContent((prevContent) => {
-      if (name === "username") {
-        return {
-          username: value,
-          password: prevContent.password,
-        };
-      } else if (name === "password") {
-        return {
-          username: prevContent.username,
-          password: value,
-        };
-      }
-    });
+    setFormContent((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   }
 
   return (
@@ -103,7 +94,8 @@ const SignIn = ({ isAuthenticated }) => {
               </div>
             </form>
             <div className="signIn-dont-text">
-              <span>DON’T HAVE AN ACCOUNT?</span> <a href="/sign-up">SIGN UP</a>
+              <span>DON’T HAVE AN ACCOUNT?</span>{" "}
+              <Link to="/sign-up">SIGN UP</Link>
             </div>
           </div>
         </div>

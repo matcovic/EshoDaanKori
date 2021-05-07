@@ -28,6 +28,9 @@ const ResetPassword = ({ isAuthenticated }) => {
         console.log(data.message);
         window.location.replace(data.redirectUrl);
       } else {
+        if (data.status === -2) {
+          window.location.replace("/");
+        }
         console.log(data.status);
         console.log(data.message);
       }

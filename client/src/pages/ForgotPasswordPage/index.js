@@ -5,8 +5,14 @@ import { EmailIcon } from "../../assets/assets.js";
 import { Redirect } from "react-router";
 import axios from "axios";
 
-const ForgotPassword = ({ isAuthenticated }) => {
+const ForgotPassword = (props) => {
   const [email, setEmail] = useState("");
+  console.log(props)
+
+  if (!(props.location && props.location.state)) {
+    console.log("unauthorized. Redirecting to signing page...");
+   // return <Redirect to="/sign-in" />;
+  }
 
   function onSendClick(event) {
     event.preventDefault();
@@ -31,9 +37,7 @@ const ForgotPassword = ({ isAuthenticated }) => {
     setEmail(value);
   }
 
-  if (isAuthenticated) {
-    return <Redirect to="/" />;
-  }
+ 
   return (
     <div className="background-signup">
       <section id="signIn-section">
