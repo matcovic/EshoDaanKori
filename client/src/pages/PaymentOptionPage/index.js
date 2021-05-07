@@ -46,18 +46,15 @@ const PaymentOptions = (props) => {
   }
  */
 
-  const [payment, setPayment] = useState("");
   console.log(props.location);
 
   if (!(props.location && props.location.state)) {
     console.log("unauthorized. Redirecting to signing page...");
     window.location = "/";
-
   }
 
   function onClick(event) {
     event.preventDefault();
-    setPayment("")
     console.log("start campaign clicked");
     console.log(props.location.state);
 
