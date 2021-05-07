@@ -7,7 +7,7 @@ const NumberLists = (props) => {
   return (
     <List.Item>
       <List.Content floated="right">
-        <Button>
+        <Button onClick={props.OnClickFunction}>
           <img className="delet-icon" src={DeletIcon} alt="delete" />
         </Button>
       </List.Content>

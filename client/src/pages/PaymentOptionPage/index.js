@@ -46,12 +46,50 @@ const PaymentOptions = (props) => {
 
   if (!(props.location && props.location.state)) {
     console.log("unauthorized. Redirecting to signing page...");
-    window.location = "/";
+    // window.location = "/";
   }
 
-  console.log(props.location);
-  function getPhoneNumbers(e) {
-    console.log(e.target.value);
+  // const [number, setNumbers] = useState();
+  const [paymentOptionsNumb, setPaymentOptions] = useState([]);
+  const [paymentIconKey, setPaymentIcon] = useState("Bkash");
+  const [inputField, setInputField] = useState("");
+  //-----------------delete Number list Function---------------
+  function deletNumber(index, e) {
+    e.preventDefault();
+    const newList = paymentOptionsNumb.filter((item, indx) => indx !== index);
+    setPaymentOptions(newList);
+  }
+
+  // console.log(props.location);
+  function onChange(e) {
+    setInputField(e.target.value);
+  }
+
+  function addOnClick(event) {
+    event.preventDefault();
+    if (inputField !== "") {
+      var newList;
+      if (paymentIconKey === "Bkash") {
+        newList = paymentOptionsNumb.concat({ numb: inputField, ico: Bkash });
+      }
+      if (paymentIconKey === "Nagad") {
+        newList = paymentOptionsNumb.concat({ numb: inputField, ico: Nagad });
+      }
+      if (paymentIconKey === "Rocket") {
+        newList = paymentOptionsNumb.concat({ numb: inputField, ico: Rocket });
+      }
+
+      setPaymentOptions(newList);
+      console.log(paymentOptionsNumb);
+      console.log(paymentIconKey);
+
+      setInputField("");
+    }
+  }
+
+  function dropDownSelect(e, data) {
+    console.log("Dropdown:" + data.value);
+    setPaymentIcon(data.value);
   }
 
   return (
@@ -73,23 +111,35 @@ const PaymentOptions = (props) => {
                     inline
                     options={MobileBankingOptions}
                     defaultValue={MobileBankingOptions[0].value}
+                    onChange={dropDownSelect}
                   />
                 </span>
                 <Input
+                  value={inputField}
                   className="input-length"
                   placeholder="Enter your number. Ex- 19XXXXXXXX"
-                  onChange={getPhoneNumbers}
+                  onChange={onChange}
+                  required
                 />
               </div>
-              <button className="btn btn-type1">ADD MORE</button>
+              <button onClick={addOnClick} className="btn btn-type1">
+                ADD MORE
+              </button>
             </form>
             <div className="number-list">
               <p>PAYMENT OPTIONS ADDED</p>
               <div className="number-listView">
                 <List verticalAlign="middle">
-                  <NumberLists icon={Bkash} number="012222" />
+                  {paymentOptionsNumb.map((item, index) => (
+                    <NumberLists
+                      OnClickFunction={deletNumber.bind(this, index)}
+                      icon={item.ico}
+                      number={item.numb}
+                    />
+                  ))}
+                  {/* <NumberLists icon={Bkash} number="012222" />
                   <NumberLists icon={Nagad} number="012222" />
-                  <NumberLists icon={Rocket} number="012222" />
+                  <NumberLists icon={Rocket} number="012222" /> */}
                 </List>
               </div>
             </div>
