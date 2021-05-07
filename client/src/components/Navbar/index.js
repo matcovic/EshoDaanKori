@@ -80,12 +80,24 @@ const Navbar = ({ isAuthenticated }) => {
             <div className="collapse navbar-collapse" id="main_nav">
               <ul className="navbar-nav ms-auto">
                 <li className="nav-item active">
-                  <NavHashLink to="/my-fundraisers" className="nav-link">
+                  <NavHashLink
+                    to={{
+                      pathname: "/fundraisers",
+                      state: { status: 1 },
+                    }}
+                    className="nav-link"
+                  >
                     My fundraisers
                   </NavHashLink>
                 </li>
               </ul>
-              <Link to="/start-campaign" className="nav-link navbar-btn">
+              <Link
+                className="nav-link navbar-btn"
+                to={{
+                  pathname: "/start-campaign",
+                  state: { status: 1 },
+                }}
+              >
                 Start a new campaign
               </Link>
 

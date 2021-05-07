@@ -8,7 +8,7 @@ const DiscoverPage = ({ isAuthenticated }) => {
   if (isAuthenticated) {
     return <Redirect to="/" />;
   }
-
+  
   return (
     <section id="discover-section">
       <div className="container-fluid">

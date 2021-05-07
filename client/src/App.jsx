@@ -48,8 +48,8 @@ function App() {
       isMounted = false;
     }; // use effect cleanup to set flag false, if unmounted
   }, []);
-
-  if (!dataChange) {
+  /* 
+   if (!dataChange) {
     return (
       <Loading
         loading={dataChange ? false : true}
@@ -57,7 +57,8 @@ function App() {
         loaderColor="#B7FE81"
       />
     );
-  }
+  } 
+ */
 
   return (
     <Router>
@@ -69,6 +70,7 @@ function App() {
               background="#00AD7C"
               loaderColor="#B7FE81"
             />
+
             {<Navbar isAuthenticated={isAuthenticated} />}
             <Switch>
               <Route
@@ -93,28 +95,18 @@ function App() {
                 exact
                 component={() => <SignUp isAuthenticated={isAuthenticated} />}
               />
-
               <Route path="/registration" exact component={Registration} />
               <Route
                 path="/registration-complete"
                 exact
                 component={RegistrationComplete}
               />
-              <Route
-                exact
-                path="/start-campaign"
-                component={() => (
-                  <NewCampaign isAuthenticated={isAuthenticated} />
-                )}
-              />
+              <Route exact path="/start-campaign" component={NewCampaign} />
               <Route
                 exact
                 path="/payment"
-                component={() => (
-                  <PaymentOptions isAuthenticated={isAuthenticated} />
-                )}
+                render={(props) => <PaymentOptions {...props} />}
               />
-
               <Route
                 exact
                 path="/forgot-password"
@@ -122,7 +114,7 @@ function App() {
                   <ForgotPassword isAuthenticated={isAuthenticated} />
                 )}
               />
-
+              ``
               <Route
                 exact
                 path="/reset-password/:token/:id"
