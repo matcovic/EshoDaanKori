@@ -52,6 +52,7 @@
   vertical-align: middle;
 }
 
+.private-navbar .btn:focus,
 .private-navbar .btn:hover {
   color: var(--btn-hover-color);
 }
