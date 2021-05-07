@@ -200,6 +200,9 @@ element.style {
   border-radius: 10px;
   background-size: cover;
 }
+#campaign-section span {
+  color: var(--dove-gray);
+}
 
 .other-photo-thumbnail {
   width: 100px;
