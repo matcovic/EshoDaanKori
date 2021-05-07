@@ -370,57 +370,5 @@ const NewCampaign = ({ isAuthenticated }) => {
     </div>
   );
 };
-// --------------------cover thumbnail function----------------------------------
-function updateThumbnail(dropZoneElement, file) {
-  let thumbnailElement = dropZoneElement.querySelector(".photo-thumbnail");
-
-  if (dropZoneElement.querySelector(".drag-drop-text")) {
-    dropZoneElement.querySelector(".drag-drop-text").remove();
-  }
-  if (!thumbnailElement) {
-    thumbnailElement = document.createElement("img");
-    thumbnailElement.classList.add("photo-thumbnail");
-    dropZoneElement.appendChild(thumbnailElement);
-  }
-
-  if (file.type.startsWith("image/")) {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      thumbnailElement.src = reader.result;
-    };
-  }
-}
-
-function updateOptionalThumbnail(dropZoneElement, file) {
-  let thumbnailElement = dropZoneElement.querySelector(".photo-thumbnail");
-
-  if (dropZoneElement.querySelector(".drag-drop-text")) {
-    dropZoneElement.querySelector(".drag-drop-text").remove();
-  }
-  // if (!thumbnailElement) {
-  //   thumbnailElement = document.createElement("img");
-  //   thumbnailElement.classList.add("other-photo-thumbnail");
-  //   dropZoneElement.appendChild(thumbnailElement);
-  // }
-
-  // if (file.type.startsWith("image/")) {
-  var i = file.length;
-  // console.log(i);
-  for (var image = 0; image < i; image++) {
-    // console.log(file[image]);
-    const reader = new FileReader();
-    reader.readAsDataURL(file[image]);
-    console.log(file[image]);
-    reader.onload = () => {
-      thumbnailElement = document.createElement("img");
-      thumbnailElement.classList.add("other-photo-thumbnail");
-      dropZoneElement.appendChild(thumbnailElement);
-      thumbnailElement.src = reader.result;
-    };
-    console.log(reader.onload);
-  }
-  // }
-}
 
 export default NewCampaign;
