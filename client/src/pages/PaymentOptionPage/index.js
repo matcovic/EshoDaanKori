@@ -6,10 +6,9 @@ import Nagad from "../../assets/icons/ico-nagad.svg";
 import Rocket from "../../assets/icons/ico-rocket.svg";
 import NumberLists from "./components/ListofNumbers";
 import twoDots from "../../assets/icons/ico-2dots2.svg";
-import { Redirect } from "react-router";
 import axios from "axios";
-import { getBase64 } from "../../util/util";
 import { useState } from "react";
+import { Button, Modal } from "semantic-ui-react";
 
 const MobileBankingOptions = [
   {
@@ -45,6 +44,11 @@ const PaymentOptions = (props) => {
     return <Redirect to="/access-denied" />;
   }
  */
+  const [paymentOptionsList, setPaymentOptionsList] = useState([]); // holds the final numbers
+  const [paymentIconKey, setPaymentIcon] = useState("Bkash");
+  const [inputField, setInputField] = useState("");
+  const [campaignCreated, setCampaignCreated] = useState(false);
+  const [buttonActivation, setButtonActivation] = useState("false"); // disables button while loading
 
   console.log(props.location);
 
@@ -53,11 +57,15 @@ const PaymentOptions = (props) => {
     window.location = "/";
   }
 
-  function onClick(event) {
+  function onStartCampaignClick(event) {
     event.preventDefault();
     console.log("start campaign clicked");
+    console.log(paymentOptionsList);
+    props.location.state.paymentOptions = paymentOptionsList;
+    props.location.state.category = "Entertainment";
     console.log(props.location.state);
 
+    setButtonActivation("");
     const startCampaign = async () => {
       const { data } = await axios.post(
         "/api/campaign/new-campaign",
@@ -66,11 +74,14 @@ const PaymentOptions = (props) => {
 
       if (data.status === 1) {
         console.log(data.message);
+        setCampaignCreated(true);
+        // open dialog here
         // window.location.replace("/registration-complete");
         // return <Redirect to="/registration-complete" />;
       } else {
         console.log(data.message);
-        //window.location.replace("/error?");
+        setButtonActivation("false"); // making the button enabled again
+        window.location.replace("/");
 
         // return <Redirect to="/error?" />;
       }
@@ -79,15 +90,11 @@ const PaymentOptions = (props) => {
     startCampaign();
   }
 
-  // const [number, setNumbers] = useState();
-  const [paymentOptionsNumb, setPaymentOptions] = useState([]);
-  const [paymentIconKey, setPaymentIcon] = useState("Bkash");
-  const [inputField, setInputField] = useState("");
   //-----------------delete Number list Function---------------
-  function deletNumber(index, e) {
+  function onDeletNumberClick(index, e) {
     e.preventDefault();
-    const newList = paymentOptionsNumb.filter((item, indx) => indx !== index);
-    setPaymentOptions(newList);
+    const newList = paymentOptionsList.filter((item, indx) => indx !== index);
+    setPaymentOptionsList(newList);
   }
 
   // console.log(props.location);
@@ -95,22 +102,20 @@ const PaymentOptions = (props) => {
     setInputField(e.target.value);
   }
 
-  function addOnClick(event) {
+  /**
+   *
+   * @param {*} event Add More button
+   */
+  function onAddMoreClick(event) {
     event.preventDefault();
     if (inputField !== "") {
-      var newList;
-      if (paymentIconKey === "Bkash") {
-        newList = paymentOptionsNumb.concat({ numb: inputField, ico: Bkash });
-      }
-      if (paymentIconKey === "Nagad") {
-        newList = paymentOptionsNumb.concat({ numb: inputField, ico: Nagad });
-      }
-      if (paymentIconKey === "Rocket") {
-        newList = paymentOptionsNumb.concat({ numb: inputField, ico: Rocket });
-      }
+      const newList = paymentOptionsList.concat({
+        number: inputField,
+        icon: paymentIconKey,
+      });
 
-      setPaymentOptions(newList);
-      console.log(paymentOptionsNumb);
+      setPaymentOptionsList(newList);
+      console.log(paymentOptionsList);
       console.log(paymentIconKey);
 
       setInputField("");
@@ -121,6 +126,17 @@ const PaymentOptions = (props) => {
     console.log("Dropdown:" + data.value);
     setPaymentIcon(data.value);
   }
+
+  /*   if (campaignCreated) {
+    return (
+      <Modal
+        trigger={<Button>Show Modal</Button>}
+        header="Reminder!"
+        content="Call Benjamin regarding the reports."
+        actions={["Snooze", { key: "done", content: "Done", positive: true }]}
+      />
+    );
+  } */
 
   return (
     <div className="payment-background">
@@ -152,7 +168,11 @@ const PaymentOptions = (props) => {
                   required
                 />
               </div>
-              <button onClick={addOnClick} className="btn btn-type1">
+              <button
+                onClick={onAddMoreClick}
+                disabled={!buttonActivation}
+                className="btn btn-type1"
+              >
                 ADD MORE
               </button>
             </form>
@@ -160,16 +180,13 @@ const PaymentOptions = (props) => {
               <p>PAYMENT OPTIONS ADDED</p>
               <div className="number-listView">
                 <List verticalAlign="middle">
-                  {paymentOptionsNumb.map((item, index) => (
+                  {paymentOptionsList.map((item, index) => (
                     <NumberLists
-                      OnClickFunction={deletNumber.bind(this, index)}
-                      icon={item.ico}
-                      number={item.numb}
+                      OnClickFunction={onDeletNumberClick.bind(this, index)}
+                      icon={mapIcon(item.icon)}
+                      number={item.number}
                     />
                   ))}
-                  {/* <NumberLists icon={Bkash} number="012222" />
-                  <NumberLists icon={Nagad} number="012222" />
-                  <NumberLists icon={Rocket} number="012222" /> */}
                 </List>
               </div>
             </div>
@@ -179,7 +196,11 @@ const PaymentOptions = (props) => {
                 it from your profile
               </p>
               <form>
-                <button onClick={onClick} className="btn btn-type1">
+                <button
+                  onClick={onStartCampaignClick}
+                  className="btn btn-type1"
+                  disabled={!buttonActivation}
+                >
                   START CAMPAIGN
                 </button>
               </form>
@@ -197,5 +218,16 @@ const PaymentOptions = (props) => {
     </div>
   );
 };
+
+function mapIcon(iconName) {
+  switch (iconName) {
+    case "Bkash":
+      return Bkash;
+    case "Nagad":
+      return Nagad;
+    default:
+      return Rocket;
+  }
+}
 
 export default PaymentOptions;
