@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, Dropdown, List } from "semantic-ui-react";
+import { Input, Dropdown, List, Message } from "semantic-ui-react";
 import "./payment.css";
 import Bkash from "../../assets/icons/ico-bkash.svg";
 import Nagad from "../../assets/icons/ico-nagad.svg";
@@ -10,6 +10,20 @@ import { Redirect } from "react-router";
 import axios from "axios";
 import { getBase64 } from "../../util/util";
 import { useState } from "react";
+
+//-----------for validation------------------
+import * as yup from "yup";
+
+const phoneRegExp = "[0][1][1-9][0-9]{8}";
+const schema = yup.object().shape({
+  numb: yup
+    .string()
+    .matches(phoneRegExp, "Phone number is not valid")
+    .max(11, "Phone number is too long")
+    .min(11, "Phone number is too short")
+    .required(),
+});
+//-----------for validation------------------
 
 const MobileBankingOptions = [
   {
@@ -83,6 +97,9 @@ const PaymentOptions = (props) => {
   const [paymentOptionsNumb, setPaymentOptions] = useState([]);
   const [paymentIconKey, setPaymentIcon] = useState("Bkash");
   const [inputField, setInputField] = useState("");
+  const [ErrorMessage, setErrorMessage] = useState();
+  const [ErrorBox, setErrorBox] = useState(true);
+
   //-----------------delete Number list Function---------------
   function deletNumber(index, e) {
     e.preventDefault();
@@ -95,9 +112,21 @@ const PaymentOptions = (props) => {
     setInputField(e.target.value);
   }
 
-  function addOnClick(event) {
+  async function addOnClick(event) {
     event.preventDefault();
-    if (inputField !== "") {
+
+    const isValid = await schema.isValid({ numb: inputField });
+
+    if (!isValid) {
+      schema.validate({ numb: inputField }).catch(function (err) {
+        console.log("Error Name:");
+        console.log(err.name); // => 'ValidationError'
+        console.log("Error error");
+        console.log(err.errors); // => [{ key: 'field_too_short', values: { min: 18 } }]
+        setErrorBox(false);
+        setErrorMessage(err.errors);
+      });
+    } else {
       var newList;
       if (paymentIconKey === "Bkash") {
         newList = paymentOptionsNumb.concat({ numb: inputField, ico: Bkash });
@@ -106,9 +135,12 @@ const PaymentOptions = (props) => {
         newList = paymentOptionsNumb.concat({ numb: inputField, ico: Nagad });
       }
       if (paymentIconKey === "Rocket") {
-        newList = paymentOptionsNumb.concat({ numb: inputField, ico: Rocket });
+        newList = paymentOptionsNumb.concat({
+          numb: inputField,
+          ico: Rocket,
+        });
       }
-
+      setErrorBox(true);
       setPaymentOptions(newList);
       console.log(paymentOptionsNumb);
       console.log(paymentIconKey);
@@ -150,6 +182,7 @@ const PaymentOptions = (props) => {
                   placeholder="Enter your number. Ex- 19XXXXXXXX"
                   onChange={onChange}
                   required
+                  name="userNumber"
                 />
               </div>
               <button onClick={addOnClick} className="btn btn-type1">
@@ -184,6 +217,12 @@ const PaymentOptions = (props) => {
                 </button>
               </form>
             </div>
+            <Message
+              icon="exclamation triangle"
+              hidden={ErrorBox}
+              error
+              header={ErrorMessage}
+            />
             <i>
               <img
                 alt="start campaign button"

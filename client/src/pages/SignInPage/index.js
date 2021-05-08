@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Input } from "semantic-ui-react";
+import { Input, Message } from "semantic-ui-react";
 import facebookLogo from "../../assets/images/facebookLogo.svg";
 import googleLogo from "../../assets/images/googleLogo.svg";
 import "./SignIn.css";
@@ -7,31 +7,73 @@ import { EmailIcon, KeyIcon } from "../../assets/assets.js";
 import axios from "axios";
 import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
+//-----------for validation------------------
+import * as yup from "yup";
+
+yup.setLocale({
+  // use constant translation keys for messages without values
+  mixed: {
+    default: "Field Invalid",
+  },
+  email: {},
+  // use functions to generate an error object that includes the value from the schema
+  string: {
+    min: () => "Password is too short",
+  },
+});
+
+const schema = yup.object().shape({
+  username: yup.string().email().required(),
+  password: yup.string().required().min(6),
+});
+//-----------for validation------------------
 
 const SignIn = ({ isAuthenticated }) => {
   const [form, setFormContent] = useState({});
+  const [ErrorMessage, setErrorMessage] = useState();
+  const [ErrorBox, setErrorBox] = useState(true);
 
   if (isAuthenticated) {
     return <Redirect to="/" />;
   }
 
-  function onSignInClick(event) {
+  async function onSignInClick(event) {
     event.preventDefault();
-    setFormContent(form);
+
     console.log("sign in clicked");
     console.log(form);
 
-    const loginUser = async () => {
-      const { data } = await axios.post("/api/auth/login-email", form);
-      if (data.status === 1) {
-        window.location.replace("/");
-      } else {
-        console.log(data.status);
-        console.log(data.message);
-      }
-    };
+    const isValid = await schema.isValid(form);
+    console.log("to mama");
+    console.log(isValid);
 
-    loginUser();
+    if (!isValid) {
+      schema.validate(form).catch(function (err) {
+        console.log("Error Name:");
+        console.log(err.name); // => 'ValidationError'
+        console.log("Error error");
+        console.log(err.errors); // => [{ key: 'field_too_short', values: { min: 18 } }]
+        setErrorBox(false);
+        setErrorMessage(err.errors);
+      });
+    } else {
+      console.log(form);
+
+      const loginUser = async () => {
+        const { data } = await axios.post("/api/auth/login-email", form);
+        if (data.status === 1) {
+          setErrorBox(true);
+          window.location.replace("/");
+        } else {
+          setErrorBox(false);
+          console.log(data.status);
+          console.log(data.message);
+          setErrorMessage(data.message);
+        }
+      };
+
+      loginUser();
+    }
   }
 
   function handleChange(event) {
@@ -69,7 +111,6 @@ const SignIn = ({ isAuthenticated }) => {
                   iconPosition="left"
                   placeholder="Email Address"
                   className="input-length"
-                  required
                 />
               </div>
 
@@ -81,7 +122,6 @@ const SignIn = ({ isAuthenticated }) => {
                   iconPosition="left"
                   placeholder="Password"
                   className="input-length"
-                  required
                 />
               </div>
               <div className="signIn-forgot-text">
@@ -93,6 +133,12 @@ const SignIn = ({ isAuthenticated }) => {
                 </button>
               </div>
             </form>
+            <Message
+              icon="exclamation triangle"
+              hidden={ErrorBox}
+              error
+              header={ErrorMessage}
+            />
             <div className="signIn-dont-text">
               <span>DON’T HAVE AN ACCOUNT?</span>{" "}
               <Link to="/sign-up">SIGN UP</Link>
