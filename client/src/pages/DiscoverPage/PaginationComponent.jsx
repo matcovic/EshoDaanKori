@@ -25,13 +25,15 @@ function findKey(posts, key) {
   return list;
 }
 
-const PaginationComponent = ({ category }) => {
-  //storing each item
-  const [fundCardItems, setFundCardItems] = useState([]);
+const PaginationComponent = ({ fundCardItems }) => {
+  console.log(fundCardItems);
   const [pageNumber, setPageNumber] = useState(0);
-  const [selectedCategory, setSelectedCategory] = useState(category);
+  //storing each item
+  /*  const [fundCardItems, setFundCardItems] = useState(list);
+   */
+  // const [selectedCategory, setSelectedCategory] = useState(category);
 
-  console.log("category: ", category);
+  // console.log("category: ", category);
   //items shown per page
   const fundCardPerPage = 9;
   /**
@@ -44,8 +46,7 @@ const PaginationComponent = ({ category }) => {
   //contains total no of pages
   const pageCount = Math.ceil(fundCardItems.length / fundCardPerPage);
 
-
-  useEffect(() => {
+  /*   useEffect(() => {
     let isMounted = true;
     // when the component loads up, send a req to the server
     const fetchContent = async () => {
@@ -67,7 +68,7 @@ const PaginationComponent = ({ category }) => {
       isMounted = false;
     }; // use effect cleanup to set flag false, if unmounted
   }, []);
-
+ */
   //component for rendering/mapping each item
   console.log("fund card items: ", fundCardItems);
 

@@ -6,8 +6,27 @@ import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
 
 const DiscoverPage = (props) => {
-  const selectedCategory = props.match.params.category;
-  console.log(selectedCategory);
+  var selectedCategory = props.match.params.category;
+  selectedCategory = selectedCategory ? selectedCategory : "All";
+  const [fundCardItems, setFundCardItems] = useState([]);
+
+  useEffect(() => {
+    // when the component loads up, send a req to the server
+    const fetchContent = async () => {
+      const { data } = await axios.post("/api/campaign/get-campaigns", {
+        selectedCategory,
+      });
+      if (data.status === 1) {
+        console.log(data);
+        setFundCardItems(data.result);
+        console.log("result returned after category press: ");
+        console.log(data.result.length);
+      } else {
+        console.log(data);
+      }
+    };
+    fetchContent();
+  }, [selectedCategory]);
 
   return (
     <section id="discover-section">
@@ -44,13 +63,16 @@ const DiscoverPage = (props) => {
           </div>
           <div className="col-xl-10 col-sm-12">
             <div className="list-of-funds white-container">
-              <p>Showing category "All"</p>
+              <p>Showing category "{selectedCategory}"</p>
               <div className="divider-custom">
                 <div className="divider-custom-line"></div>
               </div>
-              <PaginationComponent
-                category={selectedCategory ? selectedCategory : "All"}
-              />
+
+              {fundCardItems.length ? (
+                <PaginationComponent fundCardItems={fundCardItems} />
+              ) : (
+                <h1>No content found</h1>
+              )}
             </div>
           </div>
         </div>

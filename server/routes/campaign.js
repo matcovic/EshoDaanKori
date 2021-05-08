@@ -9,6 +9,6 @@ const campaignRouter = express.Router();
 
 // -todo: change it to post
 campaignRouter.post("/new-campaign", newCampaignController);
-campaignRouter.get("/get-campaigns", getAllFundraiserController);
+campaignRouter.post("/get-campaigns", getAllFundraiserController);
 
 export { campaignRouter };

@@ -38,13 +38,21 @@ async function newCampaignController(req, res) {
 }
 
 /**
- * Returns all the fundraisers available
+ * Returns fundraisers available wrt the category provided
  * @param {*} req
  * @param {*} res
  */
 async function getAllFundraiserController(req, res) {
+  console.log(req.body.selectedCategory);
   try {
-    const result = await Fundraiser.find();
+    var result;
+    if (req.body.selectedCategory === "All") {
+      result = await Fundraiser.find();
+    } else {
+      result = await Fundraiser.find({
+        category: req.body.selectedCategory,
+      });
+    }
     log(`${result.length} results found`);
     res.json({ status: 1, message: "results found", result });
   } catch (error) {
