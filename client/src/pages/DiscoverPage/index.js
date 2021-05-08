@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PaginationComponent from "./PaginationComponent";
 import "../DiscoverPage/discoverPage.css";
 import axios from "axios";
 import { Redirect } from "react-router";
+import { Link } from "react-router-dom";
 
-const DiscoverPage = ({ isAuthenticated }) => {
-  if (isAuthenticated) {
-    return <Redirect to="/" />;
-  }
-  
+const DiscoverPage = (props) => {
+  const selectedCategory = props.match.params.category;
+  console.log(selectedCategory);
+
   return (
     <section id="discover-section">
       <div className="container-fluid">
@@ -19,24 +19,24 @@ const DiscoverPage = ({ isAuthenticated }) => {
                 <h4>CATEGORIES</h4>
                 <ul>
                   <li>
-                    <a className="" href="#">
+                    <Link className="" to="/category/All">
                       All
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="" href="#">
+                    <Link className="" to="/category/Medical">
                       Medical
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="" href="#">
+                    <Link className="" to="/category/Tuition">
                       Tuition
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="" href="#">
-                      Emergency
-                    </a>
+                    <Link className="" to="/category/Entertainment">
+                      Entertainment
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -48,7 +48,9 @@ const DiscoverPage = ({ isAuthenticated }) => {
               <div className="divider-custom">
                 <div className="divider-custom-line"></div>
               </div>
-              <PaginationComponent />
+              <PaginationComponent
+                category={selectedCategory ? selectedCategory : "All"}
+              />
             </div>
           </div>
         </div>

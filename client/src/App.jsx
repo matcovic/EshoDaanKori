@@ -78,12 +78,11 @@ function App() {
                 exact
                 component={isAuthenticated ? DiscoverPage : LandingPage}
               />
+              <Route path="/discover" exact component={DiscoverPage} />
               <Route
-                path="/discover"
                 exact
-                component={() => (
-                  <DiscoverPage isAuthenticated={isAuthenticated} />
-                )}
+                path="/category/:category"
+                component={DiscoverPage}
               />
               <Route
                 path="/sign-in"
@@ -114,7 +113,7 @@ function App() {
                   <ForgotPassword isAuthenticated={isAuthenticated} />
                 )}
               />
-              ``
+
               <Route
                 exact
                 path="/reset-password/:token/:id"

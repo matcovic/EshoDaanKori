@@ -1,3 +1,4 @@
+import Fundraiser from "../models/fundraiser.js";
 import {
   createFundraiserSchema,
   saveFundraiser,
@@ -36,7 +37,22 @@ async function newCampaignController(req, res) {
   }
 }
 
+/**
+ * Returns all the fundraisers available
+ * @param {*} req
+ * @param {*} res
+ */
+async function getAllFundraiserController(req, res) {
+  try {
+    const result = await Fundraiser.find();
+    log(`${result.length} results found`);
+    res.json({ status: 1, message: "results found", result });
+  } catch (error) {
+    res.json({ status: -1, message: error.message, result });
+  }
+}
+
 function log(msg) {
   console.log(msg);
 }
-export { newCampaignController };
+export { newCampaignController, getAllFundraiserController };

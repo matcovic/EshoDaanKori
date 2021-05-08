@@ -3,6 +3,12 @@ import Fundraiser from "../models/fundraiser.js";
 import User from "../models/user.js";
 import { genPassword } from "../util/util.js";
 
+/**
+ *
+ * @param {*} form
+ * @param {*} token
+ * @returns A User instance after saving it in the database
+ */
 async function createNewUser(form, token) {
   const saltHash = genPassword(form.password);
   const salt = saltHash.salt;
@@ -43,6 +49,11 @@ function createFundraiserSchema(form, uid) {
   return fundraiser;
 }
 
+/**
+ *
+ * @param {*} schema
+ * @returns {status:n, message:str}  where n = 1 or -1
+ */
 async function saveFundraiser(schema) {
   try {
     const result = await schema.save();
@@ -92,6 +103,13 @@ async function saveImages(coverPhoto, optionalPhotos, uid, fundraiserId) {
   }
 }
 
+/**
+ *
+ * @param {*} images
+ * @param {*} uid
+ * @param {*} fundraiserId
+ * @returns
+ */
 async function saveMultipleImages(images, uid, fundraiserId) {
   const list = [];
   if (images.length === null) {
@@ -124,6 +142,11 @@ async function saveMultipleImages(images, uid, fundraiserId) {
   }
 }
 
+/**
+ *
+ * @param {*} email
+ * @returns
+ */
 async function isUserAvailable(email) {
   const user = await User.findOne({ username: email });
   log(user);
@@ -136,6 +159,13 @@ async function isUserAvailable(email) {
   }
 }
 
+/**
+ *
+ * @param {*} form
+ * @param {*} id
+ * @param {*} token
+ * @returns
+ */
 async function updateUserInfo(form, id, token) {
   form.token = token;
   var query = { _id: id };
@@ -196,6 +226,11 @@ async function verifyUser(id, token) {
   }
 }
 
+/**
+ *
+ * @param {*} email
+ * @returns
+ */
 async function findUserByEmail(email) {
   const user = await User.findOne({ username: email });
   if (user) {
@@ -206,6 +241,12 @@ async function findUserByEmail(email) {
   }
 }
 
+/**
+ *
+ * @param {*} id
+ * @param {*} token
+ * @returns
+ */
 async function setUserToken(id, token) {
   try {
     var query = { _id: id };
@@ -217,6 +258,13 @@ async function setUserToken(id, token) {
   }
 }
 
+/**
+ *
+ * @param {*} uid
+ * @param {*} salt
+ * @param {*} hash
+ * @returns
+ */
 async function changeUserPassword(uid, salt, hash) {
   try {
     var query = { _id: uid };
@@ -231,8 +279,6 @@ async function changeUserPassword(uid, salt, hash) {
   }
 }
 
-// cbcdd6fd94ece431e645dd8fe05013d7d0a9bd2055a8ce19591d1da9e02cc6b8
-// cbcdd6fd94ece431e645dd8fe05013d7d0a9bd2055a8ce19591d1da9e02cc6b8
 function log(msg) {
   console.log(msg);
 }
