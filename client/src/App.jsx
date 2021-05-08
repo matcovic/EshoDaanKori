@@ -17,6 +17,7 @@ import Loading from "react-fullscreen-loading";
 import ErrorPage from "./pages/ErrorPage";
 import ForgotPassword from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
+import MyFundRaisersPage from "./pages/MyFundRaisersPage";
 
 function App() {
   const [isAuthenticated, setAuthenticationStatus] = useState(false);
@@ -83,6 +84,13 @@ function App() {
                 exact
                 component={() => (
                   <DiscoverPage isAuthenticated={isAuthenticated} />
+                )}
+              />
+              <Route
+                path="/fundraisers"
+                exact
+                component={() => (
+                  <MyFundRaisersPage isAuthenticated={isAuthenticated} />
                 )}
               />
               <Route
