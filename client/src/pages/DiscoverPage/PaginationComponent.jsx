@@ -28,12 +28,6 @@ function findKey(posts, key) {
 const PaginationComponent = ({ fundCardItems }) => {
   console.log(fundCardItems);
   const [pageNumber, setPageNumber] = useState(0);
-  //storing each item
-  /*  const [fundCardItems, setFundCardItems] = useState(list);
-   */
-  // const [selectedCategory, setSelectedCategory] = useState(category);
-
-  // console.log("category: ", category);
   //items shown per page
   const fundCardPerPage = 9;
   /**
@@ -46,30 +40,6 @@ const PaginationComponent = ({ fundCardItems }) => {
   //contains total no of pages
   const pageCount = Math.ceil(fundCardItems.length / fundCardPerPage);
 
-  /*   useEffect(() => {
-    let isMounted = true;
-    // when the component loads up, send a req to the server
-    const fetchContent = async () => {
-      const { data } = await axios.get("/api/campaign/get-campaigns");
-      if (data.status === 1) {
-        console.log(data);
-        if (isMounted) {
-          setFundCardItems(data.result);
-        }
-        console.log(data.result.length);
-      } else {
-        console.log(data);
-      }
-
-      // if (isMounted) setContent(data);
-    };
-    fetchContent();
-    return () => {
-      isMounted = false;
-    }; // use effect cleanup to set flag false, if unmounted
-  }, []);
- */
-  //component for rendering/mapping each item
   console.log("fund card items: ", fundCardItems);
 
   const displayFundCardItem = fundCardItems
