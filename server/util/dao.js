@@ -1,3 +1,5 @@
+import { cloudinary } from "../config/config.js";
+import Fundraiser from "../models/fundraiser.js";
 import User from "../models/user.js";
 import { genPassword } from "../util/util.js";
 
@@ -18,6 +20,108 @@ async function createNewUser(form, token) {
 
   const user = await newUser.save();
   return user;
+}
+
+/**
+ * creates a schema with all the form data except the images
+ * @param {*} form
+ * @param {*} uid
+ * @returns the schema created
+ */
+function createFundraiserSchema(form, uid) {
+  const fundraiser = new Fundraiser({
+    uid: uid,
+    title: form.title,
+    story: form.story,
+    location: form.location,
+    fundraisingGoal: form.fundraisingGoal,
+    fundraisingFor: form.fundraisingFor,
+    category: form.category,
+    paymentOptions: form.paymentOptions,
+  });
+
+  return fundraiser;
+}
+
+async function saveFundraiser(schema) {
+  try {
+    const result = await schema.save();
+    return {
+      status: 1,
+      message: "Created a fundraiser successfully. Redirecting...",
+    };
+  } catch (error) {
+    return {
+      status: -1,
+      message: `Coudn't create a fundraiser. ${error.message}`,
+    };
+  }
+}
+
+/**
+ *
+ * @param {*} coverPhoto
+ * @param {*} optionalPhotos
+ * @param {*} uid
+ * @param {*} fundraiserId
+ */
+async function saveImages(coverPhoto, optionalPhotos, uid, fundraiserId) {
+  var coverPhotoUrl;
+  var optionalPhotoUrls = [];
+
+  try {
+    const result = await cloudinary.v2.uploader.upload(coverPhoto, {
+      folder: `user/${uid}/fundraisers/${fundraiserId}/coverPhoto`,
+    });
+    coverPhotoUrl = result.secure_url;
+    optionalPhotoUrls = await saveMultipleImages(optionalPhotos);
+    return {
+      status: 1,
+      coverPhotoUrl,
+      optionalPhotoUrls,
+      message: "Image upload successful",
+    };
+  } catch (error) {
+    console.log("file upload error: " + error.message);
+    return {
+      status: -3,
+      undefined,
+      undefined,
+      message: `Failed to upload images: ${error.message}`,
+    };
+  }
+}
+
+async function saveMultipleImages(images, uid, fundraiserId) {
+  const list = [];
+  if (images.length === null) {
+    return null;
+  }
+
+  let res_promises = images.map(
+    (file) =>
+      new Promise(async (resolve, reject) => {
+        cloudinary.v2.uploader
+          .upload(file, {
+            folder: `user/${uid}/fundraisers/${fundraiserId}/optionalPhotos`,
+          })
+          .then((result) => {
+            resolve(result);
+            list.push(result.secure_url);
+          })
+          .catch((err) => {
+            reject(err);
+            console.log("file upload error: " + err.message);
+          });
+      })
+  );
+
+  try {
+    await Promise.all(res_promises);
+    return list;
+  } catch (error) {
+    return null;
+  }
 }
 
 async function isUserAvailable(email) {
@@ -140,4 +244,7 @@ export {
   findUserByEmail,
   setUserToken,
   changeUserPassword,
+  saveFundraiser,
+  createFundraiserSchema,
+  saveImages,
 };
