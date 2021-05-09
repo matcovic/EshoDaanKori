@@ -1,14 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+
 const EditFundCardView = (props) => {
+  const newTo = {
+    pathname: `/fundraisers/edit?/${props.title}`,
+    state: { status: 2, props: props.raw},
+  };
   return (
     // fund-card template
     <div className="fund-card-box">
       <div className="card-img">
         <img src={props.imgURL} alt="" />
         {/* edit button */}
-        <Link to="/#" className="btn edit-btn">
+        <Link to={newTo} className="btn edit-btn">
           <i aria-hidden="true" className="pencil large icon"></i>
         </Link>
       </div>
@@ -28,7 +33,9 @@ const EditFundCardView = (props) => {
         ></div>
       </div>
       <div className="card-amount">
-        <p>{props.currentAmountRaised}</p>
+        <p>
+          ৳ {props.currentAmountRaised} raised of {props.goal}
+        </p>
       </div>
     </div>
   );

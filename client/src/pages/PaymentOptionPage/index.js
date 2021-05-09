@@ -91,16 +91,14 @@ const PaymentOptions = (props) => {
       );
 
       if (data.status === 1) {
-        console.log(data.message);
+        console.log(data);
         setCampaignCreated(true);
         // open dialog here
-        // window.location.replace("/registration-complete");
+        window.location.replace("/");
         // return <Redirect to="/registration-complete" />;
       } else {
-        console.log(data.message);
-        setButtonActivation("false"); // making the button enabled again
-        window.location.replace("/");
-
+        console.log(data);
+        // window.location.replace("/");
         // return <Redirect to="/error?" />;
       }
     };
