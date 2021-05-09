@@ -204,6 +204,23 @@ element.style {
   color: var(--dove-gray);
 }
 
+/* ----------------------------image upload file style------------------------ */
+.fileContainer {
+  border: 1px var(--quill-gray) dashed !important;
+  width: 100% !important;
+  min-height: 105.7px !important;
+
+  background-color: var(--black-haze) !important;
+}
+
+.fileContainer p {
+  color: var(--dove-gray) !important;
+}
+
+.fileContainer .chooseFileButton {
+  font-family: var(--font-family-poppins) !important;
+}
+
 .other-photo-thumbnail {
   width: 100px;
   height: 100px;

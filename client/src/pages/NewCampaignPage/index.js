@@ -12,6 +12,7 @@ import threeDots from "../../assets/icons/ico-3dots2.svg";
 import { convertMultipleImagesToB64, getBase64 } from "../../util/util";
 import "./newCampaign.css";
 import kebabCase from "kebab-case";
+import ImageUploader from "react-images-upload";
 import { useHistory } from "react-router-dom";
 
 // https://stackoverflow.com/questions/64208697/uploading-a-file-using-only-the-input-field-react-hook-form
@@ -23,8 +24,8 @@ const schema = yup.object().shape({
   title: yup
     .string()
     .required("Title is required")
-    .min(15, "Too short")
-    .max(30, "Too long"),
+    .min(15, "Title Too short")
+    .max(30, "Title Too long"),
   location: yup.string().required("Location is required"),
   fundraisingGoal: yup
     .number("Invalid")
@@ -95,6 +96,22 @@ const NewCampaign = (props) => {
   const [ErrorMessage, setErrorMessage] = useState();
   const [ErrorBox, setErrorBox] = useState(true);
 
+  const [pictures, setPictures] = useState([]);
+  const [Coverpicture, setCoverPicture] = useState([]);
+
+  const [pictureCount, setPictureCount] = useState(0);
+  const onDrop = (picture) => {
+    setPictures([...pictures, picture]);
+    console.log(pictures);
+
+    setPictureCount(picture.length);
+    console.log(pictureCount + "Hoga");
+  };
+
+  const onDropCoverPhoto = (picture) => {
+    setCoverPicture([...Coverpicture, picture]);
+  };
+
   function onDropdownChange(event) {
     console.log(event.target.textContent);
     setCategory(event.target.textContent);
@@ -150,55 +167,47 @@ const NewCampaign = (props) => {
 
   async function onButtonClick(event) {
     event.preventDefault();
-    form.category = category;
-    //const isValid = await schema.isValid(form);
-    const isValid = true;
-    if (!isValid) {
-      schema.validate(form).catch(function (err) {
-        console.log("Error Name:");
-        console.log(err.name); // => 'ValidationError'
-        console.log("Error error");
-        console.log(err.errors); // => [{ key: 'field_too_short', values: { min: 18 } }]
-        setErrorBox(false);
-        setErrorMessage(err.errors);
-      });
+
+    const isValid = await schema.isValid(form);
+    console.log(pictureCount + "wowasa");
+    if (pictureCount > 5) {
+      setErrorBox(false);
+      setErrorMessage("Only 5 Photos are allowed");
     } else {
       setErrorBox(true);
-      console.log(form);
-      console.log("on continue click");
-      form.fundraisingFor = fundraisingFor;
-      console.log(form);
-      form.coverPhoto = await getBase64(coverImage);
-      form.optionalPhotos = await convertMultipleImagesToB64(optionalImages);
-
-      if (status === 2) {
-        // directly save the value in the database instead
-        const saveChanges = async () => {
-          const { data } = await axios.post(
-            "/api/campaign/edit-campaign",
-            form
-          );
-          if (data.status === 1) {
-            console.log(data);
-            // open dialog here
-           // window.location.replace("/");
-            // return <Redirect to="/registration-complete" />;
-          } else {
-            console.log(data);
-            // window.location.replace("/");
-            // return <Redirect to="/error?" />;
-          }
-        };
-
-        saveChanges();
-      } else {
-        // redirect to payment
-        history.push({
-          pathname: "/payment",
-          state: form,
+      if (!isValid) {
+        schema.validate(form).catch(function (err) {
+          console.log("Error Name:");
+          console.log(err.name); // => 'ValidationError'
+          console.log("Error error");
+          console.log(err.errors); // => [{ key: 'field_too_short', values: { min: 18 } }]
+          setErrorBox(false);
+          setErrorMessage(err.errors);
         });
+      } else {
+        setErrorBox(true);
+        console.log(form);
+        console.log("on continue click");
+        form.fundraisingFor = fundraisingFor;
+        console.log(form);
+        form.coverPhoto = await getBase64(coverImage);
+        form.optionalPhotos = await convertMultipleImagesToB64(optionalImages);
+        setRedirect(true);
       }
     }
+    /*
+    //  console.log(images);
+       const registerUser = async () => {
+      const { data } = await axios.post("/api/auth/register-info", form);
+      if (data.status === 1) {
+        console.log(data.message);
+        window.location.replace("/registration-complete");
+      } else {
+        console.log(data.message);
+      }
+    };
+
+    registerUser();  */
   }
 
   useEffect(() => {
@@ -379,46 +388,28 @@ const NewCampaign = (props) => {
 
               <Form.Field>
                 <label>Add a cover photo</label>
-                <div className="btn-type5">
-                  <input
-                    type="file"
-                    name="coverPhoto"
-                    onChange={onImageChange}
-                    className="picture-upload"
-                    id="userCoverPhoto"
-                  />
-                  <div className="drag-drop-text">
-                    <span>+</span>
-                    <br />
-                    <span>
-                      Drag and drop or upload a photo that best represents your
-                      campaign.
-                    </span>
-                  </div>
-                </div>
+                <ImageUploader
+                  {...props}
+                  buttonText="Choose images"
+                  imgExtension={[".jpg", ".png"]}
+                  maxFileSize={5242880}
+                  onChange={onDropCoverPhoto}
+                  withPreview={true}
+                  singleImage={true}
+                />
               </Form.Field>
 
               <Form.Field>
                 <label>Add more photos (optional)</label>
-                <div className="btn-type5">
-                  <input
-                    type="file"
-                    multiple="multiple"
-                    onChange={onImageChange}
-                    className="picture-upload"
-                    name="optionalPhotos"
-                    id="userOptionalPhotos"
-                  />
-                  {/* <img className="other-photo-thumbnail" multiple /> */}
-                  <div className="drag-drop-text">
-                    <span>+</span>
-                    <br />
-                    <span>
-                      Drag and drop or upload a photo that best represents your
-                      campaign.
-                    </span>
-                  </div>
-                </div>
+
+                <ImageUploader
+                  {...props}
+                  buttonText="Choose images"
+                  imgExtension={[".jpg", ".png"]}
+                  maxFileSize={5242880}
+                  onChange={onDrop}
+                  withPreview={true}
+                />
               </Form.Field>
               <Form.Group>
                 <Form.Field>
