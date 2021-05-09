@@ -71,7 +71,6 @@ function App() {
               background="#00AD7C"
               loaderColor="#B7FE81"
             />
-
             {<Navbar isAuthenticated={isAuthenticated} />}
             <Switch>
               <Route
@@ -85,12 +84,15 @@ function App() {
                 path="/category/:category"
                 component={DiscoverPage}
               />
-              <Route
-                path="/fundraisers"
+               <Route
                 exact
-                component={() => (
-                  <MyFundRaisersPage isAuthenticated={isAuthenticated} />
-                )}
+                path="/fundraisers/edit?/:fundraiserTitle"
+                component={NewCampaign}
+              />
+              <Route
+                path="/my-fundraisers"
+                exact
+                component={MyFundRaisersPage}
               />
               <Route
                 path="/sign-in"
