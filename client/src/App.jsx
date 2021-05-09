@@ -77,7 +77,7 @@ function App() {
               <Route
                 path="/"
                 exact
-                component={isAuthenticated ? DiscoverPage : FundDetailsPage}
+                component={isAuthenticated ? DiscoverPage : LandingPage}
               />
               <Route path="/discover" exact component={DiscoverPage} />
               <Route
@@ -85,7 +85,7 @@ function App() {
                 path="/category/:category"
                 component={DiscoverPage}
               />
-               <Route
+              <Route
                 exact
                 path="/fundraisers/edit?/:fundraiserTitle"
                 component={NewCampaign}
