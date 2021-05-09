@@ -1,14 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PaginationComponent from "./PaginationComponent";
 import "../DiscoverPage/discoverPage.css";
 import axios from "axios";
 import { Redirect } from "react-router";
+import { Link } from "react-router-dom";
 
-const DiscoverPage = ({ isAuthenticated }) => {
-  if (isAuthenticated) {
-    return <Redirect to="/" />;
-  }
-  
+const DiscoverPage = (props) => {
+  var selectedCategory = props.match.params.category;
+  selectedCategory = selectedCategory ? selectedCategory : "All";
+  const [fundCardItems, setFundCardItems] = useState([]);
+
+  useEffect(() => {
+    // when the component loads up, send a req to the server
+    const fetchContent = async () => {
+      const { data } = await axios.post("/api/campaign/get-campaigns", {
+        selectedCategory,
+      });
+      if (data.status === 1) {
+        console.log(data);
+        setFundCardItems(data.result);
+        console.log("result returned after category press: ");
+        console.log(data.result.length);
+      } else {
+        console.log(data);
+      }
+    };
+    fetchContent();
+  }, [selectedCategory]);
+
   return (
     <section id="discover-section">
       <div className="container-fluid">
@@ -19,24 +38,24 @@ const DiscoverPage = ({ isAuthenticated }) => {
                 <h4>CATEGORIES</h4>
                 <ul>
                   <li>
-                    <a className="" href="#">
+                    <Link className="" to="/category/All">
                       All
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="" href="#">
+                    <Link className="" to="/category/Medical">
                       Medical
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="" href="#">
+                    <Link className="" to="/category/Tuition">
                       Tuition
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="" href="#">
-                      Emergency
-                    </a>
+                    <Link className="" to="/category/Entertainment">
+                      Entertainment
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -44,11 +63,16 @@ const DiscoverPage = ({ isAuthenticated }) => {
           </div>
           <div className="col-xl-10 col-sm-12">
             <div className="list-of-funds white-container">
-              <p>Showing category "All"</p>
+              <p>Showing category "{selectedCategory}"</p>
               <div className="divider-custom">
                 <div className="divider-custom-line"></div>
               </div>
-              <PaginationComponent />
+
+              {fundCardItems.length ? (
+                <PaginationComponent fundCardItems={fundCardItems} />
+              ) : (
+                <h1>No content found</h1>
+              )}
             </div>
           </div>
         </div>

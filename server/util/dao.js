@@ -1,6 +1,14 @@
+import { cloudinary } from "../config/config.js";
+import Fundraiser from "../models/fundraiser.js";
 import User from "../models/user.js";
 import { genPassword } from "../util/util.js";
 
+/**
+ *
+ * @param {*} form
+ * @param {*} token
+ * @returns A User instance after saving it in the database
+ */
 async function createNewUser(form, token) {
   const saltHash = genPassword(form.password);
   const salt = saltHash.salt;
@@ -20,6 +28,125 @@ async function createNewUser(form, token) {
   return user;
 }
 
+/**
+ * creates a schema with all the form data except the images
+ * @param {*} form
+ * @param {*} uid
+ * @returns the schema created
+ */
+function createFundraiserSchema(form, uid) {
+  const fundraiser = new Fundraiser({
+    uid: uid,
+    title: form.title,
+    story: form.story,
+    location: form.location,
+    fundraisingGoal: form.fundraisingGoal,
+    fundraisingFor: form.fundraisingFor,
+    category: form.category,
+    paymentOptions: form.paymentOptions,
+  });
+
+  return fundraiser;
+}
+
+/**
+ *
+ * @param {*} schema
+ * @returns {status:n, message:str}  where n = 1 or -1
+ */
+async function saveFundraiser(schema) {
+  try {
+    const result = await schema.save();
+    return {
+      status: 1,
+      message: "Created a fundraiser successfully. Redirecting...",
+    };
+  } catch (error) {
+    return {
+      status: -1,
+      message: `Coudn't create a fundraiser. ${error.message}`,
+    };
+  }
+}
+
+/**
+ *
+ * @param {*} coverPhoto
+ * @param {*} optionalPhotos
+ * @param {*} uid
+ * @param {*} fundraiserId
+ */
+async function saveImages(coverPhoto, optionalPhotos, uid, fundraiserId) {
+  var coverPhotoUrl;
+  var optionalPhotoUrls = [];
+
+  try {
+    const result = await cloudinary.v2.uploader.upload(coverPhoto, {
+      folder: `user/${uid}/fundraisers/${fundraiserId}/coverPhoto`,
+    });
+    coverPhotoUrl = result.secure_url;
+    optionalPhotoUrls = await saveMultipleImages(optionalPhotos);
+    return {
+      status: 1,
+      coverPhotoUrl,
+      optionalPhotoUrls,
+      message: "Image upload successful",
+    };
+  } catch (error) {
+    console.log("file upload error: " + error.message);
+    return {
+      status: -3,
+      undefined,
+      undefined,
+      message: `Failed to upload images: ${error.message}`,
+    };
+  }
+}
+
+/**
+ *
+ * @param {*} images
+ * @param {*} uid
+ * @param {*} fundraiserId
+ * @returns
+ */
+async function saveMultipleImages(images, uid, fundraiserId) {
+  const list = [];
+  if (images.length === null) {
+    return null;
+  }
+
+  let res_promises = images.map(
+    (file) =>
+      new Promise(async (resolve, reject) => {
+        cloudinary.v2.uploader
+          .upload(file, {
+            folder: `user/${uid}/fundraisers/${fundraiserId}/optionalPhotos`,
+          })
+          .then((result) => {
+            resolve(result);
+            list.push(result.secure_url);
+          })
+          .catch((err) => {
+            reject(err);
+            console.log("file upload error: " + err.message);
+          });
+      })
+  );
+
+  try {
+    await Promise.all(res_promises);
+    return list;
+  } catch (error) {
+    return null;
+  }
+}
+
+/**
+ *
+ * @param {*} email
+ * @returns
+ */
 async function isUserAvailable(email) {
   const user = await User.findOne({ username: email });
   log(user);
@@ -32,6 +159,13 @@ async function isUserAvailable(email) {
   }
 }
 
+/**
+ *
+ * @param {*} form
+ * @param {*} id
+ * @param {*} token
+ * @returns
+ */
 async function updateUserInfo(form, id, token) {
   form.token = token;
   var query = { _id: id };
@@ -92,6 +226,11 @@ async function verifyUser(id, token) {
   }
 }
 
+/**
+ *
+ * @param {*} email
+ * @returns
+ */
 async function findUserByEmail(email) {
   const user = await User.findOne({ username: email });
   if (user) {
@@ -102,6 +241,12 @@ async function findUserByEmail(email) {
   }
 }
 
+/**
+ *
+ * @param {*} id
+ * @param {*} token
+ * @returns
+ */
 async function setUserToken(id, token) {
   try {
     var query = { _id: id };
@@ -113,6 +258,13 @@ async function setUserToken(id, token) {
   }
 }
 
+/**
+ *
+ * @param {*} uid
+ * @param {*} salt
+ * @param {*} hash
+ * @returns
+ */
 async function changeUserPassword(uid, salt, hash) {
   try {
     var query = { _id: uid };
@@ -127,8 +279,6 @@ async function changeUserPassword(uid, salt, hash) {
   }
 }
 
-// cbcdd6fd94ece431e645dd8fe05013d7d0a9bd2055a8ce19591d1da9e02cc6b8
-// cbcdd6fd94ece431e645dd8fe05013d7d0a9bd2055a8ce19591d1da9e02cc6b8
 function log(msg) {
   console.log(msg);
 }
@@ -140,4 +290,7 @@ export {
   findUserByEmail,
   setUserToken,
   changeUserPassword,
+  saveFundraiser,
+  createFundraiserSchema,
+  saveImages,
 };

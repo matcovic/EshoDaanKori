@@ -1,35 +1,14 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
-import FundCardView from "../../components/FundCardView";
+import EditFundCardView from "../components/EditFundCardView";
 
-function calculateFundraisingProgress(current, goal) {
-  try {
-    return `${(current / goal) * 100}%`;
-  } catch (error) {
-    return "0%";
-  }
-}
-
-function findKey(posts, key) {
-  const list = [];
-  if (!posts) {
-    for (var i = 0; i < posts.length; i++) {
-      var obj = posts[i];
-      if (obj.category === key) {
-        list.push(obj);
-      }
-    }
-  }
-  console.log(`For category: ${key}, we have the list:`);
-  return list;
-}
-
-const PaginationComponent = ({ fundCardItems }) => {
-  console.log(fundCardItems);
+const PaginationComponent = () => {
+  //storing each item
+  const [fundCardItems, setFundCardItems] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
+
   //items shown per page
-  const fundCardPerPage = 9;
+  const fundCardPerPage = 12;
   /**
    * We need the info- How many items we got in a single page. Suppose,
    * total items= 30. We want to show 10 items per page.
@@ -40,23 +19,25 @@ const PaginationComponent = ({ fundCardItems }) => {
   //contains total no of pages
   const pageCount = Math.ceil(fundCardItems.length / fundCardPerPage);
 
-  console.log("fund card items: ", fundCardItems);
+  //Fetching data from JSON or API
+  useEffect(() => {
+    fetch("./fund_card.json")
+      .then((response) => response.json())
+      .then((json) => setFundCardItems(json));
+  }, []);
 
+  //component for rendering/mapping each item
   const displayFundCardItem = fundCardItems
     .slice(pagesVisited, pagesVisited + fundCardPerPage)
     .map((fundCard) => {
       return (
-        <div className="col-lg-3 col-md-4 col-6" key={fundCard._id}>
-          <FundCardView
-            imgURL={fundCard.coverPhoto}
+        <div className="col-lg-3 col-md-4 col-6" key={fundCard.id}>
+          <EditFundCardView
+            imgURL={fundCard.imgURL}
             title={fundCard.title}
-            desc={fundCard.story}
-            currentProgress={calculateFundraisingProgress(
-              fundCard.fundraisedTotal,
-              fundCard.fundraisingGoal
-            )}
-            currentAmountRaised={fundCard.fundraisedTotal}
-            goal={fundCard.fundraisingGoal}
+            desc={fundCard.desc}
+            currentProgress={fundCard.currentProgress}
+            currentAmountRaised={fundCard.currentAmountRaised}
           />
         </div>
       );

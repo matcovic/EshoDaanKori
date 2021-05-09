@@ -1,11 +1,16 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const FundCardView = (props) => {
+const EditFundCardView = (props) => {
   return (
     // fund-card template
     <div className="fund-card-box">
       <div className="card-img">
         <img src={props.imgURL} alt="" />
+        {/* edit button */}
+        <Link to="/#" className="btn edit-btn">
+          <i aria-hidden="true" className="pencil large icon"></i>
+        </Link>
       </div>
       <div className="card-desc">
         <h3>{props.title}</h3>
@@ -23,10 +28,10 @@ const FundCardView = (props) => {
         ></div>
       </div>
       <div className="card-amount">
-        <p>৳ {props.currentAmountRaised} raised of {props.goal}</p>
+        <p>{props.currentAmountRaised}</p>
       </div>
     </div>
   );
 };
 
-export default FundCardView;
+export default EditFundCardView;
