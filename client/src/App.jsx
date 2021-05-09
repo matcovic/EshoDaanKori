@@ -72,7 +72,6 @@ function App() {
               background="#00AD7C"
               loaderColor="#B7FE81"
             />
-
             {<Navbar isAuthenticated={isAuthenticated} />}
             <Switch>
               <Route
@@ -80,19 +79,21 @@ function App() {
                 exact
                 component={isAuthenticated ? DiscoverPage : FundDetailsPage}
               />
+              <Route path="/discover" exact component={DiscoverPage} />
               <Route
-                path="/discover"
                 exact
-                component={() => (
-                  <DiscoverPage isAuthenticated={isAuthenticated} />
-                )}
+                path="/category/:category"
+                component={DiscoverPage}
+              />
+               <Route
+                exact
+                path="/fundraisers/edit?/:fundraiserTitle"
+                component={NewCampaign}
               />
               <Route
-                path="/fundraisers"
+                path="/my-fundraisers"
                 exact
-                component={() => (
-                  <MyFundRaisersPage isAuthenticated={isAuthenticated} />
-                )}
+                component={MyFundRaisersPage}
               />
               <Route
                 path="/sign-in"
@@ -123,7 +124,7 @@ function App() {
                   <ForgotPassword isAuthenticated={isAuthenticated} />
                 )}
               />
-              ``
+
               <Route
                 exact
                 path="/reset-password/:token/:id"

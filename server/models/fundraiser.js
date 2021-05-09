@@ -22,7 +22,7 @@ const fundraiserSchema = new Schema(
       required: true,
     },
     fundraisingGoal: {
-      type: String,
+      type: Number,
       required: true,
     },
     fundraisingFor: {
@@ -35,6 +35,10 @@ const fundraiserSchema = new Schema(
     },
     coverPhoto: {
       type: String,
+    },
+    fundraisedTotal: {
+      type: Number,
+      default: 0,
     },
     paymentOptions: [],
     optionalPhotos: [],

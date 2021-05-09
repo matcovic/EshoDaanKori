@@ -1,43 +1,53 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
+import { Redirect } from "react-router";
 import FundCardView from "../../components/FundCardView";
+import { calculateFundraisingProgress, getCard } from "../../util/util";
+import kebabCase from "kebab-case";
 
-const PaginationComponent = () => {
-  //storing each item
-  const [fundCardItems, setFundCardItems] = useState([]);
+
+const PaginationComponent = ({ fundCardItems }) => {
   const [pageNumber, setPageNumber] = useState(0);
+  const [cardClicked, setCardClick] = useState({
+    card: undefined,
+    redirect: false,
+  });
 
   //items shown per page
-  const fundCardPerPage = 9;
-  /**
-   * We need the info- How many items we got in a single page. Suppose,
-   * total items= 30. We want to show 10 items per page.
-   * So on the 3rd page there will be 30th item,
-   * So it's index will be 3*10=30
-   */
+  const fundCardPerPage = 12;
+
+  function onCardClick(event) {
+    event.preventDefault();
+    console.log("card clicked");
+    const fundraiserId = event.currentTarget.id;
+    //console.log(fundraiserId);
+    const card = getCard(fundraiserId, fundCardItems);
+    setCardClick({ card: card, redirect: true });
+  }
+
   const pagesVisited = pageNumber * fundCardPerPage;
-  //contains total no of pages
   const pageCount = Math.ceil(fundCardItems.length / fundCardPerPage);
-
-  //Fetching data from JSON or API
-  useEffect(() => {
-    fetch("./fund_card.json")
-      .then((response) => response.json())
-      .then((json) => setFundCardItems(json));
-  }, []);
-
-  //component for rendering/mapping each item
   const displayFundCardItem = fundCardItems
     .slice(pagesVisited, pagesVisited + fundCardPerPage)
     .map((fundCard) => {
       return (
-        <div className="col-lg-3 col-md-4 col-6" key={fundCard.id}>
+        <div
+          onClick={onCardClick}
+          className="col-lg-3 col-md-4 col-6"
+          id={fundCard._id}
+        >
           <FundCardView
-            imgURL={fundCard.imgURL}
+            imgURL={fundCard.coverPhoto}
             title={fundCard.title}
-            desc={fundCard.desc}
-            currentProgress={fundCard.currentProgress}
-            currentAmountRaised={fundCard.currentAmountRaised}
+            desc={fundCard.story.substring(0, 40) + ".."}
+            currentProgress={calculateFundraisingProgress(
+              fundCard.fundraisedTotal,
+              fundCard.fundraisingGoal
+            )}
+            currentAmountRaised={fundCard.fundraisedTotal}
+            goal={fundCard.fundraisingGoal}
+            eventListener={onCardClick}
           />
         </div>
       );
@@ -50,6 +60,18 @@ const PaginationComponent = () => {
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
+
+  if (cardClicked.redirect) {
+    console.log(cardClicked.card);
+    return (
+      <Redirect
+        to={{
+          pathname: `/fundraisers/view?/${kebabCase(cardClicked.card.title)}`,
+          state: { content: cardClicked.card },
+        }}
+      />
+    );
+  }
 
   return (
     <div>

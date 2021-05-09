@@ -5,23 +5,6 @@ import { NavHashLink } from "react-router-hash-link";
 import "./privateNavBar.css";
 import "./utilities/navBarHide";
 
-function onSignOutClick(event) {
-  event.preventDefault();
-  console.log("sign out clicked");
-
-  const signOut = async () => {
-    const { data } = await axios.post("/api/auth/sign-out");
-    if (data.status === 1) {
-      console.log(data.message);
-      window.location.replace("/");
-    } else {
-      console.log(data.message);
-    }
-  };
-
-  signOut();
-}
-
 const Navbar = ({ isAuthenticated }) => {
   const [userInfo, setUserInfo] = useState({});
 
@@ -45,6 +28,23 @@ const Navbar = ({ isAuthenticated }) => {
       isMounted = false;
     };
   }, []);
+
+  function onSignOutClick(event) {
+    event.preventDefault();
+    console.log("sign out clicked");
+
+    const signOut = async () => {
+      const { data } = await axios.post("/api/auth/sign-out");
+      if (data.status === 1) {
+        console.log(data.message);
+        window.location.replace("/");
+      } else {
+        console.log(data.message);
+      }
+    };
+
+    signOut();
+  }
 
   return (
     <>
@@ -82,7 +82,7 @@ const Navbar = ({ isAuthenticated }) => {
                 <li className="nav-item active">
                   <NavHashLink
                     to={{
-                      pathname: "/fundraisers",
+                      pathname: "/my-fundraisers",
                       state: { status: 1 },
                     }}
                     className="nav-link"

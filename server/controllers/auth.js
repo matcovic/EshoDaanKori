@@ -37,7 +37,8 @@ async function registerController(req, res, next) {
     const result = await sendVerificationEmail(
       user.username,
       `Verify your account`,
-      `Please click on the link to verify yourself: ${process.env.SERVER_HOST}/verify/${verification_token}/${user._id}/`
+      `Please click on the link to verify yourself: ${process.env.SERVER_HOST}/verify/${verification_token}/${user._id}/`,
+      "verification"
     );
 
     res.json(result);
@@ -135,7 +136,8 @@ async function forgotPasswordController(req, res) {
       const result = await sendVerificationEmail(
         email,
         `Reset your Password`,
-        `Please click on the link to reset your password: ${process.env.CLIENT_HOST}/reset-password/${verification_token}/${userId}`
+        `Please click on the link to reset your password: ${process.env.CLIENT_HOST}/reset-password/${verification_token}/${userId}`,
+        "resetPassword"
       );
       res.json(result);
     } else {

@@ -1,14 +1,31 @@
-import React from "react";
-import { Input, Dropdown, List } from "semantic-ui-react";
+import React, { useRef } from "react";
+import { Input, Dropdown, List, Message, Header } from "semantic-ui-react";
 import "./payment.css";
 import Bkash from "../../assets/icons/ico-bkash.svg";
 import Nagad from "../../assets/icons/ico-nagad.svg";
 import Rocket from "../../assets/icons/ico-rocket.svg";
 import NumberLists from "./components/ListofNumbers";
 import twoDots from "../../assets/icons/ico-2dots2.svg";
+import { Redirect } from "react-router";
 import axios from "axios";
+import { getBase64 } from "../../util/util";
 import { useState } from "react";
 import { Button, Modal } from "semantic-ui-react";
+import LoadingBar from "react-top-loading-bar";
+
+//-----------for validation------------------
+import * as yup from "yup";
+
+const phoneRegExp = "[0][1][1-9][0-9]{8}";
+const schema = yup.object().shape({
+  numb: yup
+    .string()
+    .matches(phoneRegExp, "Phone number is not valid")
+    .max(11, "Phone number is too long")
+    .min(11, "Phone number is too short")
+    .required(),
+});
+//-----------for validation------------------
 
 const MobileBankingOptions = [
   {
@@ -40,15 +57,18 @@ const MobileBankingOptions = [
 ];
 
 const PaymentOptions = (props) => {
-  /*   if (!isAuthenticated) {
-    return <Redirect to="/access-denied" />;
-  }
- */
+  const ref = useRef(null); // for loading bar
   const [paymentOptionsList, setPaymentOptionsList] = useState([]); // holds the final numbers
   const [paymentIconKey, setPaymentIcon] = useState("Bkash");
   const [inputField, setInputField] = useState("");
   const [campaignCreated, setCampaignCreated] = useState(false);
   const [buttonActivation, setButtonActivation] = useState("false"); // disables button while loading
+  const [ErrorMessage, setErrorMessage] = useState();
+  const [ErrorBox, setErrorBox] = useState(true);
+
+  console.log(props);
+  //////Modal information---------------
+  const [open, setOpen] = React.useState(true);
 
   console.log(props.location);
 
@@ -62,8 +82,9 @@ const PaymentOptions = (props) => {
     console.log("start campaign clicked");
     console.log(paymentOptionsList);
     props.location.state.paymentOptions = paymentOptionsList;
-    props.location.state.category = "Entertainment";
     console.log(props.location.state);
+
+    ref.current.continuousStart(); // start loading
 
     setButtonActivation("");
     const startCampaign = async () => {
@@ -73,16 +94,16 @@ const PaymentOptions = (props) => {
       );
 
       if (data.status === 1) {
-        console.log(data.message);
+        console.log(data);
         setCampaignCreated(true);
-        // open dialog here
-        // window.location.replace("/registration-complete");
+        ref.current.complete(); // end loading
+        // @todo: open dialog here
+        window.location.replace("/");
         // return <Redirect to="/registration-complete" />;
       } else {
-        console.log(data.message);
-        setButtonActivation("false"); // making the button enabled again
-        window.location.replace("/");
-
+        console.log(data);
+        ref.current.complete(); // end loading
+        // window.location.replace("/");
         // return <Redirect to="/error?" />;
       }
     };
@@ -106,18 +127,27 @@ const PaymentOptions = (props) => {
    *
    * @param {*} event Add More button
    */
-  function onAddMoreClick(event) {
+  async function onAddMoreClick(event) {
     event.preventDefault();
-    if (inputField !== "") {
+
+    const isValid = await schema.isValid({ numb: inputField });
+    if (!isValid) {
+      schema.validate({ numb: inputField }).catch(function (err) {
+        console.log("Error Name:");
+        console.log(err.name); // => 'ValidationError'
+        console.log("Error error");
+        console.log(err.errors); // => [{ key: 'field_too_short', values: { min: 18 } }]
+        setErrorBox(false);
+        setErrorMessage(err.errors);
+      });
+    } else {
       const newList = paymentOptionsList.concat({
         number: inputField,
         icon: paymentIconKey,
       });
-
+      setErrorBox(true);
       setPaymentOptionsList(newList);
-      console.log(paymentOptionsList);
       console.log(paymentIconKey);
-
       setInputField("");
     }
   }
@@ -126,17 +156,6 @@ const PaymentOptions = (props) => {
     console.log("Dropdown:" + data.value);
     setPaymentIcon(data.value);
   }
-
-  /*   if (campaignCreated) {
-    return (
-      <Modal
-        trigger={<Button>Show Modal</Button>}
-        header="Reminder!"
-        content="Call Benjamin regarding the reports."
-        actions={["Snooze", { key: "done", content: "Done", positive: true }]}
-      />
-    );
-  } */
 
   return (
     <div className="payment-background">
@@ -166,6 +185,7 @@ const PaymentOptions = (props) => {
                   placeholder="Enter your number. Ex- 19XXXXXXXX"
                   onChange={onChange}
                   required
+                  name="userNumber"
                 />
               </div>
               <button
@@ -187,6 +207,9 @@ const PaymentOptions = (props) => {
                       number={item.number}
                     />
                   ))}
+                  {/* <NumberLists icon={Bkash} number="012222" />
+                  <NumberLists icon={Nagad} number="012222" />
+                  <NumberLists icon={Rocket} number="012222" /> */}
                 </List>
               </div>
             </div>
@@ -205,6 +228,12 @@ const PaymentOptions = (props) => {
                 </button>
               </form>
             </div>
+            <Message
+              icon="exclamation triangle"
+              hidden={ErrorBox}
+              error
+              header={ErrorMessage}
+            />
             <i>
               <img
                 alt="start campaign button"
@@ -215,6 +244,28 @@ const PaymentOptions = (props) => {
           </div>
         </div>
       </section>
+
+      <Modal
+        onOpen={() => setOpen(true)}
+        open={open}
+        onClose={() => {
+          console.log("MODAL CLOSED");
+          setOpen(false);
+        }}
+        // trigger={onSignInClick}
+      >
+        <Modal.Content>
+          <Modal.Description>
+            <Header>SUCCESS</Header>
+            <p>
+              You have successfully created a campaign. Make sure to invite your
+              friends and family!
+            </p>
+          </Modal.Description>
+          <button className="btn btn-type1 modal-btn">COPY LINK</button>
+          <button className="btn btn-type1 modal-btn">HOME</button>
+        </Modal.Content>
+      </Modal>
     </div>
   );
 };

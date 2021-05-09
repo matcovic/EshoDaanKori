@@ -3,7 +3,7 @@ import React from "react";
 const FundCardView = (props) => {
   return (
     // fund-card template
-    <div className="fund-card-box">
+    <div className="fund-card-box" >
       <div className="card-img">
         <img src={props.imgURL} alt="" />
       </div>
@@ -23,7 +23,7 @@ const FundCardView = (props) => {
         ></div>
       </div>
       <div className="card-amount">
-        <p>{props.currentAmountRaised}</p>
+        <p>৳ {props.currentAmountRaised} raised of {props.goal}</p>
       </div>
     </div>
   );

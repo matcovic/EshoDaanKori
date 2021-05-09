@@ -177,7 +177,7 @@ element.style {
 }
 
 #campaign-section .ui[class*="left icon"].input > input {
-  padding-left: 3rem !important;
+  padding-left: 5rem !important;
 }
 
 @media screen and (max-width: 850px) {
@@ -202,6 +202,19 @@ element.style {
 }
 #campaign-section span {
   color: var(--dove-gray);
+}
+
+/* ----------------------------image upload file style------------------------ */
+.fileContainer {
+  border: 1px var(--quill-gray) dashed !important;
+  width: 100% !important;
+  min-height: 105.7px !important;
+
+  background-color: var(--black-haze) !important;
+}
+
+.fileContainer p {
+  color: var(--dove-gray) !important;
 }
 
 .other-photo-thumbnail {

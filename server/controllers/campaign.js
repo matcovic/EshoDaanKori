@@ -1,22 +1,19 @@
+import Fundraiser from "../models/fundraiser.js";
 import {
   createFundraiserSchema,
   saveFundraiser,
   saveImages,
+  saveMultipleImages,
 } from "../util/dao.js";
 import { respond } from "../util/util.js";
 
 async function newCampaignController(req, res) {
-  console.log("req received");
-  //console.log(req.body);
-  //console.log(req.user);
   if (!req.isAuthenticated()) {
     res.json({ status: -2, message: "You are unauthorized. Redirecting" });
     return;
   }
 
   const schema = createFundraiserSchema(req.body, req.user._id);
-  console.log(schema._id);
-
   const result = await saveImages(
     req.body.coverPhoto,
     req.body.optionalPhotos,
@@ -28,15 +25,116 @@ async function newCampaignController(req, res) {
   schema.optionalPhotos = result.optionalPhotoUrls;
 
   if (result.status === 1) {
-    console.log(schema);
-    const result = await saveFundraiser(schema);
-    res.json(result);
+    //console.log(schema);
+    console.log("Saved to database.");
+    const result = saveFundraiser(schema);
+    res.json({
+      status: 1,
+      message: "Created a new campaign. Redirecting...",
+    });
   } else {
-    res.json(result);
+    res.json({
+      status: -1,
+      message:
+        "Coudn't create a campaign at this moment. Please try again. Redirecting...",
+    });
+  }
+}
+
+/**
+ * Returns fundraisers available wrt the category provided
+ * @param {*} req
+ * @param {*} res
+ */
+async function getAllFundraiserController(req, res) {
+  console.log(req.body.selectedCategory);
+  try {
+    var result;
+    if (req.body.selectedCategory === "All") {
+      result = await Fundraiser.find();
+    } else {
+      result = await Fundraiser.find({
+        category: req.body.selectedCategory,
+      });
+    }
+    log(`${result.length} results found`);
+    res.json({ status: 1, message: "results found", result });
+  } catch (error) {
+    res.json({ status: -1, message: error.message, result });
+  }
+}
+
+async function getMyFundraiserController(req, res) {
+  if (!req.isAuthenticated()) {
+    res.json({
+      status: -2,
+      message: "User is not authenticated. Redirecting...",
+    });
+    return;
+  }
+  try {
+    const result = await Fundraiser.find({
+      uid: req.user._id,
+    });
+    log(`${result.length} results found`);
+    res.json({ status: 1, message: "results found", result });
+  } catch (error) {
+    res.json({ status: -1, message: error.message, result });
+  }
+}
+
+async function editCampaignController(req, res) {
+  console.log(`fundraiserId: ${req.body._id}`);
+  const fundraiserId = req.body._id;
+  delete req.body["_id"];
+  console.log(typeof req.body.title);
+
+  console.log(fundraiserId);
+
+  if (req.isAuthenticated()) {
+    try {
+      req.body.optionalPhotos = await saveMultipleImages(
+        req.body.optionalPhotos,
+        req.user._id,
+        req.body._id
+      );
+
+      var newList = [];
+      if (!req.body.optionalPhotos) {
+        console.log("no new optional images selected");
+        delete req.body["optionalPhotos"];
+        newList = req.body.previousOptionalImages;
+      } else {
+        newList = [
+          ...req.body.previousOptionalImages,
+          ...req.body.optionalPhotos,
+        ];
+      }
+
+      req.body.optionalPhotos = newList.length ? newList : undefined;
+
+      //console.log(req.body.optionalPhotos);
+      const filter = { _id: fundraiserId };
+      const result = await Fundraiser.findOneAndUpdate(filter, req.body, {
+        new: true,
+      });
+      console.log("result saved. Returning previous: ");
+      console.log(result);
+      res.json({ status: 1, message: "Updated successfully." });
+    } catch (error) {
+      res.json({ status: -1, message: error.message });
+    }
+  } else {
+    res.json({ status: -1, message: "Unauthorized access. Redirecting..." });
   }
 }
 
 function log(msg) {
   console.log(msg);
 }
-export { newCampaignController };
+export {
+  newCampaignController,
+  getAllFundraiserController,
+  getMyFundraiserController,
+  editCampaignController,
+};
