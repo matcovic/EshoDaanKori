@@ -1,14 +1,30 @@
 import React from "react";
-import { Input, Dropdown, List } from "semantic-ui-react";
+import { Input, Dropdown, List, Message } from "semantic-ui-react";
 import "./payment.css";
 import Bkash from "../../assets/icons/ico-bkash.svg";
 import Nagad from "../../assets/icons/ico-nagad.svg";
 import Rocket from "../../assets/icons/ico-rocket.svg";
 import NumberLists from "./components/ListofNumbers";
 import twoDots from "../../assets/icons/ico-2dots2.svg";
+import { Redirect } from "react-router";
 import axios from "axios";
+import { getBase64 } from "../../util/util";
 import { useState } from "react";
 import { Button, Modal } from "semantic-ui-react";
+
+//-----------for validation------------------
+import * as yup from "yup";
+
+const phoneRegExp = "[0][1][1-9][0-9]{8}";
+const schema = yup.object().shape({
+  numb: yup
+    .string()
+    .matches(phoneRegExp, "Phone number is not valid")
+    .max(11, "Phone number is too long")
+    .min(11, "Phone number is too short")
+    .required(),
+});
+//-----------for validation------------------
 
 const MobileBankingOptions = [
   {
@@ -49,6 +65,8 @@ const PaymentOptions = (props) => {
   const [inputField, setInputField] = useState("");
   const [campaignCreated, setCampaignCreated] = useState(false);
   const [buttonActivation, setButtonActivation] = useState("false"); // disables button while loading
+  const [ErrorMessage, setErrorMessage] = useState();
+  const [ErrorBox, setErrorBox] = useState(true);
 
   console.log(props.location);
 
@@ -90,6 +108,7 @@ const PaymentOptions = (props) => {
     startCampaign();
   }
 
+
   //-----------------delete Number list Function---------------
   function onDeletNumberClick(index, e) {
     e.preventDefault();
@@ -106,20 +125,37 @@ const PaymentOptions = (props) => {
    *
    * @param {*} event Add More button
    */
-  function onAddMoreClick(event) {
+  async function onAddMoreClick(event) {
+
+
+
     event.preventDefault();
-    if (inputField !== "") {
+
+    const isValid = await schema.isValid({ numb: inputField });
+
+    if (!isValid) {
+      schema.validate({ numb: inputField }).catch(function (err) {
+        console.log("Error Name:");
+        console.log(err.name); // => 'ValidationError'
+        console.log("Error error");
+        console.log(err.errors); // => [{ key: 'field_too_short', values: { min: 18 } }]
+        setErrorBox(false);
+        setErrorMessage(err.errors);
+      });
+    } else {
       const newList = paymentOptionsList.concat({
         number: inputField,
         icon: paymentIconKey,
       });
-
+      setErrorBox(true);
       setPaymentOptionsList(newList);
-      console.log(paymentOptionsList);
+
       console.log(paymentIconKey);
 
       setInputField("");
     }
+
+
   }
 
   function dropDownSelect(e, data) {
@@ -166,6 +202,7 @@ const PaymentOptions = (props) => {
                   placeholder="Enter your number. Ex- 19XXXXXXXX"
                   onChange={onChange}
                   required
+                  name="userNumber"
                 />
               </div>
               <button
@@ -187,6 +224,9 @@ const PaymentOptions = (props) => {
                       number={item.number}
                     />
                   ))}
+                  {/* <NumberLists icon={Bkash} number="012222" />
+                  <NumberLists icon={Nagad} number="012222" />
+                  <NumberLists icon={Rocket} number="012222" /> */}
                 </List>
               </div>
             </div>
@@ -205,6 +245,12 @@ const PaymentOptions = (props) => {
                 </button>
               </form>
             </div>
+            <Message
+              icon="exclamation triangle"
+              hidden={ErrorBox}
+              error
+              header={ErrorMessage}
+            />
             <i>
               <img
                 alt="start campaign button"
