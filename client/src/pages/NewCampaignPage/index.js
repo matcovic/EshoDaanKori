@@ -14,6 +14,10 @@ import "./newCampaign.css";
 import kebabCase from "kebab-case";
 import ImageUploader from "react-images-upload";
 import { useHistory } from "react-router-dom";
+import customModal from "../../components/CustomModal";
+
+// https://stackoverflow.com/questions/64208697/uploading-a-file-using-only-the-input-field-react-hook-form
+//-----------for validation------------------
 import * as yup from "yup";
 import axios from "axios";
 import LoadingBar from "react-top-loading-bar";
@@ -121,6 +125,8 @@ const NewCampaign = (props) => {
     status === 2 ? props.location.state.props.coverPhoto : "",
   ]);
 
+  //////Modal information---------------
+  const [open, setOpen] = React.useState(true);
   const [optionalPicturesDefault, setOptionalPicturesDefault] = useState(
     getOptionalPhotos(props, status)
   );
@@ -136,13 +142,16 @@ const NewCampaign = (props) => {
   const onDropOptionalPhotos = (picture) => {
     setOptionalPictures(picture);
     setPictureCount(picture.length);
+
   };
+
+
 
   // sets dropdown category
   const onDropdownChange = (event) => {
     console.log(event.target.textContent);
     setCategory(event.target.textContent);
-  };
+  }
 
   function onDelete(event) {
     console.log("delete clicked");
@@ -382,6 +391,16 @@ const NewCampaign = (props) => {
           </div>
         </div>
       </section>
+
+      {/* <customModal
+        onClose={() => setOpen()}
+        onClose={() => setOpen(false)}
+        onOpen={() => setOpen(true)}
+        open={open}
+        Header="Success"
+        message="Wow"
+        buttonText="Help"
+      /> */}
     </div>
   );
 };

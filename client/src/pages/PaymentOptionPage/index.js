@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Input, Dropdown, List, Message } from "semantic-ui-react";
+import { Input, Dropdown, List, Message, Header } from "semantic-ui-react";
 import "./payment.css";
 import Bkash from "../../assets/icons/ico-bkash.svg";
 import Nagad from "../../assets/icons/ico-nagad.svg";
@@ -67,6 +67,10 @@ const PaymentOptions = (props) => {
   const [ErrorBox, setErrorBox] = useState(true);
 
   console.log(props);
+  //////Modal information---------------
+  const [open, setOpen] = React.useState(true);
+
+  console.log(props.location);
 
   if (!(props.location && props.location.state)) {
     console.log("unauthorized. Redirecting to signing page...");
@@ -240,6 +244,28 @@ const PaymentOptions = (props) => {
           </div>
         </div>
       </section>
+
+      <Modal
+        onOpen={() => setOpen(true)}
+        open={open}
+        onClose={() => {
+          console.log("MODAL CLOSED");
+          setOpen(false);
+        }}
+        // trigger={onSignInClick}
+      >
+        <Modal.Content>
+          <Modal.Description>
+            <Header>SUCCESS</Header>
+            <p>
+              You have successfully created a campaign. Make sure to invite your
+              friends and family!
+            </p>
+          </Modal.Description>
+          <button className="btn btn-type1 modal-btn">COPY LINK</button>
+          <button className="btn btn-type1 modal-btn">HOME</button>
+        </Modal.Content>
+      </Modal>
     </div>
   );
 };

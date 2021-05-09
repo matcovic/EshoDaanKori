@@ -64,6 +64,7 @@ const SignUp = ({ isAuthenticated }) => {
       
 
       //-------------todo------------
+      window.location = "/registration";
     }
   }
 

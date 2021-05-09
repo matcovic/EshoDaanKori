@@ -217,10 +217,6 @@ element.style {
   color: var(--dove-gray) !important;
 }
 
-.fileContainer .chooseFileButton {
-  font-family: var(--font-family-poppins) !important;
-}
-
 .other-photo-thumbnail {
   width: 100px;
   height: 100px;

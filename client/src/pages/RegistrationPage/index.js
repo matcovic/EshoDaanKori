@@ -31,7 +31,7 @@ yup.setLocale({
 const phoneRegExp = "[0][1][1-9][0-9]{8}";
 
 const schema = yup.object().shape({
-  fullname: yup.string().required("Enter your full name"),
+  fullName: yup.string().required("Enter your full name"),
 
   phoneNumber: yup
     .string()
