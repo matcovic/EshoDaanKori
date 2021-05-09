@@ -39,7 +39,8 @@ async function newCampaignController(req, res) {
   } else {
     res.json({
       status: -1,
-      message: "Coudn't create a campaign at this moment. Please try again. Redirecting...",
+      message:
+        "Coudn't create a campaign at this moment. Please try again. Redirecting...",
     });
   }
 }
@@ -86,6 +87,26 @@ async function getMyFundraiserController(req, res) {
   }
 }
 
+async function editCampaignController(req, res) {
+  console.log(req.body);
+  if (req.isAuthenticated()) {
+    try {
+      const result =  await Fundraiser.findOneAndUpdate(
+        {
+          _id: req.body._id,
+        },
+        req.body.form
+      );
+      console.log(result);
+      res.json({ status: 1, message: "Updated successfully." });
+    } catch (error) {
+      res.json({ status: -1, message: error.message });
+    }
+  } else {
+    res.json({ status: -1, message: "Unauthorized access. Redirecting..." });
+  }
+}
+
 function log(msg) {
   console.log(msg);
 }
@@ -93,4 +114,5 @@ export {
   newCampaignController,
   getAllFundraiserController,
   getMyFundraiserController,
+  editCampaignController,
 };

@@ -12,10 +12,12 @@ import threeDots from "../../assets/icons/ico-3dots2.svg";
 import { convertMultipleImagesToB64, getBase64 } from "../../util/util";
 import "./newCampaign.css";
 import kebabCase from "kebab-case";
+import { useHistory } from "react-router-dom";
 
 // https://stackoverflow.com/questions/64208697/uploading-a-file-using-only-the-input-field-react-hook-form
 //-----------for validation------------------
 import * as yup from "yup";
+import axios from "axios";
 
 const schema = yup.object().shape({
   title: yup
@@ -34,10 +36,10 @@ const schema = yup.object().shape({
 //-----------for validation------------------
 
 const options = [
-  { key: "m", text: "Male", value: "male" },
-  { key: "f", text: "Female", value: "female" },
-  { key: "o", text: "Other", value: "other" },
-  { key: "x", text: "Entertainment", value: "s" },
+  { key: "m", text: "Medical", value: "Medical" },
+  { key: "t", text: "Tuition", value: "Tuition" },
+  { key: "o", text: "Others", value: "Others" },
+  { key: "e", text: "Entertainment", value: "Entertainment" },
 ];
 
 var coverImage;
@@ -71,18 +73,25 @@ function getPreviousFundraisingFor(props) {
   if (props.location.state.status === 2) {
     return props.location.state.props.fundraisingFor;
   } else {
-    return null;
+    return "Yourself";
   }
 }
 
 const NewCampaign = (props) => {
+  const history = useHistory();
+
+  // status === 2 means it came from edit profile window
+  // status === 1 means it came from discover window
+  const status = props.location.state.status;
+
   console.log(props);
   const [fundraisingFor, setFundraisingFor] = useState(
     getPreviousFundraisingFor(props)
   );
   const [form, setFormContent] = useState(getPreviousValues(props));
-  const [category, setCategory] = useState();
-  const [redirect, setRedirect] = useState(false);
+  const [category, setCategory] = useState(
+    status === 2 ? props.location.state.props.category : ""
+  );
   const [ErrorMessage, setErrorMessage] = useState();
   const [ErrorBox, setErrorBox] = useState(true);
 
@@ -141,9 +150,9 @@ const NewCampaign = (props) => {
 
   async function onButtonClick(event) {
     event.preventDefault();
-
-    const isValid = await schema.isValid(form);
-
+    form.category = category;
+    //const isValid = await schema.isValid(form);
+    const isValid = true;
     if (!isValid) {
       schema.validate(form).catch(function (err) {
         console.log("Error Name:");
@@ -161,22 +170,35 @@ const NewCampaign = (props) => {
       console.log(form);
       form.coverPhoto = await getBase64(coverImage);
       form.optionalPhotos = await convertMultipleImagesToB64(optionalImages);
-      setRedirect(true);
-    }
 
-    /* 
-    //  console.log(images);
-       const registerUser = async () => {
-      const { data } = await axios.post("/api/auth/register-info", form);
-      if (data.status === 1) {
-        console.log(data.message);
-        window.location.replace("/registration-complete");
+      if (status === 2) {
+        // directly save the value in the database instead
+        const saveChanges = async () => {
+          const { data } = await axios.post(
+            "/api/campaign/edit-campaign",
+            form
+          );
+          if (data.status === 1) {
+            console.log(data);
+            // open dialog here
+           // window.location.replace("/");
+            // return <Redirect to="/registration-complete" />;
+          } else {
+            console.log(data);
+            // window.location.replace("/");
+            // return <Redirect to="/error?" />;
+          }
+        };
+
+        saveChanges();
       } else {
-        console.log(data.message);
+        // redirect to payment
+        history.push({
+          pathname: "/payment",
+          state: form,
+        });
       }
-    };
-
-    registerUser();  */
+    }
   }
 
   useEffect(() => {
@@ -292,17 +314,6 @@ const NewCampaign = (props) => {
     }
   }
 
-  if (redirect) {
-    return (
-      <Redirect
-        to={{
-          pathname: "/payment",
-          state: form,
-        }}
-      />
-    );
-  }
-
   return (
     <div className="body-background">
       <section id="campaign-section">
@@ -340,7 +351,8 @@ const NewCampaign = (props) => {
                   onChange={onDropdownChange}
                   name="category"
                   options={options}
-                  defaultValue={options[1].value}
+                  defaultValue={category}
+                  value={category}
                 />
 
                 <Form.Field>
@@ -433,7 +445,9 @@ const NewCampaign = (props) => {
               </Form.Group>
               <Form.Field>
                 <button onClick={onButtonClick} className="btn btn-type1">
-                  PROCEED TO PAYMENT OPTIONS
+                  {status === 2
+                    ? "SAVE CHANGES"
+                    : " PROCEED TO PAYMENT OPTIONS"}
                 </button>
               </Form.Field>
             </Form>

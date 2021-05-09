@@ -56,10 +56,6 @@ const MobileBankingOptions = [
 ];
 
 const PaymentOptions = (props) => {
-  /*   if (!isAuthenticated) {
-    return <Redirect to="/access-denied" />;
-  }
- */
   const [paymentOptionsList, setPaymentOptionsList] = useState([]); // holds the final numbers
   const [paymentIconKey, setPaymentIcon] = useState("Bkash");
   const [inputField, setInputField] = useState("");
@@ -68,7 +64,7 @@ const PaymentOptions = (props) => {
   const [ErrorMessage, setErrorMessage] = useState();
   const [ErrorBox, setErrorBox] = useState(true);
 
-  console.log(props.location);
+  console.log(props);
 
   if (!(props.location && props.location.state)) {
     console.log("unauthorized. Redirecting to signing page...");
@@ -80,7 +76,6 @@ const PaymentOptions = (props) => {
     console.log("start campaign clicked");
     console.log(paymentOptionsList);
     props.location.state.paymentOptions = paymentOptionsList;
-    props.location.state.category = "Entertainment";
     console.log(props.location.state);
 
     setButtonActivation("");
