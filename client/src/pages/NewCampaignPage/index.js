@@ -1,20 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Redirect } from "react-router";
-import {
-  Form,
-  Input,
-  Radio,
-  Select,
-  TextArea,
-  Message,
-} from "semantic-ui-react";
+import React, {useEffect, useState} from "react";
+import {Redirect} from "react-router";
+import {Form, Input, Message, Radio, Select, TextArea,} from "semantic-ui-react";
 import threeDots from "../../assets/icons/ico-3dots2.svg";
-import { convertMultipleImagesToB64, getBase64 } from "../../util/util";
+import {convertMultipleImagesToB64, getBase64} from "../../util/util";
 import "./newCampaign.css";
 import kebabCase from "kebab-case";
 
 // https://stackoverflow.com/questions/64208697/uploading-a-file-using-only-the-input-field-react-hook-form
-
 //-----------for validation------------------
 import * as yup from "yup";
 
@@ -70,8 +62,7 @@ function getPreviousValues(props) {
 
 function getPreviousFundraisingFor(props) {
   if (props.location.state.status === 2) {
-    const post = props.location.state.props.fundraisingFor;
-    return post;
+    return props.location.state.props.fundraisingFor;
   } else {
     return null;
   }
@@ -83,12 +74,15 @@ const NewCampaign = (props) => {
     getPreviousFundraisingFor(props)
   );
   const [form, setFormContent] = useState(getPreviousValues(props));
-  const [redirect, setRedirect] = useState(false);
   const [category, setCategory] = useState();
+  const [redirect, setRedirect] = useState(false);
+  const [ErrorMessage, setErrorMessage] = useState();
+  const [ErrorBox, setErrorBox] = useState(true);
+
+
 
   function onDropdownChange(event) {
     console.log(event.target.textContent);
-
     setCategory(event.target.textContent);
   }
 
@@ -96,12 +90,6 @@ const NewCampaign = (props) => {
     console.log("unauthorized. Redirecting to signing page...");
     window.location = "/";
   }
-
-  const [fundraisingFor, setFundraisingFor] = useState("Yourself");
-  const [form, setFormContent] = useState({});
-  const [redirect, setRedirect] = useState(false);
-  const [ErrorMessage, setErrorMessage] = useState();
-  const [ErrorBox, setErrorBox] = useState(true);
 
   // handles radio button changes
   const handleChange = (event, { value }) => {
