@@ -61,6 +61,7 @@ const SignUp = ({ isAuthenticated }) => {
       });
     } else {
       setErrorBox(true);
+      
 
       //-------------todo------------
     }

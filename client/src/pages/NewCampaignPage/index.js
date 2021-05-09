@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Redirect } from "react-router";
 import {
   Form,
@@ -13,36 +13,37 @@ import { convertMultipleImagesToB64, getBase64 } from "../../util/util";
 import "./newCampaign.css";
 import kebabCase from "kebab-case";
 import ImageUploader from "react-images-upload";
-
-// https://stackoverflow.com/questions/64208697/uploading-a-file-using-only-the-input-field-react-hook-form
-//-----------for validation------------------
+import { useHistory } from "react-router-dom";
 import * as yup from "yup";
+import axios from "axios";
+import LoadingBar from "react-top-loading-bar";
 
 const schema = yup.object().shape({
   title: yup
     .string()
-    .required("Title is required")
-    .min(15, "Title Too short")
-    .max(30, "Title Too long"),
-  location: yup.string().required("Location is required"),
+    .required("Please write a meaningful title.")
+    .min(15, "Please write a meaningful title.")
+    .max(60, "Please make the title shorter!"),
+  location: yup
+    .string()
+    .required("Location is required")
+    .min(5, "Please enter a valid location")
+    .max(30, "Please make the title shorter!"),
   fundraisingGoal: yup
-    .number("Invalid")
-    .positive("Invalid")
-    .integer("Invalid")
-    .required(),
+    .number("Invalid goal entered. Please enter a number.")
+    .positive("Invalid goal entered. Please enter a number.")
+    .integer("Invalid goal entered. Please enter a number.")
+    .required("Please enter the fundraiser target amount."),
   story: yup.string().required(),
 });
 //-----------for validation------------------
 
 const options = [
-  { key: "m", text: "Male", value: "male" },
-  { key: "f", text: "Female", value: "female" },
-  { key: "o", text: "Other", value: "other" },
-  { key: "x", text: "Entertainment", value: "s" },
+  { key: "m", text: "Medical", value: "Medical" },
+  { key: "t", text: "Tuition", value: "Tuition" },
+  { key: "o", text: "Others", value: "Others" },
+  { key: "e", text: "Entertainment", value: "Entertainment" },
 ];
-
-var coverImage;
-var optionalImages = [];
 
 function getPreviousValues(props) {
   // if status is 2, it means that the campaign page is opened for editing only
@@ -53,6 +54,7 @@ function getPreviousValues(props) {
 
     const post = props.location.state.props;
     const form = {
+      _id: post._id,
       title: post.title,
       location: post.location,
       fundraisingGoal: post.fundraisingGoal,
@@ -72,42 +74,79 @@ function getPreviousFundraisingFor(props) {
   if (props.location.state.status === 2) {
     return props.location.state.props.fundraisingFor;
   } else {
-    return null;
+    return "Yourself";
   }
 }
 
+function getOptionalPhotos(props, status) {
+  if (status === 2) {
+    if (props.location.state.props.optionalPhotos) {
+      return props.location.state.props.optionalPhotos;
+    }
+  }
+  return [];
+}
+
 const NewCampaign = (props) => {
-  console.log(props);
+  const history = useHistory();
+  const ref = useRef(null); // for loading bar
+
+  // status === 2 means it came from edit profile window, and values are saved in {props.location.state.props}
+  // status === 1 means it came from discover window
+  const status = props.location.state.status;
+
+  if (status === 2) {
+    console.log("OPTIONAL PHOTOS: ");
+    console.log(props.location.state.props.optionalPhotos);
+  }
+
+  const [buttonActivation, setButtonActivation] = useState("false");
   const [fundraisingFor, setFundraisingFor] = useState(
     getPreviousFundraisingFor(props)
   );
   const [form, setFormContent] = useState(getPreviousValues(props));
-  const [category, setCategory] = useState();
-  const [redirect, setRedirect] = useState(false);
+  const [category, setCategory] = useState(
+    status === 2 ? props.location.state.props.category : []
+  );
   const [ErrorMessage, setErrorMessage] = useState();
   const [ErrorBox, setErrorBox] = useState(true);
-
-  const [pictures, setPictures] = useState([]);
-  const [Coverpicture, setCoverPicture] = useState([]);
-
+  const [optionalPictures, setOptionalPictures] = useState([]);
+  const [coverPicture, setCoverPicture] = useState(
+    status === 2 ? props.location.state.props.coverPhoto : ""
+  );
   const [pictureCount, setPictureCount] = useState(0);
-  const onDrop = (picture) => {
-    setPictures([...pictures, picture]);
-    console.log(pictures);
 
+  // used for the default images obtained from the user's edit fundraiser window
+  const [coverPictureDefault, setCoverPictureDefault] = useState([
+    status === 2 ? props.location.state.props.coverPhoto : "",
+  ]);
+
+  const [optionalPicturesDefault, setOptionalPicturesDefault] = useState(
+    getOptionalPhotos(props, status)
+  );
+
+  // cover photo change listener
+  const onDropCoverPhoto = (picture, data) => {
+    console.log("deleting: " + picture);
+    setCoverPicture(picture);
+    setCoverPictureDefault(data);
+  };
+
+  // optional photos change listener
+  const onDropOptionalPhotos = (picture) => {
+    setOptionalPictures(picture);
     setPictureCount(picture.length);
-    console.log(pictureCount + "Hoga");
   };
 
-  const onDropCoverPhoto = (picture) => {
-    setCoverPicture([...Coverpicture, picture]);
-  };
-
-  function onDropdownChange(event) {
+  // sets dropdown category
+  const onDropdownChange = (event) => {
     console.log(event.target.textContent);
     setCategory(event.target.textContent);
-  }
+  };
 
+  function onDelete(event) {
+    console.log("delete clicked");
+  }
   if (!(props.location && props.location.state)) {
     console.log("unauthorized. Redirecting to signing page...");
     window.location = "/";
@@ -121,46 +160,18 @@ const NewCampaign = (props) => {
   // handles input field changes
   function onChange(event) {
     const { value, name } = event.target;
-    console.log(value + " " + name);
-
-    // console.log("DropDown Value:");
-    // console.log(event.target.textContent);
-
     setFormContent((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   }
 
-  // handles image upload changes
-  function onImageChange(event) {
-    const { name } = event.target;
-
-    if (name === "coverPhoto") {
-      coverImage = event.target.files[0];
-      console.log(coverImage);
-    } else if (name === "optionalPhotos") {
-      optionalImages = parseFiles(event.target.files);
-    }
-  }
-
-  function parseFiles(files) {
-    Array.from(files).forEach((file) => {
-      console.log(`pushing file::: files size-${files.length}`);
-      optionalImages.push(file);
-    });
-
-    console.log("new content");
-    console.log(optionalImages);
-
-    return optionalImages;
-  }
-
   async function onButtonClick(event) {
     event.preventDefault();
 
     const isValid = await schema.isValid(form);
-    console.log(pictureCount + "wowasa");
+    // const isValid = true; //for debug
+    console.log("optional picture count: " + pictureCount);
     if (pictureCount > 5) {
       setErrorBox(false);
       setErrorMessage("Only 5 Photos are allowed");
@@ -176,158 +187,67 @@ const NewCampaign = (props) => {
           setErrorMessage(err.errors);
         });
       } else {
-        setErrorBox(true);
-        console.log(form);
-        console.log("on continue click");
+        ref.current.continuousStart();
+
         form.fundraisingFor = fundraisingFor;
+        form.category = category;
+        console.log("coverpic:");
+        console.log(coverPicture);
+        console.log(typeof coverPicture[0]);
+
+        // means user selected a new picture
+        if (coverPicture[0] instanceof File) {
+          console.log("converting coverpic to b64:");
+          form.coverPhoto = await getBase64(
+            coverPicture ? coverPicture[0] : undefined
+          );
+        }
+
+        form.optionalPhotos = await convertMultipleImagesToB64(
+          optionalPictures
+        );
+
+        form.previousOptionalImages = optionalPicturesDefault;
+        console.log("Form: ");
         console.log(form);
-        form.coverPhoto = await getBase64(coverImage);
-        form.optionalPhotos = await convertMultipleImagesToB64(optionalImages);
-        setRedirect(true);
+        if (status === 2) {
+          setButtonActivation(""); // disables button
+
+          // save changes to database
+          const editChanges = async () => {
+            const { data } = await axios.post(
+              "/api/campaign/edit-campaign",
+              form
+            );
+            if (data.status === 1) {
+              console.log(data.message);
+              // window.location.replace("/");
+            } else {
+              console.log(data.status);
+              console.log(data.message);
+            }
+            setButtonActivation("false"); // enables button
+            ref.current.complete();
+          };
+
+          editChanges();
+        } else {
+          ref.current.complete();
+
+          history.push({
+            pathname: "/payment",
+            state: form,
+          });
+        }
       }
     }
-    /* 
-    //  console.log(images);
-       const registerUser = async () => {
-      const { data } = await axios.post("/api/auth/register-info", form);
-      if (data.status === 1) {
-        console.log(data.message);
-        window.location.replace("/registration-complete");
-      } else {
-        console.log(data.message);
-      }
-    };
-
-    registerUser();  */
-  }
-
-  useEffect(() => {
-    // ---------------java script for cover image----------------------
-    document.querySelectorAll("#userCoverPhoto").forEach((inputElement) => {
-      const dropZoneElement = inputElement.closest(".btn-type5");
-
-      dropZoneElement.addEventListener("click", (e) => {
-        inputElement.click();
-      });
-
-      inputElement.addEventListener("change", (e) => {
-        if (inputElement.files.length) {
-          updateThumbnail(dropZoneElement, inputElement.files[0]);
-        }
-      });
-
-      dropZoneElement.addEventListener("dragover", (e) => {
-        e.preventDefault();
-      });
-
-      dropZoneElement.addEventListener("drop", (e) => {
-        e.preventDefault();
-        if (e.dataTransfer.files.length) {
-          inputElement.files = e.dataTransfer.files;
-          updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
-        }
-        // console.log(e.dataTransfer.files);
-      });
-    });
-
-    // ---------------java script for aditional image----------------------
-
-    document.querySelectorAll("#userOptionalPhotos").forEach((inputElement) => {
-      const dropZoneElement = inputElement.closest(".btn-type5");
-
-      dropZoneElement.addEventListener("click", (e) => {
-        inputElement.click();
-      });
-
-      inputElement.addEventListener("change", (e) => {
-        if (inputElement.files.length) {
-          updateOptionalThumbnail(dropZoneElement, inputElement.files);
-        }
-      });
-
-      dropZoneElement.addEventListener("dragover", (e) => {
-        e.preventDefault();
-      });
-
-      dropZoneElement.addEventListener("drop", (e) => {
-        e.preventDefault();
-        if (e.dataTransfer.files.length) {
-          /*  setOtherImages((prev) => {
-            console.log(prev);
-            return e.dataTransfer.files;
-          }); */
-
-          inputElement.files = e.dataTransfer.files;
-          updateOptionalThumbnail(dropZoneElement, e.dataTransfer.files);
-        }
-        console.log(e.dataTransfer.files);
-      });
-    });
-  }, []);
-
-  // --------------------cover thumbnail function----------------------------------
-  function updateThumbnail(dropZoneElement, file) {
-    let thumbnailElement = dropZoneElement.querySelector(".photo-thumbnail");
-
-    if (dropZoneElement.querySelector(".drag-drop-text")) {
-      dropZoneElement.querySelector(".drag-drop-text").remove();
-    }
-    if (!thumbnailElement) {
-      thumbnailElement = document.createElement("img");
-      thumbnailElement.classList.add("photo-thumbnail");
-      dropZoneElement.appendChild(thumbnailElement);
-    }
-
-    if (file.type.startsWith("image/")) {
-      //setCoverPhoto(file);
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        thumbnailElement.src = reader.result;
-      };
-    }
-  }
-
-  function updateOptionalThumbnail(dropZoneElement, file) {
-    let thumbnailElement = dropZoneElement.querySelector(".photo-thumbnail");
-
-    if (dropZoneElement.querySelector(".drag-drop-text")) {
-      dropZoneElement.querySelector(".drag-drop-text").remove();
-    }
-
-    var i = file.length;
-
-    // shows the preview of the all the images dragged in
-    for (var image = 0; image < i; image++) {
-      if (file[image].type.startsWith("image/")) {
-        const reader = new FileReader();
-        reader.readAsDataURL(file[image]);
-        // eslint-disable-next-line no-loop-func
-        reader.onload = () => {
-          thumbnailElement = document.createElement("img");
-          thumbnailElement.classList.add("other-photo-thumbnail");
-          dropZoneElement.appendChild(thumbnailElement);
-          thumbnailElement.src = reader.result;
-        };
-        //console.log(reader.onload);
-      }
-    }
-  }
-
-  if (redirect) {
-    return (
-      <Redirect
-        to={{
-          pathname: "/payment",
-          state: form,
-        }}
-      />
-    );
   }
 
   return (
     <div className="body-background">
       <section id="campaign-section">
+        <LoadingBar color="#FF641A" ref={ref} shadow={true} height={4} />
+
         <div className="sample">
           <div className="campaign-box campaign-box-medium campaign-box-small">
             <h2>START A NEW CAMPAIGN</h2>
@@ -362,7 +282,8 @@ const NewCampaign = (props) => {
                   onChange={onDropdownChange}
                   name="category"
                   options={options}
-                  defaultValue={options[1].value}
+                  defaultValue={category}
+                  value={category}
                 />
 
                 <Form.Field>
@@ -391,25 +312,29 @@ const NewCampaign = (props) => {
                 <label>Add a cover photo</label>
                 <ImageUploader
                   {...props}
-                  buttonText="Choose images"
+                  label="Max file size: 5MB. Accepted extensions: PNG | JPG"
+                  buttonText="Choose image"
                   imgExtension={[".jpg", ".png"]}
                   maxFileSize={5242880}
                   onChange={onDropCoverPhoto}
-                  withPreview={true}
+                  withPreview={coverPicture === "" ? false : true}
                   singleImage={true}
+                  defaultImages={coverPictureDefault}
                 />
               </Form.Field>
 
               <Form.Field>
                 <label>Add more photos (optional)</label>
-
                 <ImageUploader
                   {...props}
+                  label="Max file count: 5. Accepted extensions: PNG | JPG"
                   buttonText="Choose images"
                   imgExtension={[".jpg", ".png"]}
                   maxFileSize={5242880}
-                  onChange={onDrop}
+                  onChange={onDropOptionalPhotos}
+                  onDelete={onDelete}
                   withPreview={true}
+                  defaultImages={optionalPicturesDefault}
                 />
               </Form.Field>
               <Form.Group>
@@ -437,7 +362,10 @@ const NewCampaign = (props) => {
               </Form.Group>
               <Form.Field>
                 <button onClick={onButtonClick} className="btn btn-type1">
-                  PROCEED TO PAYMENT OPTIONS
+                  {status === 2
+                    ? "SAVE CHANGES"
+                    : " PROCEED TO PAYMENT OPTIONS"}{" "}
+                  disabled={buttonActivation}
                 </button>
               </Form.Field>
             </Form>

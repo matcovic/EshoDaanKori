@@ -1,7 +1,5 @@
 import User from "../models/user.js";
 
-function testController(req, res, next) {
-  console.log("testing controller");
-}
+async function testController(req, res, next) {}
 
 export { testController };

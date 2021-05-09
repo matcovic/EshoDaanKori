@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Input, Dropdown, List, Message } from "semantic-ui-react";
 import "./payment.css";
 import Bkash from "../../assets/icons/ico-bkash.svg";
@@ -11,6 +11,7 @@ import axios from "axios";
 import { getBase64 } from "../../util/util";
 import { useState } from "react";
 import { Button, Modal } from "semantic-ui-react";
+import LoadingBar from "react-top-loading-bar";
 
 //-----------for validation------------------
 import * as yup from "yup";
@@ -56,10 +57,7 @@ const MobileBankingOptions = [
 ];
 
 const PaymentOptions = (props) => {
-  /*   if (!isAuthenticated) {
-    return <Redirect to="/access-denied" />;
-  }
- */
+  const ref = useRef(null); // for loading bar
   const [paymentOptionsList, setPaymentOptionsList] = useState([]); // holds the final numbers
   const [paymentIconKey, setPaymentIcon] = useState("Bkash");
   const [inputField, setInputField] = useState("");
@@ -68,7 +66,7 @@ const PaymentOptions = (props) => {
   const [ErrorMessage, setErrorMessage] = useState();
   const [ErrorBox, setErrorBox] = useState(true);
 
-  console.log(props.location);
+  console.log(props);
 
   if (!(props.location && props.location.state)) {
     console.log("unauthorized. Redirecting to signing page...");
@@ -80,8 +78,9 @@ const PaymentOptions = (props) => {
     console.log("start campaign clicked");
     console.log(paymentOptionsList);
     props.location.state.paymentOptions = paymentOptionsList;
-    props.location.state.category = "Entertainment";
     console.log(props.location.state);
+
+    ref.current.continuousStart(); // start loading
 
     setButtonActivation("");
     const startCampaign = async () => {
@@ -93,11 +92,13 @@ const PaymentOptions = (props) => {
       if (data.status === 1) {
         console.log(data);
         setCampaignCreated(true);
-        // open dialog here
+        ref.current.complete(); // end loading
+        // @todo: open dialog here
         window.location.replace("/");
         // return <Redirect to="/registration-complete" />;
       } else {
         console.log(data);
+        ref.current.complete(); // end loading
         // window.location.replace("/");
         // return <Redirect to="/error?" />;
       }
@@ -105,7 +106,6 @@ const PaymentOptions = (props) => {
 
     startCampaign();
   }
-
 
   //-----------------delete Number list Function---------------
   function onDeletNumberClick(index, e) {
@@ -124,13 +124,9 @@ const PaymentOptions = (props) => {
    * @param {*} event Add More button
    */
   async function onAddMoreClick(event) {
-
-
-
     event.preventDefault();
 
     const isValid = await schema.isValid({ numb: inputField });
-
     if (!isValid) {
       schema.validate({ numb: inputField }).catch(function (err) {
         console.log("Error Name:");
@@ -147,30 +143,15 @@ const PaymentOptions = (props) => {
       });
       setErrorBox(true);
       setPaymentOptionsList(newList);
-
       console.log(paymentIconKey);
-
       setInputField("");
     }
-
-
   }
 
   function dropDownSelect(e, data) {
     console.log("Dropdown:" + data.value);
     setPaymentIcon(data.value);
   }
-
-  /*   if (campaignCreated) {
-    return (
-      <Modal
-        trigger={<Button>Show Modal</Button>}
-        header="Reminder!"
-        content="Call Benjamin regarding the reports."
-        actions={["Snooze", { key: "done", content: "Done", positive: true }]}
-      />
-    );
-  } */
 
   return (
     <div className="payment-background">
