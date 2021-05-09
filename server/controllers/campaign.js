@@ -16,7 +16,7 @@ async function newCampaignController(req, res) {
   }
 
   const schema = createFundraiserSchema(req.body, req.user._id);
-  console.log(schema._id);
+  console.log(req.body);
 
   const result = await saveImages(
     req.body.coverPhoto,
@@ -29,11 +29,18 @@ async function newCampaignController(req, res) {
   schema.optionalPhotos = result.optionalPhotoUrls;
 
   if (result.status === 1) {
-    console.log(schema);
-    const result = await saveFundraiser(schema);
-    res.json(result);
+    //console.log(schema);
+    console.log("Saved to database.");
+    const result = saveFundraiser(schema);
+    res.json({
+      status: 1,
+      message: "Created a new campaign. Redirecting...",
+    });
   } else {
-    res.json(result);
+    res.json({
+      status: -1,
+      message: "Coudn't create a campaign at this moment. Please try again. Redirecting...",
+    });
   }
 }
 
@@ -60,7 +67,30 @@ async function getAllFundraiserController(req, res) {
   }
 }
 
+async function getMyFundraiserController(req, res) {
+  if (!req.isAuthenticated()) {
+    res.json({
+      status: -2,
+      message: "User is not authenticated. Redirecting...",
+    });
+    return;
+  }
+  try {
+    const result = await Fundraiser.find({
+      uid: req.user._id,
+    });
+    log(`${result.length} results found`);
+    res.json({ status: 1, message: "results found", result });
+  } catch (error) {
+    res.json({ status: -1, message: error.message, result });
+  }
+}
+
 function log(msg) {
   console.log(msg);
 }
-export { newCampaignController, getAllFundraiserController };
+export {
+  newCampaignController,
+  getAllFundraiserController,
+  getMyFundraiserController,
+};

@@ -56,7 +56,7 @@ function createFundraiserSchema(form, uid) {
  */
 async function saveFundraiser(schema) {
   try {
-    const result = await schema.save();
+    await schema.save();
     return {
       status: 1,
       message: "Created a fundraiser successfully. Redirecting...",
@@ -112,8 +112,8 @@ async function saveImages(coverPhoto, optionalPhotos, uid, fundraiserId) {
  */
 async function saveMultipleImages(images, uid, fundraiserId) {
   const list = [];
-  if (images.length === null) {
-    return null;
+  if (images === null || images === undefined) {
+    return undefined;
   }
 
   let res_promises = images.map(

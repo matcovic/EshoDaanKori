@@ -4,6 +4,7 @@ import { Form, Input, Radio, Select, TextArea } from "semantic-ui-react";
 import threeDots from "../../assets/icons/ico-3dots2.svg";
 import { convertMultipleImagesToB64, getBase64 } from "../../util/util";
 import "./newCampaign.css";
+import kebabCase from "kebab-case";
 
 // https://stackoverflow.com/questions/64208697/uploading-a-file-using-only-the-input-field-react-hook-form
 
@@ -11,21 +12,64 @@ const options = [
   { key: "m", text: "Male", value: "male" },
   { key: "f", text: "Female", value: "female" },
   { key: "o", text: "Other", value: "other" },
+  { key: "x", text: "Entertainment", value: "s" },
 ];
 
 var coverImage;
 var optionalImages = [];
 
+function getPreviousValues(props) {
+  // if status is 2, it means that the campaign page is opened for editing only
+  if (props.location.state.status === 2) {
+    console.log(props);
+    const title = kebabCase(props.match.params.fundraiserTitle);
+    console.log(title);
+
+    const post = props.location.state.props;
+    const form = {
+      title: post.title,
+      location: post.location,
+      fundraisingGoal: post.fundraisingGoal,
+      fundraisingFor: post.fundraisingFor,
+      story: post.story,
+      category: post.category,
+    };
+
+    console.log(form);
+    return form;
+  } else {
+    return {};
+  }
+}
+
+function getPreviousFundraisingFor(props) {
+  if (props.location.state.status === 2) {
+    const post = props.location.state.props.fundraisingFor;
+    return post;
+  } else {
+    return null;
+  }
+}
+
 const NewCampaign = (props) => {
   console.log(props);
+  const [fundraisingFor, setFundraisingFor] = useState(
+    getPreviousFundraisingFor(props)
+  );
+  const [form, setFormContent] = useState(getPreviousValues(props));
+  const [redirect, setRedirect] = useState(false);
+  const [category, setCategory] = useState();
+
+  function onDropdownChange(event) {
+    console.log(event.target.textContent);
+  
+    setCategory(event.target.textContent);
+  }
+
   if (!(props.location && props.location.state)) {
     console.log("unauthorized. Redirecting to signing page...");
     window.location = "/";
   }
-
-  const [fundraisingFor, setFundraisingFor] = useState(null);
-  const [form, setFormContent] = useState({});
-  const [redirect, setRedirect] = useState(false);
 
   // handles radio button changes
   const handleChange = (event, { value }) => {
@@ -227,6 +271,7 @@ const NewCampaign = (props) => {
                   <label>What’s your fundraiser title?</label>
                   <Input
                     name="title"
+                    value={form.title}
                     onChange={onChange}
                     placeholder="Ex: Need money for sex "
                   />
@@ -235,6 +280,7 @@ const NewCampaign = (props) => {
                   <label>Enter your location</label>
                   <Input
                     name="location"
+                    value={form.location}
                     onChange={onChange}
                     icon="map marker alternate"
                     placeholder="Enter your location "
@@ -247,7 +293,7 @@ const NewCampaign = (props) => {
                   control={Select}
                   label="What is the fundraiser for?"
                   placeholder="Choose a category"
-                  onChange={onChange}
+                  onChange={onDropdownChange}
                   name="category"
                   options={options}
                 />
@@ -256,6 +302,7 @@ const NewCampaign = (props) => {
                   <label>Set your fundraising goal</label>
                   <Input
                     name="fundraisingGoal"
+                    value={form.fundraisingGoal}
                     onChange={onChange}
                     icon="dollar"
                     iconPosition="left"
@@ -268,6 +315,7 @@ const NewCampaign = (props) => {
                 name="story"
                 onChange={onChange}
                 control={TextArea}
+                value={form.story}
                 label="Tell your story"
                 placeholder="Tell us more about you..."
               />

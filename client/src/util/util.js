@@ -1,5 +1,5 @@
 function getBase64(file) {
-  if (!file) return null;
+  if (!file) return undefined;
   return new Promise((resolve) => {
     let fileInfo;
     let baseURL = "";
@@ -24,7 +24,7 @@ function getBase64(file) {
 async function convertMultipleImagesToB64(images) {
   const list = [];
   if (images.length === 0) {
-    return null;
+    return undefined;
   }
   let res_promises = images.map(
     (file) =>
@@ -42,7 +42,30 @@ async function convertMultipleImagesToB64(images) {
     await Promise.all(res_promises);
     return list;
   } catch (error) {
-    return null;
+    return undefined;
   }
 }
-export { getBase64, convertMultipleImagesToB64 };
+
+function calculateFundraisingProgress(current, goal) {
+  try {
+    return `${(current / goal) * 100}%`;
+  } catch (error) {
+    return "0%";
+  }
+}
+
+function getCard(id, fundCardItems) {
+  for (var i = 0; i < fundCardItems.length; i++) {
+    if (fundCardItems[i]._id === id) {
+      console.log("found");
+      return fundCardItems[i];
+    }
+  }
+}
+
+export {
+  getBase64,
+  convertMultipleImagesToB64,
+  calculateFundraisingProgress,
+  getCard,
+};
