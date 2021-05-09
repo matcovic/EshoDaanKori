@@ -149,3 +149,107 @@ span {
   font-family: var(--font-family-poppins);
   color: var(--jade);
 }
+
+/* -------------------------modal design-------------------------- */
+.ui.input > input {
+  border-radius: 10px !important;
+  background-color: var(--black-haze) !important;
+  width: 100%;
+  font-family: var(--font-family-poppins);
+  font-size: var(--font-size-body2);
+  font-weight: var(--font-size-body1);
+  padding-left: 100px;
+}
+
+.modal-btn {
+  width: 100%;
+  height: 56.77px;
+  margin-left: 0;
+  margin-top: 20px;
+  font-size: var(--font-size-body1);
+  font-weight: 800;
+}
+
+.ui.button:hover {
+  background-color: var(--btn-hover-color) !important;
+  color: var(--white);
+}
+.input-length {
+  width: 100%;
+  height: 56.77px;
+}
+
+.ui.modal > .content {
+  text-align: center;
+}
+.ui.modal {
+  width: 30% !important;
+  padding: 2% 3% 3% 3% !important;
+  border-radius: 10px !important;
+}
+
+.ui.header:first-child {
+  color: rgba(0, 173, 124, 1);
+  font-size: var(--font-size-heading);
+  font-weight: var(--font-weight-subHeading2) !important;
+  font-family: var(--font-family-poppins);
+}
+
+.ui.modal p {
+  line-height: 27px !important;
+  font-size: var(--font-size-body1);
+  font-weight: var(--font-weight-body1);
+  text-align: center;
+  color: var(--dove-gray);
+}
+
+.modal {
+  padding: 1000px !important;
+  position: fixed !important;
+  top: auto;
+  left: auto;
+  /* z-index: 1060 !important; */
+  display: none;
+  width: 100%;
+  height: auto;
+  text-align: center;
+  overflow: hidden;
+  outline: 0;
+  /* margin: 100px!important; */
+}
+
+.modal-not-interested {
+  margin-top: 20px;
+}
+.modal-not-interested span {
+  cursor: pointer;
+  text-decoration-line: underline;
+  font-weight: var(--font-size-subHeading2);
+  font-size: var(--font-size-body2);
+}
+.ui.dimmer {
+  z-index: 2000 !important;
+}
+
+@media screen and (max-width: 1000px) {
+  .ui.modal {
+    width: 42% !important;
+  }
+}
+
+@media screen and (max-width: 738px) {
+  .ui.modal {
+    width: 63% !important;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .ui.modal {
+    width: 90% !important;
+  }
+}
+
+.red-btn {
+  background-color: #ff641a;
+}
+/* -------------------------modal design-------------------------- */

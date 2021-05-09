@@ -13,6 +13,7 @@ import { convertMultipleImagesToB64, getBase64 } from "../../util/util";
 import "./newCampaign.css";
 import kebabCase from "kebab-case";
 import ImageUploader from "react-images-upload";
+import customModal from "../../components/CustomModal";
 
 // https://stackoverflow.com/questions/64208697/uploading-a-file-using-only-the-input-field-react-hook-form
 //-----------for validation------------------
@@ -91,6 +92,10 @@ const NewCampaign = (props) => {
   const [Coverpicture, setCoverPicture] = useState([]);
 
   const [pictureCount, setPictureCount] = useState(0);
+
+  //////Modal information---------------
+  const [open, setOpen] = React.useState(true);
+
   const onDrop = (picture) => {
     setPictures([...pictures, picture]);
     console.log(pictures);
@@ -454,6 +459,16 @@ const NewCampaign = (props) => {
           </div>
         </div>
       </section>
+
+      {/* <customModal
+        onClose={() => setOpen()}
+        onClose={() => setOpen(false)}
+        onOpen={() => setOpen(true)}
+        open={open}
+        Header="Success"
+        message="Wow"
+        buttonText="Help"
+      /> */}
     </div>
   );
 };

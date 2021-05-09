@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, Dropdown, List, Message } from "semantic-ui-react";
+import { Input, Dropdown, List, Message, Header } from "semantic-ui-react";
 import "./payment.css";
 import Bkash from "../../assets/icons/ico-bkash.svg";
 import Nagad from "../../assets/icons/ico-nagad.svg";
@@ -68,6 +68,9 @@ const PaymentOptions = (props) => {
   const [ErrorMessage, setErrorMessage] = useState();
   const [ErrorBox, setErrorBox] = useState(true);
 
+  //////Modal information---------------
+  const [open, setOpen] = React.useState(true);
+
   console.log(props.location);
 
   if (!(props.location && props.location.state)) {
@@ -106,7 +109,6 @@ const PaymentOptions = (props) => {
     startCampaign();
   }
 
-
   //-----------------delete Number list Function---------------
   function onDeletNumberClick(index, e) {
     e.preventDefault();
@@ -124,9 +126,6 @@ const PaymentOptions = (props) => {
    * @param {*} event Add More button
    */
   async function onAddMoreClick(event) {
-
-
-
     event.preventDefault();
 
     const isValid = await schema.isValid({ numb: inputField });
@@ -152,8 +151,6 @@ const PaymentOptions = (props) => {
 
       setInputField("");
     }
-
-
   }
 
   function dropDownSelect(e, data) {
@@ -259,6 +256,28 @@ const PaymentOptions = (props) => {
           </div>
         </div>
       </section>
+
+      <Modal
+        onOpen={() => setOpen(true)}
+        open={open}
+        onClose={() => {
+          console.log("MODAL CLOSED");
+          setOpen(false);
+        }}
+        // trigger={onSignInClick}
+      >
+        <Modal.Content>
+          <Modal.Description>
+            <Header>SUCCESS</Header>
+            <p>
+              You have successfully created a campaign. Make sure to invite your
+              friends and family!
+            </p>
+          </Modal.Description>
+          <button className="btn btn-type1 modal-btn">COPY LINK</button>
+          <button className="btn btn-type1 modal-btn">HOME</button>
+        </Modal.Content>
+      </Modal>
     </div>
   );
 };

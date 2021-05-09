@@ -63,6 +63,7 @@ const SignUp = ({ isAuthenticated }) => {
       setErrorBox(true);
 
       //-------------todo------------
+      window.location = "/registration";
     }
   }
 
