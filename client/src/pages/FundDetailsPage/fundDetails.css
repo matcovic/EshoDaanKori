@@ -1,0 +1,237 @@
+:root {
+  --alien-armpit: rgba(94, 218, 0, 1);
+  --black-haze: rgba(246, 246, 246, 1);
+  --dove-gray: rgba(110, 110, 110, 1);
+  --font-family-just_me_again_down_here: "Just Me Again Down Here", Helvetica;
+  --font-family-poppins: "Poppins", Helvetica;
+  --font-size-heading: 49px;
+  --font-size-subHeading: 28px;
+  --font-size-subHeading2: 1.094rem;
+  --font-size-body1: 21px;
+  --font-size-body2: 14.7px;
+  --font-size-title: 44.1px;
+  --font-weight-heading: 800;
+  --font-weight-subHeading: 800;
+  --font-weight-subHeading2: 700;
+  --font-weight-body1: 300;
+  --font-weight-body2: 400;
+  --font-weight-title: 400;
+  --jade: rgba(0, 173, 124, 1);
+  --quill-gray: rgba(213, 213, 213, 1);
+  --tundora: rgba(68, 68, 68, 1);
+  --white: rgba(255, 255, 255, 1);
+  --btn-hover-color: #b7fe81;
+  --padding-elements: 1rem 0.7rem 0.7rem 0.7rem;
+  --padding-section: 3% 4%;
+}
+
+#fund-details-section {
+  background-color: var(--black-haze);
+  padding: var(--padding-section);
+  font-family: var(--font-family-poppins);
+}
+
+#fund-details-section .carousel-inner {
+  border-radius: 10px;
+}
+
+/* #fund-details-section .carousel-control-prev-icon {
+  background-color: rgba(110, 110, 110, 0.49);
+  border-radius: 50%;
+}
+
+#fund-details-section .carousel-control-next-icon {
+  background-color: rgba(110, 110, 110, 0.49);
+  border-radius: 50%;
+} */
+
+#fund-details-section .post-time-text {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--tundora);
+  padding: var(--padding-elements);
+  padding-left: 0;
+  margin: 0;
+}
+
+/* each fund-tag */
+#fund-details-section .fund-tags {
+  background-color: var(--black-haze);
+  display: inline-flex;
+  margin: 0 0.7rem 0.7rem 0;
+  border-radius: 7px;
+  /* padding: 0.6rem; */
+}
+
+/* fund-tag icon  */
+#fund-details-section .fund-tags img {
+  width: 18px;
+  height: 18px;
+  margin: 0.5rem 0 0.5rem 0.5rem;
+}
+
+/* fund-tag label  */
+#fund-details-section .fund-tags h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--jade);
+  margin: 0;
+  padding: 0.5rem;
+}
+
+#fund-details-section .fund-tags-container li {
+  list-style: none;
+  display: inline-block;
+}
+/* fund-tag ul tag */
+#fund-details-section .fund-tags-container ul {
+  padding-left: 0.8rem;
+}
+
+#fund-details-section p {
+  white-space: pre-line;
+  font-size: var(--font-size-body2);
+  font-weight: var(--font-weight-body2);
+  color: var(--dove-gray);
+  line-height: 21px;
+}
+
+#fund-details-section .fund-btn-group {
+  display: flex;
+  margin-top: 25px;
+}
+
+#fund-details-section .btn-type1 {
+  width: 100%;
+}
+
+/* donation received & goal text  */
+#fund-details-section .donation-statistics .amount-box {
+  display: inline-flex;
+}
+/* donation goal text  */
+#fund-details-section .donation-statistics .amount-goal-box {
+  justify-content: flex-end;
+}
+
+#fund-details-section .donation-statistics .amount-box .amount-text {
+  color: var(--alien-armpit);
+}
+
+#fund-details-section .donation-statistics .amount-box h3 {
+  margin: 0;
+  padding: 2% 2% 2% 0;
+  text-transform: uppercase;
+}
+
+/* progress bar  */
+#fund-details-section .donation-statistics .progress {
+  margin: 0;
+}
+
+.availlable-payment-sidebar {
+  background-color: #f6f6f6;
+  padding: 1.5rem;
+  border-radius: 7px;
+  width: 100%;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.payment-list {
+  background-color: #e7e7e7;
+  text-align: center;
+  padding: 1rem;
+  border-radius: 7px;
+  width: 100%;
+}
+
+.payment-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+/* payment-list each list item  */
+.payment-list li {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding: 1%;
+}
+
+/* payment list icon  */
+.payment-list li img {
+  width: 25px;
+  height: 25px;
+}
+
+/* payment list mobile number  */
+.payment-list li h3 {
+  font-size: 18px;
+  margin: 0.2rem 0.3rem 0.3rem 1rem;
+}
+
+.payment-list-btn {
+  margin: 15px 0 0 0;
+  background-color: var(--dove-gray);
+  border-radius: 10px !important;
+  color: var(--white);
+  font-family: var(--font-family-poppins);
+  font-size: var(--font-size-subHeading2);
+  font-weight: var(--font-weight-subHeading2);
+  padding: 1rem 3rem;
+}
+.payment-list-btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* ----------------Available payments DropDown---------------  */
+.accordion {
+  margin-top: 20px;
+  display: none;
+}
+
+.accordion .payment-list {
+  background-color: transparent;
+}
+
+.accordion-item {
+  border: none;
+}
+
+.accordion-body {
+  background-color: #e7e7e7;
+  margin: 0 10px;
+  border-radius: 7px;
+}
+
+/* when accordion not collapsed */
+.accordion-button:not(.collapsed) {
+  color: black;
+  background-color: var(--quill-gray);
+}
+
+/* ---------------------- Breakpoints--------------------- */
+/* break point for button group  */
+@media only screen and (max-width: 380px) {
+  #fund-details-section .fund-btn-group {
+    display: block;
+  }
+}
+
+/* break point for donation received & goal box */
+@media only screen and (max-width: 575px) {
+  #fund-details-section .donation-statistics .amount-goal-box {
+    justify-content: flex-start;
+  }
+}
+
+/* break point for available payment and accordion */
+@media only screen and (max-width: 991px) {
+  .availlable-payment-sidebar {
+    display: none;
+  }
+  .accordion {
+    display: inherit;
+  }
+}

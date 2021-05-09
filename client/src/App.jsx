@@ -18,6 +18,7 @@ import ErrorPage from "./pages/ErrorPage";
 import ForgotPassword from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import MyFundRaisersPage from "./pages/MyFundRaisersPage";
+import FundDetailsPage from "./pages/FundDetailsPage";
 
 function App() {
   const [isAuthenticated, setAuthenticationStatus] = useState(false);
@@ -76,7 +77,7 @@ function App() {
               <Route
                 path="/"
                 exact
-                component={isAuthenticated ? DiscoverPage : LandingPage}
+                component={isAuthenticated ? DiscoverPage : FundDetailsPage}
               />
               <Route path="/discover" exact component={DiscoverPage} />
               <Route
