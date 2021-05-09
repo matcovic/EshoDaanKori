@@ -1,8 +1,15 @@
-import React, {useEffect, useState} from "react";
-import {Redirect} from "react-router";
-import {Form, Input, Message, Radio, Select, TextArea,} from "semantic-ui-react";
+import React, { useEffect, useState } from "react";
+import { Redirect } from "react-router";
+import {
+  Form,
+  Input,
+  Message,
+  Radio,
+  Select,
+  TextArea,
+} from "semantic-ui-react";
 import threeDots from "../../assets/icons/ico-3dots2.svg";
-import {convertMultipleImagesToB64, getBase64} from "../../util/util";
+import { convertMultipleImagesToB64, getBase64 } from "../../util/util";
 import "./newCampaign.css";
 import kebabCase from "kebab-case";
 
@@ -79,8 +86,6 @@ const NewCampaign = (props) => {
   const [ErrorMessage, setErrorMessage] = useState();
   const [ErrorBox, setErrorBox] = useState(true);
 
-
-
   function onDropdownChange(event) {
     console.log(event.target.textContent);
     setCategory(event.target.textContent);
@@ -100,6 +105,9 @@ const NewCampaign = (props) => {
   function onChange(event) {
     const { value, name } = event.target;
     console.log(value + " " + name);
+
+    // console.log("DropDown Value:");
+    // console.log(event.target.textContent);
 
     setFormContent((prevState) => ({
       ...prevState,
@@ -332,6 +340,7 @@ const NewCampaign = (props) => {
                   onChange={onDropdownChange}
                   name="category"
                   options={options}
+                  defaultValue={options[1].value}
                 />
 
                 <Form.Field>
