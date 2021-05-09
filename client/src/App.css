@@ -251,40 +251,6 @@ p {
   padding: var(--padding-elements);
 }
 
-.blob1 {
-  position: absolute;
-  height: 100%;
-  left: 0;
-  top: 20px;
-  z-index: -1;
-  overflow: hidden;
-}
-
-.blob2 {
-  position: absolute;
-  height: 100%;
-  right: 0;
-  top: 20px;
-  z-index: -1;
-}
-
-.blob3 {
-  position: absolute;
-  height: 100%;
-  left: 0;
-  top: 20px;
-  z-index: -1;
-  overflow: hidden;
-}
-
-.blob4 {
-  position: absolute;
-  height: 100%;
-  right: 0;
-  top: 100px;
-  z-index: -1;
-}
-
 /* --------------------- Our-Story Section --------------------- */
 #our-story-section {
   background-color: var(--black-haze);
