@@ -104,11 +104,11 @@ async function saveImages(coverPhoto, optionalPhotos, uid, fundraiserId) {
 }
 
 /**
- *
+ * Saves multple images in cloudinary
  * @param {*} images
  * @param {*} uid
  * @param {*} fundraiserId
- * @returns
+ * @returns a list containing all the links of the images. Can return undefined or []
  */
 async function saveMultipleImages(images, uid, fundraiserId) {
   const list = [];
@@ -282,6 +282,7 @@ async function changeUserPassword(uid, salt, hash) {
 function log(msg) {
   console.log(msg);
 }
+
 export {
   isUserAvailable,
   createNewUser,
@@ -293,4 +294,5 @@ export {
   saveFundraiser,
   createFundraiserSchema,
   saveImages,
+  saveMultipleImages,
 };
