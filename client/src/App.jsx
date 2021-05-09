@@ -78,7 +78,7 @@ function App() {
               <Route
                 path="/"
                 exact
-                component={isAuthenticated ? DiscoverPage : LandingPage}
+                component={isAuthenticated ? DiscoverPage : FundDetailsPage}
               />
               <Route
                 path="/discover"

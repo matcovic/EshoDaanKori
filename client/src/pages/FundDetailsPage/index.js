@@ -1,240 +1,115 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./fundDetails.css";
+import { Link } from "react-router-dom";
+import CarouselComponent from "../../components/CarouselComponent";
+import FundTags from "./components/FundTags";
+import Story from "./components/Story";
+import DonationStats from "./components/DonationStats";
+import PaymentSideBar from "./components/PaymentSideBar";
+import PaymentAccordion from "./components/PaymentAccordion";
 
 const FundDetailsPage = () => {
+  // const [fundDetails, setFundDetails] = useState({});
+  const fundDetails = {
+    _id: {
+      $oid: "60980faf4014412e2add453f",
+    },
+    fundraisedTotal: {
+      $numberInt: "0",
+    },
+    paymentOptions: [
+      {
+        number: "01966184895",
+        icon: "Bkash",
+      },
+      {
+        number: "01303105504",
+        icon: "Nagad",
+      },
+    ],
+    optionalPhotos: [
+      "https://www.pngjoy.com/pngl/777/9240233_facebook-logo-png-logo-fb-instagram-png-transparent.png",
+      "https://c4.wallpaperflare.com/wallpaper/787/854/424/jujutsu-kaisen-satoru-gojo-anime-boys-anime-girls-hd-wallpaper-preview.jpg",
+    ],
+    uid: "6095282fa336743dd85e13b0",
+    title: "Helping The Juneau Family",
+    story:
+      "Hi everyone! I was able to see Erika and Aaron this past weekend (distanced of course!) and they asked me to post this on their behalf.\n\n“Aaron and I wanted to take a moment to thank everyone for the generous donations. Your gift has helped us to hire a full time helper for the kids while I have had to return to work. We also hired someone to help us get the house ready to list, what a huge help that was! We can’t thank you enough for your generous gifts. We are beyond grateful and touched.”",
+    location: "Greely, ON",
+    fundraisingGoal: {
+      $numberInt: "15000",
+    },
+    fundraisingFor: "Yourself",
+    category: "Medical",
+    coverPhoto:
+      "https://res.cloudinary.com/pixieum-studios/image/upload/v1620568740/user/6095282fa336743dd85e13b0/fundraisers/6097ea83a8016622208bfcb8/coverPhoto/bmjyqhbg2latywixuzwo.jpg",
+    createdAt: {
+      $date: {
+        $numberLong: "1620568711786",
+      },
+    },
+    updatedAt: {
+      $date: {
+        $numberLong: "1620575809879",
+      },
+    },
+    __v: {
+      $numberInt: "0",
+    },
+  };
+  const images = [fundDetails.coverPhoto, ...fundDetails.optionalPhotos];
+  fundDetails.images = images;
+
+  //Fetching data from JSON or API
+  // useEffect(() => {
+  //   fetch("./fund_details.json")
+  //     .then((response) => response.json())
+  //     .then((json) => setFundDetails(json[0]));
+  // }, []);
+
+  // console.log(fundDetails);
+  // console.log("TITLE IS:  " + fundDetails.title);
+
   return (
     <section id="fund-details-section">
       <div className="white-container">
-        <h2>Need money for party</h2>
-        <div class="container-fluid">
-          <div class="row">
+        {/* Fund title */}
+        <h2>{fundDetails.title}</h2>
+        <div className="container-fluid">
+          <div className="row">
             <div className="col-lg-8">
-              <div
-                id="carouselExampleControls"
-                class="carousel slide"
-                data-bs-ride="carousel"
-                data-bs-interval="false"
-              >
-                <div class="carousel-inner">
-                  <div class="carousel-item active">
-                    <img
-                      src="https://c4.wallpaperflare.com/wallpaper/787/854/424/jujutsu-kaisen-satoru-gojo-anime-boys-anime-girls-hd-wallpaper-preview.jpg"
-                      class="d-block w-100"
-                      alt="..."
-                    />
-                  </div>
-                  <div class="carousel-item">
-                    <img
-                      src="https://c4.wallpaperflare.com/wallpaper/787/854/424/jujutsu-kaisen-satoru-gojo-anime-boys-anime-girls-hd-wallpaper-preview.jpg"
-                      class="d-block w-100"
-                      alt="..."
-                    />
-                  </div>
-                  <div class="carousel-item">
-                    <img
-                      src="https://www.xtrafondos.com/wallpapers/resized/satoru-gojo-jujutsu-kaisen-6852.jpg?s=large"
-                      class="d-block w-100"
-                      alt="..."
-                    />
-                  </div>
-                </div>
-                <button
-                  class="carousel-control-prev"
-                  type="button"
-                  data-bs-target="#carouselExampleControls"
-                  data-bs-slide="prev"
-                >
-                  <span
-                    class="carousel-control-prev-icon"
-                    aria-hidden="true"
-                  ></span>
-                  <span class="visually-hidden">Previous</span>
-                </button>
-                <button
-                  class="carousel-control-next"
-                  type="button"
-                  data-bs-target="#carouselExampleControls"
-                  data-bs-slide="next"
-                >
-                  <span
-                    class="carousel-control-next-icon"
-                    aria-hidden="true"
-                  ></span>
-                  <span class="visually-hidden">Next</span>
-                </button>
-              </div>
+              {/* Carousel */}
+              <CarouselComponent carouselImages={fundDetails.images} />
+
+              {/* Fund posted time ago  */}
               <h3 className="post-time-text">Posted 4 days ago</h3>
-              <div className="row fund-tags-container">
-                <ul>
-                  <li>
-                    <div className="fund-tags">
-                      <img
-                        src="https://www.pngjoy.com/pngl/777/9240233_facebook-logo-png-logo-fb-instagram-png-transparent.png"
-                        alt="..."
-                      />
-                      <h4>Medical</h4>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="fund-tags">
-                      <img
-                        src="https://www.pngjoy.com/pngl/777/9240233_facebook-logo-png-logo-fb-instagram-png-transparent.png"
-                        alt="..."
-                      />
-                      <h4>Medical</h4>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="fund-tags">
-                      <img
-                        src="https://www.pngjoy.com/pngl/777/9240233_facebook-logo-png-logo-fb-instagram-png-transparent.png"
-                        alt="..."
-                      />
-                      <h4>Kalabagan, Dhaka</h4>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="fund-tags">
-                      <img
-                        src="https://www.pngjoy.com/pngl/777/9240233_facebook-logo-png-logo-fb-instagram-png-transparent.png"
-                        alt="..."
-                      />
-                      <h4>Medical</h4>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="fund-tags">
-                      <img
-                        src="https://www.pngjoy.com/pngl/777/9240233_facebook-logo-png-logo-fb-instagram-png-transparent.png"
-                        alt="..."
-                      />
-                      <h4>Medical</h4>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="fund-tags">
-                      <img
-                        src="https://www.pngjoy.com/pngl/777/9240233_facebook-logo-png-logo-fb-instagram-png-transparent.png"
-                        alt="..."
-                      />
-                      <h4>Medical</h4>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="fund-tags">
-                      <img
-                        src="https://www.pngjoy.com/pngl/777/9240233_facebook-logo-png-logo-fb-instagram-png-transparent.png"
-                        alt="..."
-                      />
-                      <h4>Medical</h4>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="fund-tags">
-                      <img
-                        src="https://www.pngjoy.com/pngl/777/9240233_facebook-logo-png-logo-fb-instagram-png-transparent.png"
-                        alt="..."
-                      />
-                      <h4>Medical</h4>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-              {/* progress in percentage */}
-              <div className="donation-statistics">
-                <div className="row">
-                  <div className="col-sm-6 amount-box">
-                    <h3>DONATION RECEIVED:</h3>
-                    <h3 className="amount-text">100tk</h3>
-                  </div>
-                  <div className="col-sm-6 amount-box amount-goal-box">
-                    <h3>GOAL:</h3>
-                    <h3 className="amount-text">1000tk</h3>
-                  </div>
-                </div>
-                <div className="progress">
-                  <div
-                    className="progress-bar"
-                    role="progressbar"
-                    style={{ width: "25%", backgroundColor: "#00AD7C" }}
-                    aria-valuenow="25"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                  ></div>
-                </div>
-              </div>
 
-              <h3>STORY</h3>
-              <p>
-                Lorem ipsum dt. Pretium in diam accumsan, pellentesque quam
-                mauris, vulputate cursus euismodvenenatis, ultrices interdum.
-                Pretium mi nibh mi eget sit integer. Fringilla adipiscing ma
-                uris venenatis turpis quam purus quis. Suscipit vivamus ante mi
-                mi viverra. Lobortis nisl dolor, integer elit, pellentesque
-                tincidunt nullam. Morbi dictumst nunc, mollis interdum neque
-                placerat consectetur aliquet nisi. Mauris, nec vitae lectus
-                scelerisque ridiculus sollicitudin morbi. Lorem ipsum dt.
-                Pretium in diam accumsan, pellentesque quam mauris, vulputate
-                cursus euismodvenenatis, ultrices interdum. Pretium mi nibh mi
-                eget sit integer. Fringilla adipiscing ma uris venenatis turpis
-                quam purus quis. Suscipit vivamus ante mi mi viverra. Lobortis
-                nisl dolor, integer elit, pellentesque tincidunt nullam. Morbi
-                dictumst nunc, mollis interdum neque placerat consectetur
-                aliquet nisi. Mauris, nec vitae lectus scelerisque ridiculus
-                sollicitudin morbi. Lorem ipsum dt. Pretium in diam accumsan,
-                pellentesque quam mauris, vulputate cursus euismodvenenatis,
-                ultrices interdum. Pretium mi nibh mi eget sit integer.
-                Fringilla adipiscing ma uris venenatis turpis quam purus quis.
-                Suscipit vivamus ante mi mi viverra. Lobortis nisl dolor,
-                integer elit, pellentesque tincidunt nullam. Morbi dictumst
-                nunc, mollis interdum neque placerat consectetur aliquet nisi.
-                Mauris, nec vitae lectus scelerisque ridiculus sollicitudin
-                morbi.sque ridiculus sollicitudin morbi. Lorem ipsum dt. Pretium
-                in diam accumsan, pellentesque quam mauris, vulputate cursus
-                euismodvenenatis, ultrices interdum. Pretium mi nibh mi eget sit
-                integer.
-              </p>
+              {/* tags and labels */}
+              <FundTags tags={fundDetails} />
 
+              {/* donation stats */}
+              <DonationStats fundDetails={fundDetails} />
+
+              {/* payment accordion  */}
+              <PaymentAccordion payments={fundDetails.paymentOptions} />
+
+              {/* story  */}
+              <Story story={fundDetails.story} />
+
+              {/* contact & share button  */}
               <div className="fund-btn-group">
-                <a href="#" className="btn btn-type1">
+                <Link to="/#" className="btn btn-type1">
                   CONTACT
-                </a>
-                <a href="#" className="btn btn-type4">
+                </Link>
+                <Link to="/#" className="btn btn-type4">
                   SHARE
-                </a>
+                </Link>
               </div>
             </div>
+
             <div className="col-lg-4">
-              <div className="availlable-payment-sidebar">
-                <div className="payment-list">
-                  <ul>
-                    <li>
-                      <img
-                        src="https://www.pngjoy.com/pngl/777/9240233_facebook-logo-png-logo-fb-instagram-png-transparent.png"
-                        alt=".."
-                      />
-                      <h3 className="phone-text">+8801966184892</h3>
-                    </li>
-                    <li>
-                      <img
-                        src="https://www.pngjoy.com/pngl/777/9240233_facebook-logo-png-logo-fb-instagram-png-transparent.png"
-                        alt=".."
-                      />
-                      <h3 className="phone-text">+8801966184892</h3>
-                    </li>
-                    <li>
-                      <img
-                        src="https://www.pngjoy.com/pngl/777/9240233_facebook-logo-png-logo-fb-instagram-png-transparent.png"
-                        alt=".."
-                      />
-                      <h3 className="phone-text">+8801966184892</h3>
-                    </li>
-                  </ul>
-                </div>
-                <button className="btn btn-type1 payment-list-btn" disabled>
-                  AVAILABLE PAYMENT OPTIONS
-                </button>
-              </div>
+              {/* payment sidebar  */}
+              <PaymentSideBar payments={fundDetails.paymentOptions} />
             </div>
           </div>
         </div>

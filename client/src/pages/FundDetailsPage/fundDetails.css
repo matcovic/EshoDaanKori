@@ -31,7 +31,7 @@
   font-family: var(--font-family-poppins);
 }
 
-.carousel-inner {
+#fund-details-section .carousel-inner {
   border-radius: 10px;
 }
 
@@ -56,8 +56,7 @@
 
 /* each fund-tag */
 #fund-details-section .fund-tags {
-  /* background-color: var(--black-haze); */
-  background-color: blueviolet;
+  background-color: var(--black-haze);
   display: inline-flex;
   margin: 0 0.7rem 0.7rem 0;
   border-radius: 7px;
@@ -99,6 +98,7 @@
 
 #fund-details-section .fund-btn-group {
   display: flex;
+  margin-top: 25px;
 }
 
 #fund-details-section .btn-type1 {
@@ -134,7 +134,7 @@
   padding: 1.5rem;
   border-radius: 7px;
   width: 100%;
-  box-shadow: 0px 4px 22px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
 }
 
 .payment-list {
@@ -170,13 +170,48 @@
   margin: 0.2rem 0.3rem 0.3rem 1rem;
 }
 
-.availlable-payment-sidebar .payment-list-btn {
+.payment-list-btn {
   margin: 15px 0 0 0;
   background-color: var(--dove-gray);
+  border-radius: 10px !important;
+  color: var(--white);
+  font-family: var(--font-family-poppins);
+  font-size: var(--font-size-subHeading2);
+  font-weight: var(--font-weight-subHeading2);
+  padding: 1rem 3rem;
+}
+.payment-list-btn:focus {
+  outline: none;
+  box-shadow: none;
 }
 
-/* ------------------ Breakpoints------------------ */
+/* ----------------Available payments DropDown---------------  */
+.accordion {
+  margin-top: 20px;
+  display: none;
+}
 
+.accordion .payment-list {
+  background-color: transparent;
+}
+
+.accordion-item {
+  border: none;
+}
+
+.accordion-body {
+  background-color: #e7e7e7;
+  margin: 0 10px;
+  border-radius: 7px;
+}
+
+/* when accordion not collapsed */
+.accordion-button:not(.collapsed) {
+  color: black;
+  background-color: var(--quill-gray);
+}
+
+/* ---------------------- Breakpoints--------------------- */
 /* break point for button group  */
 @media only screen and (max-width: 380px) {
   #fund-details-section .fund-btn-group {
@@ -188,5 +223,15 @@
 @media only screen and (max-width: 575px) {
   #fund-details-section .donation-statistics .amount-goal-box {
     justify-content: flex-start;
+  }
+}
+
+/* break point for available payment and accordion */
+@media only screen and (max-width: 991px) {
+  .availlable-payment-sidebar {
+    display: none;
+  }
+  .accordion {
+    display: inherit;
   }
 }
