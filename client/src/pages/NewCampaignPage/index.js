@@ -62,13 +62,16 @@ const NewCampaign = (props) => {
 
   // handles input field changes
   function onChange(event) {
-    const { value, name } = event.target;
-    console.log(value + " " + name);
+    // const { value, name } = event.target;
+    // console.log(value + " " + name);
 
-    setFormContent((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    console.log("DropDown Value:");
+    console.log(event.target.textContent);
+
+    // setFormContent((prevState) => ({
+    //   ...prevState,
+    //   [name]: value,
+    // }));
   }
 
   // handles image upload changes
@@ -294,6 +297,7 @@ const NewCampaign = (props) => {
                   onChange={onChange}
                   name="category"
                   options={options}
+                  defaultValue={options[1].value}
                 />
 
                 <Form.Field>

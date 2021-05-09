@@ -177,7 +177,7 @@ element.style {
 }
 
 #campaign-section .ui[class*="left icon"].input > input {
-  padding-left: 3rem !important;
+  padding-left: 5rem !important;
 }
 
 @media screen and (max-width: 850px) {
