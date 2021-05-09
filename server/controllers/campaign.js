@@ -3,21 +3,17 @@ import {
   createFundraiserSchema,
   saveFundraiser,
   saveImages,
+  saveMultipleImages,
 } from "../util/dao.js";
 import { respond } from "../util/util.js";
 
 async function newCampaignController(req, res) {
-  console.log("req received");
-  //console.log(req.body);
-  //console.log(req.user);
   if (!req.isAuthenticated()) {
     res.json({ status: -2, message: "You are unauthorized. Redirecting" });
     return;
   }
 
   const schema = createFundraiserSchema(req.body, req.user._id);
-  console.log(req.body);
-
   const result = await saveImages(
     req.body.coverPhoto,
     req.body.optionalPhotos,
@@ -88,15 +84,41 @@ async function getMyFundraiserController(req, res) {
 }
 
 async function editCampaignController(req, res) {
-  console.log(req.body);
+  console.log(`fundraiserId: ${req.body._id}`);
+  const fundraiserId = req.body._id;
+  delete req.body["_id"];
+  console.log(typeof req.body.title);
+
+  console.log(fundraiserId);
+
   if (req.isAuthenticated()) {
     try {
-      const result =  await Fundraiser.findOneAndUpdate(
-        {
-          _id: req.body._id,
-        },
-        req.body.form
+      req.body.optionalPhotos = await saveMultipleImages(
+        req.body.optionalPhotos,
+        req.user._id,
+        req.body._id
       );
+
+      var newList = [];
+      if (!req.body.optionalPhotos) {
+        console.log("no new optional images selected");
+        delete req.body["optionalPhotos"];
+        newList = req.body.previousOptionalImages;
+      } else {
+        newList = [
+          ...req.body.previousOptionalImages,
+          ...req.body.optionalPhotos,
+        ];
+      }
+
+      req.body.optionalPhotos = newList.length ? newList : undefined;
+
+      //console.log(req.body.optionalPhotos);
+      const filter = { _id: fundraiserId };
+      const result = await Fundraiser.findOneAndUpdate(filter, req.body, {
+        new: true,
+      });
+      console.log("result saved. Returning previous: ");
       console.log(result);
       res.json({ status: 1, message: "Updated successfully." });
     } catch (error) {

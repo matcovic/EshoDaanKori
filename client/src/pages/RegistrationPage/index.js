@@ -115,7 +115,7 @@ const Registration = (props) => {
 
   return (
     <div className="background-signup">
-      <LoadingBar color="#FF641A" ref={ref} shadow={true} height={3} />
+      <LoadingBar color="#FF641A" ref={ref} shadow={true} height={4} />
 
       <section id="signIn-section">
         <div className="sample">

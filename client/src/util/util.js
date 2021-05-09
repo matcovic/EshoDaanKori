@@ -23,7 +23,7 @@ function getBase64(file) {
 
 async function convertMultipleImagesToB64(images) {
   const list = [];
-  if (images.length === 0) {
+  if (images === undefined) {
     return undefined;
   }
   let res_promises = images.map(
@@ -40,6 +40,10 @@ async function convertMultipleImagesToB64(images) {
   try {
     // Promise.all will fire when all promises are resolved
     await Promise.all(res_promises);
+    console.log("list length =" + list.length);
+    if (list.length === 0) {
+      return undefined;
+    }
     return list;
   } catch (error) {
     return undefined;

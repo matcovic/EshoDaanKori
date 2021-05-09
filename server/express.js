@@ -9,6 +9,7 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 import { config } from "dotenv";
 import { campaignRouter } from "./routes/campaign.js";
+import { testController } from "./controllers/test.js";
 
 if (process.env.NODE_ENV !== "production") {
   config();
@@ -45,6 +46,8 @@ app.use(passport.session());
 /**
  * -------------- ROUTES ----------------
  */
+
+app.get("/test", testController);
 
 app.use("/api", landingPageRouter);
 
