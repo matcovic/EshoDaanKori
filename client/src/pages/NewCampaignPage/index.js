@@ -1,12 +1,38 @@
 import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router";
-import { Form, Input, Radio, Select, TextArea } from "semantic-ui-react";
+import {
+  Form,
+  Input,
+  Radio,
+  Select,
+  TextArea,
+  Message,
+} from "semantic-ui-react";
 import threeDots from "../../assets/icons/ico-3dots2.svg";
 import { convertMultipleImagesToB64, getBase64 } from "../../util/util";
 import "./newCampaign.css";
 import kebabCase from "kebab-case";
 
 // https://stackoverflow.com/questions/64208697/uploading-a-file-using-only-the-input-field-react-hook-form
+
+//-----------for validation------------------
+import * as yup from "yup";
+
+const schema = yup.object().shape({
+  title: yup
+    .string()
+    .required("Title is required")
+    .min(15, "Too short")
+    .max(30, "Too long"),
+  location: yup.string().required("Location is required"),
+  fundraisingGoal: yup
+    .number("Invalid")
+    .positive("Invalid")
+    .integer("Invalid")
+    .required(),
+  story: yup.string().required(),
+});
+//-----------for validation------------------
 
 const options = [
   { key: "m", text: "Male", value: "male" },
@@ -62,7 +88,7 @@ const NewCampaign = (props) => {
 
   function onDropdownChange(event) {
     console.log(event.target.textContent);
-  
+
     setCategory(event.target.textContent);
   }
 
@@ -70,6 +96,12 @@ const NewCampaign = (props) => {
     console.log("unauthorized. Redirecting to signing page...");
     window.location = "/";
   }
+
+  const [fundraisingFor, setFundraisingFor] = useState("Yourself");
+  const [form, setFormContent] = useState({});
+  const [redirect, setRedirect] = useState(false);
+  const [ErrorMessage, setErrorMessage] = useState();
+  const [ErrorBox, setErrorBox] = useState(true);
 
   // handles radio button changes
   const handleChange = (event, { value }) => {
@@ -113,12 +145,28 @@ const NewCampaign = (props) => {
 
   async function onButtonClick(event) {
     event.preventDefault();
-    console.log("on continue click");
-    form.fundraisingFor = fundraisingFor;
-    console.log(form);
-    form.coverPhoto = await getBase64(coverImage);
-    form.optionalPhotos = await convertMultipleImagesToB64(optionalImages);
-    setRedirect(true);
+
+    const isValid = await schema.isValid(form);
+
+    if (!isValid) {
+      schema.validate(form).catch(function (err) {
+        console.log("Error Name:");
+        console.log(err.name); // => 'ValidationError'
+        console.log("Error error");
+        console.log(err.errors); // => [{ key: 'field_too_short', values: { min: 18 } }]
+        setErrorBox(false);
+        setErrorMessage(err.errors);
+      });
+    } else {
+      setErrorBox(true);
+      console.log(form);
+      console.log("on continue click");
+      form.fundraisingFor = fundraisingFor;
+      console.log(form);
+      form.coverPhoto = await getBase64(coverImage);
+      form.optionalPhotos = await convertMultipleImagesToB64(optionalImages);
+      setRedirect(true);
+    }
 
     /* 
     //  console.log(images);
@@ -393,6 +441,12 @@ const NewCampaign = (props) => {
               </Form.Field>
             </Form>
 
+            <Message
+              icon="exclamation triangle"
+              hidden={ErrorBox}
+              error
+              header={ErrorMessage}
+            />
             <i>
               <img alt="three dots" className="three-dots" src={threeDots} />
             </i>

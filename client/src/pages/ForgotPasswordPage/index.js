@@ -1,35 +1,68 @@
 import React, { useState } from "react";
-import { Input } from "semantic-ui-react";
+import { Input, Message } from "semantic-ui-react";
 import "../SignInPage/SignIn.css";
 import { EmailIcon } from "../../assets/assets.js";
 import { Redirect } from "react-router";
 import axios from "axios";
 
+//-----------for validation------------------
+import * as yup from "yup";
+
+yup.setLocale({
+  // use constant translation keys for messages without values
+  mixed: {
+    default: "Field Invalid",
+  },
+});
+const schema = yup.object().shape({
+  email: yup.string().email().required(),
+});
+//-----------for validation------------------
+
 const ForgotPassword = (props) => {
   const [email, setEmail] = useState("");
-  console.log(props)
+  const [ErrorMessage, setErrorMessage] = useState();
+  const [ErrorBox, setErrorBox] = useState(true);
+  console.log(props);
 
   if (!(props.location && props.location.state)) {
     console.log("unauthorized. Redirecting to signing page...");
-   // return <Redirect to="/sign-in" />;
+    // return <Redirect to="/sign-in" />;
   }
 
-  function onSendClick(event) {
+  async function onSendClick(event) {
     event.preventDefault();
     console.log("sending reset pass link");
 
-    const sendResetPasswordLink = async () => {
-      const { data } = await axios.post("/api/auth/reset-password-link", {email});
-      if (data.status === 1) {
-        console.log(data.message);
-       // window.location.replace("/");
-      } else {
-        console.log(data.status);
-        console.log(data.message);
-      }
-    };
+    console.log(email);
+    const isValid = await schema.isValid({ email: email });
 
-    sendResetPasswordLink();
+    if (!isValid) {
+      schema.validate({ email: email }).catch(function (err) {
+        console.log("Error Name:");
+        console.log(err.name); // => 'ValidationError'
+        console.log("Error error");
+        console.log(err.errors); // => [{ key: 'field_too_short', values: { min: 18 } }]
+        setErrorBox(false);
+        setErrorMessage(err.errors);
+      });
+    } else {
+      setErrorBox(true);
+      const sendResetPasswordLink = async () => {
+        const { data } = await axios.post("/api/auth/reset-password-link", {
+          email,
+        });
+        if (data.status === 1) {
+          console.log(data.message);
+          // window.location.replace("/");
+        } else {
+          console.log(data.status);
+          console.log(data.message);
+        }
+      };
+
+      sendResetPasswordLink();
+    }
   }
 
   function onChange(event) {
@@ -37,7 +70,6 @@ const ForgotPassword = (props) => {
     setEmail(value);
   }
 
- 
   return (
     <div className="background-signup">
       <section id="signIn-section">
@@ -66,6 +98,12 @@ const ForgotPassword = (props) => {
                 </button>
               </div>
             </form>
+            <Message
+              icon="exclamation triangle"
+              hidden={ErrorBox}
+              error
+              header={ErrorMessage}
+            />
           </div>
         </div>
       </section>

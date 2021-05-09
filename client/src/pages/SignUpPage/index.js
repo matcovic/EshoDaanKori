@@ -1,15 +1,69 @@
 import React, { useState } from "react";
-import { Input } from "semantic-ui-react";
+import { Input, Message } from "semantic-ui-react";
 import "../SignInPage/SignIn.css";
 import { EmailIcon, KeyIcon } from "../../assets/assets.js";
 import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
+//-----------for validation------------------
+import * as yup from "yup";
+
+yup.setLocale({
+  // use constant translation keys for messages without values
+  mixed: {
+    default: "Field Invalid",
+  },
+  email: {},
+  // use functions to generate an error object that includes the value from the schema
+  string: {
+    min: () => "Password is too short",
+  },
+  string: {
+    min: () => "Password is too short",
+  },
+});
+
+const schema = yup.object().shape({
+  username: yup.string().email("Enter a valid email").required("Enter Email"),
+  password: yup.string().required().min(6),
+  confirmPassword: yup
+    .string()
+    .required()
+    .min(6)
+    .oneOf(
+      [yup.ref("password"), null],
+      "Password and confirm password doesn't match"
+    ),
+});
+//-----------for validation------------------
 
 const SignUp = ({ isAuthenticated }) => {
   const [state, setState] = useState({});
+  const [ErrorMessage, setErrorMessage] = useState();
+  const [ErrorBox, setErrorBox] = useState(true);
 
   if (isAuthenticated) {
     return <Redirect to="/" />;
+  }
+
+  async function OnSignUpClick(event) {
+    event.preventDefault();
+    console.log(state);
+
+    const isValid = await schema.isValid(state);
+    if (!isValid) {
+      schema.validate(state).catch(function (err) {
+        console.log("Error Name:");
+        console.log(err.name); // => 'ValidationError'
+        console.log("Error error");
+        console.log(err.errors); // => [{ key: 'field_too_short', values: { min: 18 } }]
+        setErrorBox(false);
+        setErrorMessage(err.errors);
+      });
+    } else {
+      setErrorBox(true);
+
+      //-------------todo------------
+    }
   }
 
   function handleChange(event) {
@@ -60,7 +114,7 @@ const SignUp = ({ isAuthenticated }) => {
                 />
               </div>
               <div>
-                <Link
+                {/* <Link
                   className="btn btn-type1"
                   to={{
                     pathname: "/registration",
@@ -68,9 +122,20 @@ const SignUp = ({ isAuthenticated }) => {
                   }}
                 >
                   SIGN IN
-                </Link>
+                </Link> */}
+                <button onClick={OnSignUpClick} className="btn btn-type1">
+                  {" "}
+                  SIGN UP
+                </button>
               </div>
             </form>
+
+            <Message
+              icon="exclamation triangle"
+              hidden={ErrorBox}
+              error
+              header={ErrorMessage}
+            />
 
             <div className="signIn-dont-text">
               <span>Already have an account?</span>
