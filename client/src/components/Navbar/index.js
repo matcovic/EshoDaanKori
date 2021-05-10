@@ -57,15 +57,12 @@ const Navbar = ({ isAuthenticated }) => {
         aria-label="Toggle navigation"
       ></a>
       <nav
-        className={`autohide navbar navbar-expand-lg ${
+        className={`autohide navbar navbar-shadow navbar-expand-lg bg-white ${
           isAuthenticated ? "private-navbar" : ""
         }`}
       >
         <div className="container-fluid navbar-container">
-          <NavHashLink
-            className="navbar-brand abs nav-bar-title navbar-font-color-white"
-            to="/"
-          >
+          <NavHashLink className="navbar-brand abs nav-bar-title" to="/">
             AshoDaanKori
           </NavHashLink>
           <button
@@ -88,7 +85,7 @@ const Navbar = ({ isAuthenticated }) => {
                       pathname: "/my-fundraisers",
                       state: { status: 1 },
                     }}
-                    className="nav-link navbar-font-color-white"
+                    className="nav-link"
                   >
                     My fundraisers
                   </NavHashLink>
@@ -156,24 +153,18 @@ const Navbar = ({ isAuthenticated }) => {
                   <NavHashLink
                     smooth
                     to="/#our-story-section"
-                    className="nav-link navbar-font-color-white"
+                    className="nav-link"
                   >
                     About
                   </NavHashLink>
                 </li>
                 <li className="nav-item active">
-                  <NavHashLink
-                    to="/how-it-works"
-                    className="nav-link navbar-font-color-white"
-                  >
+                  <NavHashLink to="/how-it-works" className="nav-link">
                     How it works
                   </NavHashLink>
                 </li>
                 <li className="nav-item active">
-                  <NavHashLink
-                    to="/discover"
-                    className="nav-link navbar-font-color-white"
-                  >
+                  <NavHashLink to="/discover" className="nav-link">
                     Discover
                   </NavHashLink>
                 </li>
