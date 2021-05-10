@@ -432,6 +432,7 @@ i.large.icons {
   padding: 0.8rem;
   right: 5px;
   top: 170px;
+  z-index: 2;
 }
 .edit-btn:hover {
   color: var(--jade);

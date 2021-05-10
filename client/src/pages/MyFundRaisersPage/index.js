@@ -11,9 +11,7 @@ const MyFundRaisersPage = (props) => {
 
   const [fundraisers, setFundraisers] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  //////Modal information---------------
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   useEffect(() => {
     // when the component loads up, send a req to the server
@@ -64,7 +62,6 @@ const MyFundRaisersPage = (props) => {
           console.log("MODAL CLOSED");
           setOpen(false);
         }}
-        // trigger={onSignInClick}
       >
         <Modal.Content>
           <Modal.Description>

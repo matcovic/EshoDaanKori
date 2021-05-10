@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router";
 import Bkash from "../../../assets/icons/ico-bkash.svg";
 import Nagad from "../../../assets/icons/ico-nagad.svg";
 import Rocket from "../../../assets/icons/ico-rocket.svg";
@@ -16,13 +17,25 @@ function createPaymentListEntry(payment, index) {
   );
 }
 
-const EditPaymentSideBar = ({ payments }) => {
+const EditPaymentSideBar = ({ fundDetails }) => {
+  const history = useHistory();
   return (
     <div className="availlable-payment-sidebar">
       <div className="payment-list">
-        <ul>{payments.map(createPaymentListEntry)}</ul>
+        <ul>{fundDetails.paymentOptions.map(createPaymentListEntry)}</ul>
       </div>
-      <button className="btn btn-type1">CHANGE PAYMENT OPTIONS</button>
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          history.push({
+            pathname: `/fundraisers/change-payment-options/${fundDetails._id}`,
+            state: {status: 69, fundDetails: fundDetails},
+          });
+        }}
+        className="btn btn-type1"
+      >
+        CHANGE PAYMENT OPTIONS
+      </button>
     </div>
   );
 };

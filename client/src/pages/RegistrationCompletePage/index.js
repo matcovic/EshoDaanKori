@@ -14,13 +14,21 @@ const RegistrationComplete = (props) => {
           <div className="signIn-box signIn-box-medium signIn-box-small">
             <h2>REGISTRATION COMPLETE!</h2>
             <p>
-              We have received your registration form. If you are not redirected
-              within 5 seconds, press the button below.
+              We have sent a verification email to your account. Please verify
+              yourself by clicking on the link provided in the email.
             </p>
 
             <form>
               <div>
-                <button className=" btn btn-type1">CONFIRM</button>
+                <button
+                  onClick={(event) => {
+                    event.preventDefault();
+                    window.location.replace("/sign-in");
+                  }}
+                  className=" btn btn-type1"
+                >
+                  LOGIN
+                </button>
               </div>
             </form>
           </div>

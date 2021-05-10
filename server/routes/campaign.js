@@ -4,6 +4,10 @@ import {
   getAllFundraiserController,
   getMyFundraiserController,
   editCampaignController,
+  getCampaignByIdController,
+  deleteCampaignController,
+  updatePaymentOptionsController,
+  updateDonationController,
 } from "../controllers/campaign.js";
 import { testController } from "../controllers/test.js";
 
@@ -14,5 +18,9 @@ campaignRouter.post("/new-campaign", newCampaignController);
 campaignRouter.post("/get-campaigns", getAllFundraiserController);
 campaignRouter.post("/get-my-campaigns", getMyFundraiserController);
 campaignRouter.post("/edit-campaign", editCampaignController);
+campaignRouter.post("/get-campaign-by-id", getCampaignByIdController);
+campaignRouter.post("/delete-campaign", deleteCampaignController);
+campaignRouter.post("/update-payment-options", updatePaymentOptionsController);
+campaignRouter.post("/update-donation-received", updateDonationController);
 
 export { campaignRouter };

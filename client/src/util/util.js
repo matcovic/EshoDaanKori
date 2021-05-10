@@ -1,3 +1,6 @@
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function getBase64(file) {
   if (!file) return undefined;
   return new Promise((resolve) => {
@@ -52,24 +55,43 @@ async function convertMultipleImagesToB64(images) {
 
 function calculateFundraisingProgress(current, goal) {
   try {
-    return `${(current / goal) * 100}%`;
+    return `${(parseInt(current) / parseInt(goal)) * 100}%`;
   } catch (error) {
     return "0%";
   }
 }
 
-function getCard(id, fundCardItems) {
-  for (var i = 0; i < fundCardItems.length; i++) {
-    if (fundCardItems[i]._id === id) {
-      console.log("found");
-      return fundCardItems[i];
-    }
-  }
+
+function getCategoryList() {
+  const list = [
+    "All",
+    "Accidents & Emergencies",
+    "Medical",
+    "Creative",
+    "Education",
+    "Volunteer & Service",
+    "Animals & Pets",
+    "Others",
+  ];
+  return list;
 }
+
+const notifyError = (message) => {
+  toast.error(message, {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
 
 export {
   getBase64,
   convertMultipleImagesToB64,
   calculateFundraisingProgress,
-  getCard,
+  getCategoryList,
+  notifyError,
 };
