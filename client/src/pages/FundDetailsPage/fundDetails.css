@@ -213,7 +213,7 @@
 
 /* when accordion not collapsed */
 .accordion-button:not(.collapsed) {
-  color: black;
+  color: white;
   background-color: var(--quill-gray);
 }
 

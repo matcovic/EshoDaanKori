@@ -69,6 +69,58 @@ const DiscoverPage = (props) => {
                   </ul>
                 </div>
               </div>
+              {/*Categorical accordion */}
+              <div
+                className="accordion query-box categorical-box-accordion"
+                id="accordionExample"
+              >
+                <div className="accordion-item">
+                  <h2 className="accordion-header" id="headingTwo">
+                    <button
+                      className="accordion-button collapsed query-box-accordion-btn"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseTwo"
+                      aria-expanded="false"
+                      aria-controls="collapseTwo"
+                      style={{ margin: "0" }}
+                    >
+                      CATEGORIES
+                    </button>
+                  </h2>
+                  <div
+                    id="collapseTwo"
+                    className="accordion-collapse collapse"
+                    aria-labelledby="headingTwo"
+                    data-bs-parent="#accordionExample"
+                  >
+                    <div className="accordion-body">
+                      <ul>
+                        <li>
+                          <Link className="" to="/category/All">
+                            All
+                          </Link>
+                        </li>
+                        <li>
+                          <Link className="" to="/category/Medical">
+                            Medical
+                          </Link>
+                        </li>
+                        <li>
+                          <Link className="" to="/category/Tuition">
+                            Tuition
+                          </Link>
+                        </li>
+                        <li>
+                          <Link className="" to="/category/Entertainment">
+                            Entertainment
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div className="col-xl-10 col-sm-12">
               <div className="list-of-funds white-container">

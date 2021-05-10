@@ -145,6 +145,47 @@
 .query-box li {
   padding: 0.8rem 0;
 }
+/* ------------------ Query box Accordion -------------- */
+.categorical-box-accordion {
+  padding: 0;
+  margin: 0 0 10px 0 !important;
+}
+.query-box-accordion-btn {
+  background-color: var(--white);
+  border-radius: 14px !important;
+  color: var(--jade);
+  font-family: var(--font-family-poppins);
+  font-size: var(--font-size-body1);
+  font-weight: var(--font-weight-subHeading2);
+}
+.query-box-accordion-btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+.categorical-box-accordion .accordion-header {
+  padding: 0;
+}
+.categorical-box-accordion .accordion-item {
+  border: none;
+  border-radius: 14px !important;
+}
+.categorical-box-accordion .accordion-button:not(.collapsed) {
+  color: var(--jade);
+  background-color: var(--white);
+}
+.categorical-box-accordion .accordion-body {
+  background-color: var(--white);
+  margin: 0;
+  padding: 0 1.25rem 1rem 1.25rem;
+}
+@media only screen and (max-width: 1199px) {
+  .query-box.white-container {
+    display: none;
+  }
+  .categorical-box-accordion {
+    display: inherit !important;
+  }
+}
 
 .discover-no-content-found {
   text-align: center;
