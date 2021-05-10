@@ -1,5 +1,6 @@
 import React from "react";
 import "../TermsAndConditions/policy.css";
+import { Link } from "react-router-dom";
 function Cookie() {
   return (
     <div className="background-signup">
@@ -250,7 +251,9 @@ function Cookie() {
               This cookie policy was created using Termly’s Cookie Consent
               Manager.
             </p>
-            <button className="btn btn-type1 input-length">HOME</button>
+            <Link to="/" className="btn btn-type1 input-length">
+              HOME
+            </Link>
           </div>
         </div>
       </section>

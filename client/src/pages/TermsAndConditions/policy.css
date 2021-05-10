@@ -42,3 +42,7 @@
 #policy a {
   color: var(--alien-armpit);
 }
+
+#policy .btn-type1 {
+  color: white !important;
+}
