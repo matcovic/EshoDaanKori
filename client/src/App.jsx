@@ -19,6 +19,7 @@ import ForgotPassword from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import MyFundRaisersPage from "./pages/MyFundRaisersPage";
 import FundDetailsPage from "./pages/FundDetailsPage";
+import FundEditDetailsPage from "./pages/FundEditDetailsPage";
 
 function App() {
   const [isAuthenticated, setAuthenticationStatus] = useState(false);
