@@ -575,6 +575,61 @@ i.large.icons {
   font-weight: 500;
 }
 
+/* -----------------------------------How It Works------------------------------------------- */
+#how-to-fundraise-section {
+  background-color: var(--black-haze);
+}
+
+#how-to-donate-section {
+  background-color: var(--white);
+}
+
+/* Step no text */
+.step-no-text {
+  font-weight: 500;
+  text-align: center;
+}
+/* Individual Step Element */
+.step-box {
+  height: 100%;
+  padding: 2%;
+  align-items: center;
+  display: flex;
+}
+
+/* Step image */
+.step-box img {
+  width: 100%;
+  max-height: 80%;
+}
+
+/* Vertical line */
+.vertical-line {
+  border-left: 4px dashed #c4c4c4;
+  content: "";
+  position: absolute;
+  height: 40%;
+  left: 50%;
+  margin-top: 15px;
+}
+
+@media screen and (max-width: 1277px) {
+  .vertical-line {
+    border-left: 4px dashed #c4c4c4;
+    content: "";
+    position: absolute;
+    height: 35%;
+    left: 50%;
+    margin-top: 15px;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .vertical-line {
+    display: none;
+  }
+}
+
 .input-icon {
   height: 100%;
   /* width: 2.67142857em; */
