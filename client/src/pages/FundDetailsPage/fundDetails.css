@@ -103,6 +103,7 @@
 
 #fund-details-section .btn-type1 {
   width: 100%;
+  filter: none;
 }
 
 /* donation received & goal text  */
@@ -126,7 +127,7 @@
 
 /* progress bar  */
 #fund-details-section .donation-statistics .progress {
-  margin: 0;
+  margin: 0.5rem 0;
 }
 
 .availlable-payment-sidebar {
@@ -169,6 +170,11 @@
   font-size: 18px;
   margin: 0.2rem 0.3rem 0.3rem 1rem;
 }
+/* adding +88 before mobile number  */
+.payment-list li h3::before {
+  content: "+88";
+  color: black;
+}
 
 .payment-list-btn {
   margin: 15px 0 0 0;
@@ -209,6 +215,36 @@
 .accordion-button:not(.collapsed) {
   color: black;
   background-color: var(--quill-gray);
+}
+
+/* -------------------- Edit Fund Details -------------------  */
+.edit-fund-details .donation-statistics .edit-btn {
+  position: relative;
+  top: 0;
+  right: 0;
+  filter: none;
+  margin-bottom: auto;
+  padding: 0.5rem;
+}
+
+.edit-fund-details .donation-statistics .edit-btn i.large.icon,
+i.large.icons {
+  font-size: 0.8em;
+}
+
+.edit-fund-details .fund-btn-group .delete-btn {
+  background-color: #ff641a;
+}
+.edit-fund-details .fund-btn-group .delete-btn:hover {
+  background-color: #ffb490;
+}
+
+.edit-fund-details .availlable-payment-sidebar .btn-type1 {
+  margin: 15px 0 0 0;
+}
+
+.edit-fund-details .payment-list-btn {
+  background-color: var(--alien-armpit);
 }
 
 /* ---------------------- Breakpoints--------------------- */
