@@ -247,6 +247,33 @@ i.large.icons {
   background-color: var(--alien-armpit);
 }
 
+/* ----------------------------modal design------------------------- */
+.goal-input {
+  border-radius: 10px;
+  background-color: var(--black-haze);
+  width: 100%;
+  font-family: var(--font-family-poppins);
+  font-size: var(--font-size-body2);
+  font-weight: var(--font-size-body1);
+  text-align: center;
+  border: none;
+}
+.goal-input:focus {
+  background-color: var(--black-haze);
+  outline: 0;
+  opacity: 0.85;
+  transition: all 0.1s ease-in;
+  border: none;
+}
+
+.goal {
+  font-weight: bold;
+}
+.taka {
+  color: var(--alien-armpit);
+  font-weight: bold;
+}
+
 /* ---------------------- Breakpoints--------------------- */
 /* break point for button group  */
 @media only screen and (max-width: 380px) {

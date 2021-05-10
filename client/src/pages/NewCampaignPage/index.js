@@ -142,16 +142,13 @@ const NewCampaign = (props) => {
   const onDropOptionalPhotos = (picture) => {
     setOptionalPictures(picture);
     setPictureCount(picture.length);
-
   };
-
-
 
   // sets dropdown category
   const onDropdownChange = (event) => {
     console.log(event.target.textContent);
     setCategory(event.target.textContent);
-  }
+  };
 
   function onDelete(event) {
     console.log("delete clicked");
