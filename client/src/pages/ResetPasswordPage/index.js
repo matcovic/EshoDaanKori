@@ -124,8 +124,9 @@ const ResetPassword = ({ isAuthenticated }) => {
                   onChange={handleChange}
                   icon={KeyIcon}
                   iconPosition="left"
-                  placeholder="Password"
+                  placeholder="Password *"
                   className="input-length"
+                  type="password"
                 />
               </div>
               <div>
@@ -134,8 +135,9 @@ const ResetPassword = ({ isAuthenticated }) => {
                   onChange={handleChange}
                   icon={KeyIcon}
                   iconPosition="left"
-                  placeholder="Confirm Password"
+                  placeholder="Confirm Password *"
                   className="input-length"
+                  type="password"
                 />
               </div>
               <div>

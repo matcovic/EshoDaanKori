@@ -61,7 +61,6 @@ const SignUp = ({ isAuthenticated }) => {
       });
     } else {
       setErrorBox(true);
-      
 
       //-------------todo------------
       window.location = "/registration";
@@ -89,7 +88,7 @@ const SignUp = ({ isAuthenticated }) => {
                   name="username"
                   icon={EmailIcon}
                   iconPosition="left"
-                  placeholder="Email Address"
+                  placeholder="Email Address *"
                   className="input-length"
                   onChange={handleChange}
                 />
@@ -100,8 +99,9 @@ const SignUp = ({ isAuthenticated }) => {
                   name="password"
                   icon={KeyIcon}
                   iconPosition="left"
-                  placeholder="Password"
+                  placeholder="Password *"
                   className="input-length"
+                  type="password"
                   onChange={handleChange}
                 />
               </div>
@@ -110,8 +110,9 @@ const SignUp = ({ isAuthenticated }) => {
                   name="confirmPassword"
                   icon={KeyIcon}
                   iconPosition="left"
-                  placeholder="Confirm Password"
+                  placeholder="Confirm Password *"
                   className="input-length"
+                  type="password"
                   onChange={handleChange}
                 />
               </div>

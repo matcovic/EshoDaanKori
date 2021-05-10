@@ -146,10 +146,38 @@
   padding: 0.8rem 0;
 }
 
+.discover-no-content-found {
+  text-align: center;
+}
+.discover-no-content-found p {
+  text-align: center;
+}
+
+.discover-no-content-found img {
+  margin-top: 20px;
+  height: 30%;
+  width: 30%;
+}
+
+@media only screen and (max-width: 450px) {
+  .discover-no-content-found img {
+    height: 30%;
+    width: 70% !important;
+  }
+}
+
 @media only screen and (max-width: 360px) {
+  .discover-no-content-found img {
+    height: 30%;
+    width: 82% !important;
+  }
 }
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
+  .discover-no-content-found img {
+    height: 30%;
+    width: 42%;
+  }
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
