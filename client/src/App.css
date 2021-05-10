@@ -33,6 +33,7 @@
 html,
 body {
   height: 100%;
+  /* background-color: brown; */
 }
 
 #container {
@@ -125,8 +126,16 @@ body {
 }
 
 /* Shadow for navbar */
-.navbar {
+.navbar-shadow {
   box-shadow: 0px -5px 13px rgba(0, 0, 0, 0.25);
+}
+
+/* navbar font color on transparency */
+.navbar-font-color-white {
+  color: var(--white) !important;
+}
+.navbar-font-color-white:hover {
+  color: var(--btn-hover-color) !important;
 }
 
 /* Navbar elements style */
@@ -160,6 +169,10 @@ body {
   margin: 5px 20px;
   text-transform: uppercase;
   text-align: center;
+}
+.nav-bar-title:hover,
+.nav-link:hover {
+  color: var(--btn-hover-color);
 }
 
 .navbar-btn {
@@ -225,9 +238,9 @@ body {
 /* --------------------- Intro Section --------------------- */
 #intro-section {
   padding: var(--padding-section);
-  padding-bottom: 15%;
+  /* padding-bottom: 15%; */
   position: relative;
-  z-index: 1;
+  z-index: 1000;
 }
 
 h1 {
@@ -612,4 +625,8 @@ i.large.icons {
 }
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
+}
+
+.landing-page .carousel-item {
+  max-height: 700px;
 }

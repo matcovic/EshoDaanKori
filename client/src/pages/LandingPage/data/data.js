@@ -50,7 +50,7 @@ const whyUs = [
 ];
 
 const landingPageInitialContent = {
-  slogan: "MAKE  EASIER",
+  slogan: "MAKE FUNDRAISING EASIER",
   sloganDescription:
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum sit dui diam non. Dolor egestas lectus at pellentesque faucibus sed faucibus commodo proin.",
   ourVision:

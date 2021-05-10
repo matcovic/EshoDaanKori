@@ -57,12 +57,15 @@ const Navbar = ({ isAuthenticated }) => {
         aria-label="Toggle navigation"
       ></a>
       <nav
-        className={`autohide navbar navbar-expand-lg bg-white ${
+        className={`autohide navbar navbar-expand-lg ${
           isAuthenticated ? "private-navbar" : ""
         }`}
       >
         <div className="container-fluid navbar-container">
-          <NavHashLink className="navbar-brand abs nav-bar-title" to="/">
+          <NavHashLink
+            className="navbar-brand abs nav-bar-title navbar-font-color-white"
+            to="/"
+          >
             AshoDaanKori
           </NavHashLink>
           <button
@@ -85,7 +88,7 @@ const Navbar = ({ isAuthenticated }) => {
                       pathname: "/my-fundraisers",
                       state: { status: 1 },
                     }}
-                    className="nav-link"
+                    className="nav-link navbar-font-color-white"
                   >
                     My fundraisers
                   </NavHashLink>
@@ -153,18 +156,24 @@ const Navbar = ({ isAuthenticated }) => {
                   <NavHashLink
                     smooth
                     to="/#our-story-section"
-                    className="nav-link"
+                    className="nav-link navbar-font-color-white"
                   >
                     About
                   </NavHashLink>
                 </li>
                 <li className="nav-item active">
-                  <NavHashLink to="/how-it-works" className="nav-link">
+                  <NavHashLink
+                    to="/how-it-works"
+                    className="nav-link navbar-font-color-white"
+                  >
                     How it works
                   </NavHashLink>
                 </li>
                 <li className="nav-item active">
-                  <NavHashLink to="/discover" className="nav-link">
+                  <NavHashLink
+                    to="/discover"
+                    className="nav-link navbar-font-color-white"
+                  >
                     Discover
                   </NavHashLink>
                 </li>

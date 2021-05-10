@@ -6,8 +6,20 @@ import OurStory from "./components/OurStory";
 import OurVision from "./components/OurVision";
 import AvailFundraisers from "./components/AvaiFundraisers";
 import { landingPageInitialContent } from "./data/data";
+import BannerCarousel from "./components/BannerCarousel";
 
 function LandingPage() {
+  const introSection = {
+    images: [
+      // { intro_img_1 },
+      // { intro_img_2 },
+      // { intro_img_3 },
+      // { intro_img_4 },
+      "https://images.hdqwalls.com/wallpapers/tengen-jujutsu-kaisen-4k-xn.jpg",
+      "https://c4.wallpaperflare.com/wallpaper/787/854/424/jujutsu-kaisen-satoru-gojo-anime-boys-anime-girls-hd-wallpaper-preview.jpg",
+    ],
+  };
+
   const [content, setContent] = useState(landingPageInitialContent);
   // this is called as soon as the components load up.
   useEffect(() => {
@@ -25,11 +37,16 @@ function LandingPage() {
   }, []);
 
   return (
-    <div>
-      <Intro
+    <div className="landing-page">
+      <BannerCarousel
+        carouselImages={introSection.images}
         slogan={content.slogan}
         sloganDescription={content.sloganDescription}
       />
+      {/* <Intro
+        slogan={content.slogan}
+        sloganDescription={content.sloganDescription}
+      /> */}
 
       <OurStory ourStory={content.ourStory} />
 
