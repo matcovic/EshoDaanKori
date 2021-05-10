@@ -5,6 +5,7 @@ import axios from "axios";
 import { Redirect } from "react-router";
 import Loading from "react-fullscreen-loading";
 import { Input, Modal, Header } from "semantic-ui-react";
+import NoContentImage from "../../assets/images/NoContentImage.svg";
 
 const MyFundRaisersPage = (props) => {
   console.log(props);
@@ -48,7 +49,15 @@ const MyFundRaisersPage = (props) => {
               <div className="divider-custom" style={{ paddingTop: "0" }}>
                 <div className="divider-custom-line"></div>
               </div>
-              <PaginationComponent fundraisers={fundraisers} />
+              {fundraisers.length ? (
+                <PaginationComponent fundraisers={fundraisers} />
+              ) : (
+                <div className="discover-no-content-found">
+                  <img src={NoContentImage}></img>
+                  <h1>NO FUNDRAISERS FOUND</h1>
+                  <p>You have no fundraisers availabel at this moment.</p>
+                </div>
+              )}
             </div>
           </div>
         </div>

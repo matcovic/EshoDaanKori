@@ -18,9 +18,6 @@ yup.setLocale({
   string: {
     min: () => "Password is too short",
   },
-  string: {
-    min: () => "Password is too short",
-  },
 });
 
 const schema = yup.object().shape({
@@ -39,7 +36,6 @@ const schema = yup.object().shape({
 
 const SignUp = ({ isAuthenticated }) => {
   const history = useHistory();
-
   const [state, setState] = useState({}); // stores the form data
   const [ErrorMessage, setErrorMessage] = useState();
   const [ErrorBox, setErrorBox] = useState(true);
@@ -91,7 +87,7 @@ const SignUp = ({ isAuthenticated }) => {
                   name="username"
                   icon={EmailIcon}
                   iconPosition="left"
-                  placeholder="Email Address"
+                  placeholder="Email Address*"
                   className="input-length"
                   onChange={handleChange}
                 />
@@ -102,8 +98,9 @@ const SignUp = ({ isAuthenticated }) => {
                   name="password"
                   icon={KeyIcon}
                   iconPosition="left"
-                  placeholder="Password"
+                  placeholder="Password*"
                   className="input-length"
+                  type="password"
                   onChange={handleChange}
                 />
               </div>
@@ -112,8 +109,9 @@ const SignUp = ({ isAuthenticated }) => {
                   name="confirmPassword"
                   icon={KeyIcon}
                   iconPosition="left"
-                  placeholder="Confirm Password"
+                  placeholder="Confirm Password*"
                   className="input-length"
+                  type="password"
                   onChange={handleChange}
                 />
               </div>

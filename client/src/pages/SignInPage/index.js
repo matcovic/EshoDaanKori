@@ -120,8 +120,10 @@ const SignIn = ({ isAuthenticated }) => {
                   iconPosition="left"
                   placeholder="Password"
                   className="input-length"
+                  type="password"
                 />
               </div>
+
               <div className="signIn-forgot-text">
                 <Link to="/forgot-password">FORGOT YOUR PASSWORD?</Link>
               </div>

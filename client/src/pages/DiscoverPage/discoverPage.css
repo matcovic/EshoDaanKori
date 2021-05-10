@@ -154,6 +154,7 @@
 }
 
 .discover-no-content-found img {
+  margin-top: 20px;
   height: 30%;
   width: 30%;
 }

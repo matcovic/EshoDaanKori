@@ -40,7 +40,6 @@ const schema = yup.object().shape({
     .min(11, "Phone number is too short")
     .required(),
   dob: yup.date("Date must be dd/mm/yyyy").required(),
-  nid: yup.number("Invalid").positive("Invalid").integer("Invalid"),
 });
 //-----------for validation------------------
 
@@ -132,7 +131,7 @@ const Registration = (props) => {
                   onChange={handleChange}
                   icon={ProfileIcon}
                   iconPosition="left"
-                  placeholder="Enter your full name"
+                  placeholder="Enter your full name *"
                   className="input-length"
                 />
               </div>
@@ -143,7 +142,7 @@ const Registration = (props) => {
                   onChange={handleChange}
                   icon={PhoneIcon}
                   iconPosition="left"
-                  placeholder="Enter your phone number"
+                  placeholder="Enter your phone number *"
                   className="input-length"
                 />
               </div>
@@ -153,18 +152,7 @@ const Registration = (props) => {
                   onChange={handleChange}
                   icon={CalendarIcon}
                   iconPosition="left"
-                  placeholder="Enter date of birth"
-                  className="input-length"
-                />
-              </div>
-
-              <div>
-                <Input
-                  name="nid"
-                  onChange={handleChange}
-                  icon={NidIcon}
-                  iconPosition="left"
-                  placeholder="Enter your NID or birth certificate number (optional)"
+                  placeholder="Enter date of birth(dd/mm/yy) *"
                   className="input-length"
                 />
               </div>
