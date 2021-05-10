@@ -47,6 +47,7 @@ const Registration = (props) => {
   const [form, setFormContent] = useState({});
   const [ErrorMessage, setErrorMessage] = useState();
   const [ErrorBox, setErrorBox] = useState(true);
+  const [registrationStatus, setRegistrationStatus] = useState(false);
 
   const ref = useRef(null); // for loading bar
   console.log("props: ");
@@ -54,7 +55,7 @@ const Registration = (props) => {
 
   if (!(props.location && props.location.state)) {
     console.log("unauthorized. Redirecting to signing page...");
-    // return <Redirect to="/sign-in" />;
+    return <Redirect to="/sign-in" />;
   }
   const { username, password, confirmPassword } =
     (props.location && props.location.state) || {};
@@ -69,7 +70,6 @@ const Registration = (props) => {
     console.log("on continue click");
     console.log(form);
     ref.current.continuousStart();
-
     const isValid = await schema.isValid(form);
 
     if (!isValid) {
@@ -89,13 +89,12 @@ const Registration = (props) => {
           ref.current.complete();
           console.log(data.message);
           window.location.replace("/registration-complete");
-          // return <Redirect to="/registration-complete" />;
+          setRegistrationStatus(true);
         } else {
           console.log(data.message);
           ref.current.complete();
-          window.location.replace("/error?");
-
-          // return <Redirect to="/error?" />;
+          setErrorBox(false);
+          setErrorMessage(data.message);
         }
       };
 
@@ -110,6 +109,10 @@ const Registration = (props) => {
       ...prevState,
       [name]: value,
     }));
+  }
+
+  if (registrationStatus) {
+    return <Redirect to="/registration-complete" />;
   }
 
   return (

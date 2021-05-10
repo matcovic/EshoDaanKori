@@ -1,27 +1,36 @@
 import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
 import { Redirect } from "react-router";
-import { calculateFundraisingProgress, getCard } from "../../../util/util";
+import { calculateFundraisingProgress } from "../../../util/util";
 import EditFundCardView from "../components/EditFundCardView";
 import kebabCase from "kebab-case";
+import { useHistory } from "react-router-dom";
 
 const PaginationComponent = ({ fundraisers }) => {
   //storing each item
   const [pageNumber, setPageNumber] = useState(0);
-  const [cardClicked, setCardClick] = useState({
-    card: undefined,
-    redirect: false,
-  });
+  const history = useHistory();
 
   function onCardClick(event) {
     event.preventDefault();
-    console.log("card clicked");
     const fundraiserId = event.currentTarget.id;
-    const card = getCard(fundraiserId, fundraisers);
-    setCardClick({ card: card, redirect: true });
+    console.log(fundraiserId);
+    if (
+      event.target.className === "btn edit-btn" ||
+      event.target.className === "pencil large icon"
+    ) {
+      history.push({
+        pathname: `/fundraisers/edit-post/${fundraiserId}`,
+        state: {id: fundraiserId, status: 2},
+      });
+    } else {
+      console.log("card clicked");
+      history.push({
+        pathname: `/fundraisers/view/${fundraiserId}`,
+      });
+    }
   }
 
-  
   const fundCardPerPage = 12;
   const pagesVisited = pageNumber * fundCardPerPage;
   const pageCount = Math.ceil(fundraisers.length / fundCardPerPage);
@@ -36,7 +45,7 @@ const PaginationComponent = ({ fundraisers }) => {
         >
           <EditFundCardView
             imgURL={fundCard.coverPhoto}
-            title={kebabCase(fundCard.title)}
+            title={fundCard.title}
             desc={fundCard.story.substring(0, 40) + ".."}
             currentProgress={calculateFundraisingProgress(
               fundCard.fundraisedTotal,
@@ -44,7 +53,7 @@ const PaginationComponent = ({ fundraisers }) => {
             )}
             currentAmountRaised={fundCard.fundraisedTotal}
             goal={fundCard.fundraisingGoal}
-            raw = {fundCard}
+            raw={fundCard}
           />
         </div>
       );
@@ -57,18 +66,6 @@ const PaginationComponent = ({ fundraisers }) => {
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
-
-  if (cardClicked.redirect) {
-    console.log(cardClicked.card);
-    return (
-      <Redirect
-        to={{
-          pathname: `/fundraisers/view?/${kebabCase(cardClicked.card.title)}`,
-          state: { content: cardClicked.card },
-        }}
-      />
-    );
-  }
 
   return (
     <div>

@@ -7,7 +7,6 @@ import { EmailIcon, KeyIcon } from "../../assets/assets.js";
 import axios from "axios";
 import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
-//-----------for validation------------------
 import * as yup from "yup";
 
 yup.setLocale({
@@ -32,9 +31,6 @@ const SignIn = ({ isAuthenticated }) => {
   const [form, setFormContent] = useState({});
   const [ErrorMessage, setErrorMessage] = useState();
   const [ErrorBox, setErrorBox] = useState(true);
-
-  //////Modal information---------------
-  const [open, setOpen] = React.useState(true);
 
   if (isAuthenticated) {
     return <Redirect to="/" />;
@@ -61,7 +57,6 @@ const SignIn = ({ isAuthenticated }) => {
       });
     } else {
       console.log(form);
-
       const loginUser = async () => {
         const { data } = await axios.post("/api/auth/login-email", form);
         if (data.status === 1) {
@@ -151,42 +146,6 @@ const SignIn = ({ isAuthenticated }) => {
           </div>
         </div>
       </section>
-
-      <Modal
-        id="modal-section"
-        onClose={() => setOpen(false)}
-        onOpen={() => setOpen(true)}
-        open={open}
-        onClose={() => {
-          console.log("MODAL CLOSED");
-          setOpen(false);
-        }}
-        // trigger={onSignInClick}
-      >
-        <Modal.Content>
-          <Modal.Description>
-            <Header>News Letter</Header>
-            <p>
-              Our platform completely depends on individuals. The more people we
-              have, the greater funds we can raise and help people to a greater
-              extent. Subscribe to our newsletter to get notified of new
-              campaigns
-            </p>
-            {/* <p>Is it okay to use this photo?</p> */}
-            <Input
-              placeholder="Enter email"
-              iconPosition="left"
-              icon={EmailIcon}
-              className="input-length"
-            />
-          </Modal.Description>
-          <button className="btn btn-type1 modal-btn">CONFIRM</button>
-
-          <div className="modal-not-interested">
-            <span onClick={() => setOpen(false)}>I’M NOT INTERESTED</span>
-          </div>
-        </Modal.Content>
-      </Modal>
     </div>
   );
 };

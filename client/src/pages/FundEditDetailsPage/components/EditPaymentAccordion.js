@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router";
 import Bkash from "../../../assets/icons/ico-bkash.svg";
 import Nagad from "../../../assets/icons/ico-nagad.svg";
 import Rocket from "../../../assets/icons/ico-rocket.svg";
@@ -16,7 +17,9 @@ function createPaymentListEntry(payment, index) {
   );
 }
 
-const EditPaymentAccordion = ({ payments }) => {
+const EditPaymentAccordion = ({ fundDetails }) => {
+  const history = useHistory();
+
   return (
     <div className="accordion" id="accordionExample">
       <div className="accordion-item payment-list" style={{ padding: "0" }}>
@@ -41,9 +44,19 @@ const EditPaymentAccordion = ({ payments }) => {
         >
           <div className="accordion-body">
             <ul>
-              {payments.map(createPaymentListEntry)}
+              {fundDetails.paymentOptions.map(createPaymentListEntry)}
               <li>
-                <button className="btn btn-type1" style={{ width: "80%" }}>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    history.push({
+                      pathname: `/fundraisers/change-payment-options/${fundDetails._id}`,
+                      state: {status: 69, fundDetails: fundDetails},
+                    });
+                  }}
+                  className="btn btn-type1"
+                  style={{ width: "80%" }}
+                >
                   UPDATE
                 </button>
               </li>

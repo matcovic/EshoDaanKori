@@ -2,16 +2,18 @@ import React, { useEffect, useState } from "react";
 import PaginationComponent from "./PaginationComponent";
 import "../DiscoverPage/discoverPage.css";
 import axios from "axios";
-import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
 import Loading from "react-fullscreen-loading";
 import NoContentImage from "../../assets/images/NoContentImage.svg";
+import { getCategoryList } from "../../util/util";
+
 
 const DiscoverPage = (props) => {
   var selectedCategory = props.match.params.category;
   selectedCategory = selectedCategory ? selectedCategory : "All";
   const [fundCardItems, setFundCardItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const categoryList = getCategoryList();
 
   useEffect(() => {
     // when the component loads up, send a req to the server
@@ -46,26 +48,16 @@ const DiscoverPage = (props) => {
                 <div className="categorical-box">
                   <h4>CATEGORIES</h4>
                   <ul>
-                    <li>
-                      <Link className="" to="/category/All">
-                        All
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="" to="/category/Medical">
-                        Medical
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="" to="/category/Tuition">
-                        Tuition
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="" to="/category/Entertainment">
-                        Entertainment
-                      </Link>
-                    </li>
+                    {categoryList.map((category) => {
+                      const link = `/category/${category}`;
+                      return (
+                        <li>
+                          <Link className="" to={link}>
+                            {category}
+                          </Link>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               </div>
@@ -81,7 +73,7 @@ const DiscoverPage = (props) => {
                   <PaginationComponent fundCardItems={fundCardItems} />
                 ) : (
                   <div className="discover-no-content-found">
-                    <img src={NoContentImage}></img>
+                    <img alt="no fundraisers" src={NoContentImage}></img>
                     <h1>NO FUNDRAISERS FOUND</h1>
                     <p>
                       No fundraiser posts available at the moment! Try switching

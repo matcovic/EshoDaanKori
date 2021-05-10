@@ -1,18 +1,12 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
-import { Redirect } from "react-router";
 import FundCardView from "../../components/FundCardView";
-import { calculateFundraisingProgress, getCard } from "../../util/util";
-import kebabCase from "kebab-case";
-
+import { calculateFundraisingProgress } from "../../util/util";
+import { useHistory } from "react-router-dom";
 
 const PaginationComponent = ({ fundCardItems }) => {
+  const history = useHistory();
   const [pageNumber, setPageNumber] = useState(0);
-  const [cardClicked, setCardClick] = useState({
-    card: undefined,
-    redirect: false,
-  });
 
   //items shown per page
   const fundCardPerPage = 12;
@@ -21,9 +15,9 @@ const PaginationComponent = ({ fundCardItems }) => {
     event.preventDefault();
     console.log("card clicked");
     const fundraiserId = event.currentTarget.id;
-    //console.log(fundraiserId);
-    const card = getCard(fundraiserId, fundCardItems);
-    setCardClick({ card: card, redirect: true });
+    history.push({
+      pathname: `/fundraisers/view/${fundraiserId}`,
+    });
   }
 
   const pagesVisited = pageNumber * fundCardPerPage;
@@ -60,18 +54,6 @@ const PaginationComponent = ({ fundCardItems }) => {
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
-
-  if (cardClicked.redirect) {
-    console.log(cardClicked.card);
-    return (
-      <Redirect
-        to={{
-          pathname: `/fundraisers/view?/${kebabCase(cardClicked.card.title)}`,
-          state: { content: cardClicked.card },
-        }}
-      />
-    );
-  }
 
   return (
     <div>

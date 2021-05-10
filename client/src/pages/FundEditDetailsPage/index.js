@@ -1,77 +1,104 @@
 import React, { useEffect, useState } from "react";
 import "../FundDetailsPage/fundDetails.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import CarouselComponent from "../../components/CarouselComponent";
 import FundTags from "../FundDetailsPage/components/FundTags";
 import Story from "../FundDetailsPage/components/Story";
 import EditDonationStats from "./components/EditDonationStats";
 import EditPaymentSideBar from "./components/EditPaymentSideBar";
 import EditPaymentAccordion from "./components/EditPaymentAccordion";
+import { Header, Input, Modal } from "semantic-ui-react";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Loading from "react-fullscreen-loading";
 
-const FundEditDetailsPage = () => {
-  // const [fundDetails, setFundDetails] = useState({});
-  const fundDetails = {
-    _id: {
-      $oid: "60980faf4014412e2add453f",
-    },
-    fundraisedTotal: {
-      $numberInt: "0",
-    },
-    paymentOptions: [
-      {
-        number: "01966184895",
-        icon: "Bkash",
-      },
-      {
-        number: "01303105504",
-        icon: "Nagad",
-      },
-    ],
-    optionalPhotos: [
-      "https://www.pngjoy.com/pngl/777/9240233_facebook-logo-png-logo-fb-instagram-png-transparent.png",
-      "https://c4.wallpaperflare.com/wallpaper/787/854/424/jujutsu-kaisen-satoru-gojo-anime-boys-anime-girls-hd-wallpaper-preview.jpg",
-    ],
-    uid: "6095282fa336743dd85e13b0",
-    title: "Helping The Juneau Family",
-    story:
-      "Hi everyone! I was able to see Erika and Aaron this past weekend (distanced of course!) and they asked me to post this on their behalf.\n\n“Aaron and I wanted to take a moment to thank everyone for the generous donations. Your gift has helped us to hire a full time helper for the kids while I have had to return to work. We also hired someone to help us get the house ready to list, what a huge help that was! We can’t thank you enough for your generous gifts. We are beyond grateful and touched.”",
-    location: "Greely, ON",
-    fundraisingGoal: {
-      $numberInt: "15000",
-    },
-    fundraisingFor: "Yourself",
-    category: "Medical",
-    coverPhoto:
-      "https://res.cloudinary.com/pixieum-studios/image/upload/v1620568740/user/6095282fa336743dd85e13b0/fundraisers/6097ea83a8016622208bfcb8/coverPhoto/bmjyqhbg2latywixuzwo.jpg",
-    createdAt: {
-      $date: {
-        $numberLong: "1620568711786",
-      },
-    },
-    updatedAt: {
-      $date: {
-        $numberLong: "1620575809879",
-      },
-    },
-    __v: {
-      $numberInt: "0",
-    },
-  };
-  const images = [fundDetails.coverPhoto, ...fundDetails.optionalPhotos];
-  fundDetails.images = images;
+const FundEditDetailsPage = (props) => {
+  const fundraiserId = props.location.state.id;
+  const [open, setOpen] = React.useState(false);
+  const [fundDetails, setFundDetails] = useState();
+  const [loading, setLoading] = useState(true);
 
-  //Fetching data from JSON or API
-  // useEffect(() => {
-  //   fetch("./fund_details.json")
-  //     .then((response) => response.json())
-  //     .then((json) => setFundDetails(json[0]));
-  // }, []);
+  const history = useHistory();
 
-  // console.log(fundDetails);
-  // console.log("TITLE IS:  " + fundDetails.title);
+  useEffect(() => {
+    // when the component loads up, send a req to the server
+    const fetchContent = async () => {
+      const { data } = await axios.post("/api/campaign/get-campaign-by-id", {
+        fundraiserId: fundraiserId,
+      });
+      if (data.status === 1) {
+        console.log(data);
+        const images = [data.result.coverPhoto, ...data.result.optionalPhotos];
+        data.result.images = images;
+        setFundDetails(data.result);
+        setLoading(false);
+        console.log("result returned ");
+      } else {
+        console.log("coudlnt get result");
+        console.log(data.message);
+        setLoading(false);
+      }
+    };
+    fetchContent();
+  }, [fundraiserId]);
+
+  function onDeleteConfirmClick(e) {
+    e.preventDefault();
+
+    const deleteFundraiser = async () => {
+      const { data } = await axios.post("/api/campaign/delete-campaign", {
+        fundraiserId: fundraiserId,
+      });
+      if (data.status === 1) {
+        console.log(data);
+        notify(data.message);
+        setOpen(false);
+        console.log("deleted success");
+      } else {
+        console.log("couldn't delete fundraiser");
+        notify(data.message);
+        setOpen(false);
+      }
+    };
+
+    deleteFundraiser();
+  }
+
+  function notify(message) {
+    const options = {
+      onClose: (props) => window.location.replace("/"),
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    };
+
+    toast.success(message, options);
+  }
+
+  if (loading) {
+    return (
+      <Loading loading={loading} background="#00AD7C" loaderColor="#B7FE81" />
+    );
+  }
 
   return (
     <section id="fund-details-section">
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div className="white-container edit-fund-details">
         {/* Fund title */}
         <h2>{fundDetails.title}</h2>
@@ -82,7 +109,9 @@ const FundEditDetailsPage = () => {
               <CarouselComponent carouselImages={fundDetails.images} />
 
               {/* Fund posted time ago  */}
-              <h3 className="post-time-text">Posted 4 days ago</h3>
+              <h3 className="post-time-text">
+                {new Date(fundDetails.createdAt).toUTCString()}
+              </h3>
 
               {/* tags and labels */}
               <FundTags tags={fundDetails} />
@@ -91,29 +120,71 @@ const FundEditDetailsPage = () => {
               <EditDonationStats fundDetails={fundDetails} />
 
               {/* payment accordion  */}
-              <EditPaymentAccordion payments={fundDetails.paymentOptions} />
+              <EditPaymentAccordion fundDetails={fundDetails} />
 
               {/* story  */}
               <Story story={fundDetails.story} />
 
               {/* contact & share button  */}
               <div className="fund-btn-group">
-                <Link to="/#" className="btn btn-type1">
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    history.push({
+                      pathname: `/fundraisers/edit/${fundDetails._id}`,
+                      state: { props: fundDetails, status: 2 },
+                    });
+                  }}
+                  className="btn btn-type1"
+                >
                   EDIT POST
-                </Link>
-                <Link to="/#" className="btn btn-type1 delete-btn">
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setOpen(true);
+                  }}
+                  className="btn btn-type1 delete-btn"
+                >
                   DELETE POST
-                </Link>
+                </button>
               </div>
             </div>
 
             <div className="col-lg-4">
               {/* payment sidebar  */}
-              <EditPaymentSideBar payments={fundDetails.paymentOptions} />
+              <EditPaymentSideBar fundDetails={fundDetails} />
             </div>
           </div>
         </div>
       </div>
+      <Modal
+        id="modal-section"
+        onOpen={() => setOpen(true)}
+        open={open}
+        onClose={() => {
+          console.log("MODAL CLOSED");
+          setOpen(false);
+        }}
+      >
+        <Modal.Content>
+          <Modal.Description>
+            <Header>ARE YOU SURE</Header>
+            <p>
+              This action is not irreversible. Make sure you are absolutely
+              sure. Enter DELETE in the box below and press confirm to delete
+              the fundraiser
+            </p>
+            {/* <Input placeholder="Enter DELETE here" className="input-length" /> */}
+          </Modal.Description>
+          <button
+            onClick={onDeleteConfirmClick}
+            className="btn btn-type1 modal-btn red-btn"
+          >
+            CONFIRM
+          </button>
+        </Modal.Content>
+      </Modal>
     </section>
   );
 };

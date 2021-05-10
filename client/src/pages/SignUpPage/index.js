@@ -6,6 +6,7 @@ import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
 //-----------for validation------------------
 import * as yup from "yup";
+import { useHistory } from "react-router-dom";
 
 yup.setLocale({
   // use constant translation keys for messages without values
@@ -14,9 +15,6 @@ yup.setLocale({
   },
   email: {},
   // use functions to generate an error object that includes the value from the schema
-  string: {
-    min: () => "Password is too short",
-  },
   string: {
     min: () => "Password is too short",
   },
@@ -37,7 +35,8 @@ const schema = yup.object().shape({
 //-----------for validation------------------
 
 const SignUp = ({ isAuthenticated }) => {
-  const [state, setState] = useState({});
+  const history = useHistory();
+  const [state, setState] = useState({}); // stores the form data
   const [ErrorMessage, setErrorMessage] = useState();
   const [ErrorBox, setErrorBox] = useState(true);
 
@@ -61,15 +60,15 @@ const SignUp = ({ isAuthenticated }) => {
       });
     } else {
       setErrorBox(true);
-
-      //-------------todo------------
-      window.location = "/registration";
+      history.push({
+        pathname: "/registration",
+        state: state,
+      });
     }
   }
 
   function handleChange(event) {
     const { value, name } = event.target;
-
     setState((prevState) => ({
       ...prevState,
       [name]: value,
@@ -88,7 +87,7 @@ const SignUp = ({ isAuthenticated }) => {
                   name="username"
                   icon={EmailIcon}
                   iconPosition="left"
-                  placeholder="Email Address *"
+                  placeholder="Email Address*"
                   className="input-length"
                   onChange={handleChange}
                 />
@@ -99,7 +98,7 @@ const SignUp = ({ isAuthenticated }) => {
                   name="password"
                   icon={KeyIcon}
                   iconPosition="left"
-                  placeholder="Password *"
+                  placeholder="Password*"
                   className="input-length"
                   type="password"
                   onChange={handleChange}
@@ -110,24 +109,14 @@ const SignUp = ({ isAuthenticated }) => {
                   name="confirmPassword"
                   icon={KeyIcon}
                   iconPosition="left"
-                  placeholder="Confirm Password *"
+                  placeholder="Confirm Password*"
                   className="input-length"
                   type="password"
                   onChange={handleChange}
                 />
               </div>
               <div>
-                {/* <Link
-                  className="btn btn-type1"
-                  to={{
-                    pathname: "/registration",
-                    state,
-                  }}
-                >
-                  SIGN IN
-                </Link> */}
                 <button onClick={OnSignUpClick} className="btn btn-type1">
-                  {" "}
                   SIGN UP
                 </button>
               </div>

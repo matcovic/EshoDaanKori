@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Redirect } from "react-router";
+import React, { useRef, useState } from "react";
 import {
   Form,
   Input,
@@ -11,16 +10,13 @@ import {
 import threeDots from "../../assets/icons/ico-3dots2.svg";
 import { convertMultipleImagesToB64, getBase64 } from "../../util/util";
 import "./newCampaign.css";
-import kebabCase from "kebab-case";
 import ImageUploader from "react-images-upload";
 import { useHistory } from "react-router-dom";
-import customModal from "../../components/CustomModal";
-
-// https://stackoverflow.com/questions/64208697/uploading-a-file-using-only-the-input-field-react-hook-form
-//-----------for validation------------------
 import * as yup from "yup";
 import axios from "axios";
 import LoadingBar from "react-top-loading-bar";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const schema = yup.object().shape({
   title: yup
@@ -43,17 +39,24 @@ const schema = yup.object().shape({
 //-----------for validation------------------
 
 const options = [
-  { key: "m", text: "Medical", value: "Medical" },
-  { key: "t", text: "Tuition", value: "Tuition" },
-  { key: "o", text: "Others", value: "Others" },
-  { key: "e", text: "Entertainment", value: "Entertainment" },
+  {
+    key: "a",
+    text: "Accidents & Emergencies",
+    value: "Accidents & Emergencies",
+  },
+  { key: "b", text: "Medical", value: "Medical" },
+  { key: "c", text: "Creative", value: "Creative" },
+  { key: "d", text: "Education", value: "Education" },
+  { key: "e", text: "Volunteer & Service", value: "Volunteer & Service" },
+  { key: "f", text: "Animals & Pets", value: "Animals & Pets" },
+  { key: "g", text: "Others", value: "Others" },
 ];
 
 function getPreviousValues(props) {
   // if status is 2, it means that the campaign page is opened for editing only
   if (props.location.state.status === 2) {
     console.log(props);
-    const title = kebabCase(props.match.params.fundraiserTitle);
+    const title = props.match.params.fundraiserTitle;
     console.log(title);
 
     const post = props.location.state.props;
@@ -104,7 +107,7 @@ const NewCampaign = (props) => {
     console.log(props.location.state.props.optionalPhotos);
   }
 
-  const [buttonActivation, setButtonActivation] = useState("false");
+  const [buttonActivation, setButtonActivation] = useState("");
   const [fundraisingFor, setFundraisingFor] = useState(
     getPreviousFundraisingFor(props)
   );
@@ -125,11 +128,33 @@ const NewCampaign = (props) => {
     status === 2 ? props.location.state.props.coverPhoto : "",
   ]);
 
-  //////Modal information---------------
-  const [open, setOpen] = React.useState(true);
   const [optionalPicturesDefault, setOptionalPicturesDefault] = useState(
     getOptionalPhotos(props, status)
   );
+
+  const notify = (message, type) => {
+    if (type === "success") {
+      toast.success(message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else if (type === "error") {
+      toast.error(message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
 
   // cover photo change listener
   const onDropCoverPhoto = (picture, data) => {
@@ -155,7 +180,7 @@ const NewCampaign = (props) => {
   }
   if (!(props.location && props.location.state)) {
     console.log("unauthorized. Redirecting to signing page...");
-    window.location = "/";
+    window.location.replace("/");
   }
 
   // handles radio button changes
@@ -216,8 +241,9 @@ const NewCampaign = (props) => {
         form.previousOptionalImages = optionalPicturesDefault;
         console.log("Form: ");
         console.log(form);
+        // status == 2 means editing post
         if (status === 2) {
-          setButtonActivation(""); // disables button
+          setButtonActivation("true"); // disables button
 
           // save changes to database
           const editChanges = async () => {
@@ -227,12 +253,14 @@ const NewCampaign = (props) => {
             );
             if (data.status === 1) {
               console.log(data.message);
-              // window.location.replace("/");
+              notify(data.message, "success");
+              setButtonActivation("");
             } else {
               console.log(data.status);
               console.log(data.message);
+              notify(data.message, "error");
             }
-            setButtonActivation("false"); // enables button
+            setButtonActivation("true"); // disables button
             ref.current.complete();
           };
 
@@ -253,6 +281,18 @@ const NewCampaign = (props) => {
     <div className="body-background">
       <section id="campaign-section">
         <LoadingBar color="#FF641A" ref={ref} shadow={true} height={4} />
+
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
 
         <div className="sample">
           <div className="campaign-box campaign-box-medium campaign-box-small">
@@ -367,11 +407,14 @@ const NewCampaign = (props) => {
                 </Form.Field>
               </Form.Group>
               <Form.Field>
-                <button onClick={onButtonClick} className="btn btn-type1">
+                <button
+                  disabled={buttonActivation}
+                  onClick={onButtonClick}
+                  className="btn btn-type1"
+                >
                   {status === 2
                     ? "SAVE CHANGES"
                     : " PROCEED TO PAYMENT OPTIONS"}{" "}
-                  disabled={buttonActivation}
                 </button>
               </Form.Field>
             </Form>
@@ -388,16 +431,6 @@ const NewCampaign = (props) => {
           </div>
         </div>
       </section>
-
-      {/* <customModal
-        onClose={() => setOpen()}
-        onClose={() => setOpen(false)}
-        onOpen={() => setOpen(true)}
-        open={open}
-        Header="Success"
-        message="Wow"
-        buttonText="Help"
-      /> */}
     </div>
   );
 };
