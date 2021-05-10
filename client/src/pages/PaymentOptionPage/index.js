@@ -12,9 +12,9 @@ import { getBase64 } from "../../util/util";
 import { useState } from "react";
 import { Button, Modal } from "semantic-ui-react";
 import LoadingBar from "react-top-loading-bar";
-
-//-----------for validation------------------
 import * as yup from "yup";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const phoneRegExp = "[0][1][1-9][0-9]{8}";
 const schema = yup.object().shape({
@@ -56,9 +56,19 @@ const MobileBankingOptions = [
   },
 ];
 
+function getPreviousPaymentList(props) {
+  var list = [];
+  if (props.location.state.status === 69) {
+    list = [...list, ...props.location.state.fundDetails.paymentOptions];
+  }
+  return list;
+}
+
 const PaymentOptions = (props) => {
   const ref = useRef(null); // for loading bar
-  const [paymentOptionsList, setPaymentOptionsList] = useState([]); // holds the final numbers
+  const [paymentOptionsList, setPaymentOptionsList] = useState(
+    getPreviousPaymentList(props)
+  ); // holds the final numbers
   const [paymentIconKey, setPaymentIcon] = useState("Bkash");
   const [inputField, setInputField] = useState("");
   const [campaignCreated, setCampaignCreated] = useState(false);
@@ -67,14 +77,11 @@ const PaymentOptions = (props) => {
   const [ErrorBox, setErrorBox] = useState(true);
 
   console.log(props);
-  //////Modal information---------------
-  const [open, setOpen] = React.useState(true);
-
-  console.log(props.location);
+  const [open, setOpen] = React.useState(false);
 
   if (!(props.location && props.location.state)) {
     console.log("unauthorized. Redirecting to signing page...");
-    window.location = "/";
+    window.location.replace("/");
   }
 
   function onStartCampaignClick(event) {
@@ -83,28 +90,48 @@ const PaymentOptions = (props) => {
     console.log(paymentOptionsList);
     props.location.state.paymentOptions = paymentOptionsList;
     console.log(props.location.state);
-
     ref.current.continuousStart(); // start loading
-
     setButtonActivation("");
+    console.log(props);
+
+    if (props.location.state.status === 69) {
+      props.location.state.updatePayment = true;
+    }
+
     const startCampaign = async () => {
-      const { data } = await axios.post(
-        "/api/campaign/new-campaign",
-        props.location.state
-      );
+      var data;
+      if (props.location.state.status !== 69) {
+        data = await axios.post(
+          "/api/campaign/new-campaign",
+          props.location.state
+        );
+        data = data.data;
+      } else {
+        data = await axios.post("/api/campaign/update-payment-options", {
+          paymentOptions: paymentOptionsList,
+          _id: props.location.state.fundDetails._id,
+        });
+
+        data = data.data;
+      }
 
       if (data.status === 1) {
         console.log(data);
         setCampaignCreated(true);
         ref.current.complete(); // end loading
-        // @todo: open dialog here
-        window.location.replace("/");
-        // return <Redirect to="/registration-complete" />;
+        setErrorBox(true);
+        if (props.location.state.status === 69) {
+          notifyUpdated("Payment options updated successfully!");
+          setButtonActivation("false");
+        } else {
+          setOpen(true);
+        }
       } else {
         console.log(data);
         ref.current.complete(); // end loading
-        // window.location.replace("/");
-        // return <Redirect to="/error?" />;
+        setErrorBox(false);
+        setErrorMessage(data.message);
+        setButtonActivation("false");
       }
     };
 
@@ -123,13 +150,37 @@ const PaymentOptions = (props) => {
     setInputField(e.target.value);
   }
 
+  const notify = () => {
+    console.log("notifying ");
+    toast.success("Link copied! 🔗", {
+      position: "bottom-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
+  const notifyUpdated = (message) => {
+    toast.success(message, {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
   /**
    *
    * @param {*} event Add More button
    */
   async function onAddMoreClick(event) {
     event.preventDefault();
-
     const isValid = await schema.isValid({ numb: inputField });
     if (!isValid) {
       schema.validate({ numb: inputField }).catch(function (err) {
@@ -159,6 +210,19 @@ const PaymentOptions = (props) => {
 
   return (
     <div className="payment-background">
+      <LoadingBar color="#FF641A" ref={ref} shadow={true} height={4} />
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+
       <section id="payment-section">
         <div className="sample">
           <div className="payment-box payment-box-medium payment-box-small">
@@ -207,9 +271,6 @@ const PaymentOptions = (props) => {
                       number={item.number}
                     />
                   ))}
-                  {/* <NumberLists icon={Bkash} number="012222" />
-                  <NumberLists icon={Nagad} number="012222" />
-                  <NumberLists icon={Rocket} number="012222" /> */}
                 </List>
               </div>
             </div>
@@ -222,9 +283,11 @@ const PaymentOptions = (props) => {
                 <button
                   onClick={onStartCampaignClick}
                   className="btn btn-type1"
-                  disabled={!buttonActivation}
+                  disabled={!buttonActivation || !paymentOptionsList.length}
                 >
-                  START CAMPAIGN
+                  {props.location.state.status === 69
+                    ? "SAVE CHANGES"
+                    : "START CAMPAIGN"}
                 </button>
               </form>
             </div>
@@ -250,9 +313,9 @@ const PaymentOptions = (props) => {
         open={open}
         onClose={() => {
           console.log("MODAL CLOSED");
+          window.location.replace("/");
           setOpen(false);
         }}
-        // trigger={onSignInClick}
       >
         <Modal.Content>
           <Modal.Description>
@@ -262,8 +325,27 @@ const PaymentOptions = (props) => {
               friends and family!
             </p>
           </Modal.Description>
-          <button className="btn btn-type1 modal-btn">COPY LINK</button>
-          <button className="btn btn-type1 modal-btn">HOME</button>
+          <button
+            onClick={(event) => {
+              event.preventDefault();
+              notify();
+              navigator.clipboard.writeText(
+                `http://localhost:3000/fundraisers/view/${props.location.state.title}`
+              );
+            }}
+            className="btn btn-type4 modal-btn"
+          >
+            COPY LINK
+          </button>
+          <button
+            onClick={(event) => {
+              event.preventDefault();
+              window.location.replace("/");
+            }}
+            className="btn btn-type1 modal-btn"
+          >
+            HOME
+          </button>
         </Modal.Content>
       </Modal>
     </div>

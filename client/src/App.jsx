@@ -92,9 +92,27 @@ function App() {
               />
               <Route
                 exact
-                path="/fundraisers/edit?/:fundraiserTitle"
+                path="/fundraisers/view/:fundraiserId"
+                component={FundDetailsPage}
+              />
+              <Route
+                exact
+                path="/fundraisers/edit/:fundraiserId"
                 component={NewCampaign}
               />
+
+              <Route
+                exact
+                path="/fundraisers/change-payment-options/:fundraiserId"
+                component={PaymentOptions}
+              />
+
+              <Route
+                exact
+                path="/fundraisers/edit-post/:fundraiserId"
+                component={FundEditDetailsPage}
+              />
+
               <Route
                 path="/my-fundraisers"
                 exact

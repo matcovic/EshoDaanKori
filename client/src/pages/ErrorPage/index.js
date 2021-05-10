@@ -4,6 +4,7 @@ import "../SignInPage/SignIn.css";
 import "./errorPage.css";
 
 const Error = (props) => {
+  console.log(props);
   return (
     <div className="background-signup">
       <section id="signIn-section">
