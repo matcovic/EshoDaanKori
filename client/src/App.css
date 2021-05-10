@@ -566,6 +566,9 @@ i.large.icons {
 }
 
 @media only screen and (max-width: 360px) {
+  h1 {
+    font-size: 35px;
+  }
   .fund-card-box .card-img img {
     height: 115px;
   }
@@ -579,6 +582,10 @@ i.large.icons {
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 361px) and (max-width: 600px) {
+  h1 {
+    font-size: 40px;
+  }
+
   .fund-card-box .card-img img {
     height: 138px;
   }
