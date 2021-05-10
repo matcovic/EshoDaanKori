@@ -1,0 +1,48 @@
+:root {
+  --alien-armpit: rgba(94, 218, 0, 1);
+  --black-haze: rgba(246, 246, 246, 1);
+  --dove-gray: rgba(110, 110, 110, 1);
+  --font-family-just_me_again_down_here: "Just Me Again Down Here", Helvetica;
+  --font-family-poppins: "Poppins", Helvetica;
+  --font-size-heading: 49px;
+  --font-size-subHeading: 28px;
+  --font-size-subHeading2: 1.094rem;
+  --font-size-body1: 21px;
+  --font-size-body2: 14.7px;
+  --font-size-title: 44.1px;
+  --font-weight-heading: 800;
+  --font-weight-subHeading: 800;
+  --font-weight-subHeading2: 700;
+  --font-weight-body1: 300;
+  --font-weight-body2: 400;
+  --font-weight-title: 400;
+  --jade: rgba(0, 173, 124, 1);
+  --quill-gray: rgba(213, 213, 213, 1);
+  --tundora: rgba(68, 68, 68, 1);
+  --white: rgba(255, 255, 255, 1);
+  --btn-hover-color: #b7fe81;
+  --padding-elements: 1rem 0.7rem 0.7rem 0.7rem;
+  --padding-section: 3% 7%;
+}
+#policy .signIn-box {
+  width: 95%;
+}
+
+#policy ul {
+  text-align: left;
+}
+
+#policy li {
+  font-family: var(--font-family-poppins);
+  font-size: var(--font-size-body1);
+  font-weight: var(--font-size-body1);
+  line-height: 41px;
+  color: var(--jade);
+}
+#policy a {
+  color: var(--alien-armpit);
+}
+
+#policy .btn-type1 {
+  color: white !important;
+}
