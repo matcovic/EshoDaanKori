@@ -57,7 +57,7 @@ const Navbar = ({ isAuthenticated }) => {
         aria-label="Toggle navigation"
       ></a>
       <nav
-        className={`autohide navbar navbar-expand-lg bg-white ${
+        className={`autohide navbar navbar-shadow navbar-expand-lg bg-white ${
           isAuthenticated ? "private-navbar" : ""
         }`}
       >
