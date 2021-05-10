@@ -5,6 +5,7 @@ import axios from "axios";
 import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
 import Loading from "react-fullscreen-loading";
+import NoContentImage from "../../assets/images/NoContentImage.svg";
 
 const DiscoverPage = (props) => {
   var selectedCategory = props.match.params.category;
@@ -79,7 +80,14 @@ const DiscoverPage = (props) => {
                 {fundCardItems.length ? (
                   <PaginationComponent fundCardItems={fundCardItems} />
                 ) : (
-                  <h1>No content found</h1>
+                  <div className="discover-no-content-found">
+                    <img src={NoContentImage}></img>
+                    <h1>NO FUNDRAISERS FOUND</h1>
+                    <p>
+                      No fundraiser posts available at the moment! Try switching
+                      between the categories to see if you can find one.
+                    </p>
+                  </div>
                 )}
               </div>
             </div>
