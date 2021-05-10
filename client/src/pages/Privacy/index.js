@@ -1,6 +1,7 @@
 import React from "react";
 import { NavHashLink } from "react-router-hash-link";
 import "../TermsAndConditions/policy.css";
+import { Link } from "react-router-dom";
 function Privacy() {
   return (
     <div className="background-signup">
@@ -515,7 +516,9 @@ function Privacy() {
               This privacy policy was created using Termly’s Privacy Policy
               Generator.
             </p>
-            <button className="btn btn-type1 input-length">HOME</button>
+            <Link to="/" className="btn btn-type1 input-length">
+              HOME
+            </Link>
           </div>
         </div>
       </section>
