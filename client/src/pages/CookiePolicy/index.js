@@ -3,7 +3,7 @@ import "../TermsAndConditions/policy.css";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
-function Cookie() {
+function CookiePolicy() {
   return (
     <div className="background-signup">
       <Helmet>
@@ -17,13 +17,13 @@ function Cookie() {
             <h2>Last updated May 08, 2021</h2>
 
             <p>
-              This Cookie Policy explains how we use cookies and similar technologies to recognize you
-              when you visit our websites at{" "}
+              This Cookie Policy explains how we use cookies and similar
+              technologies to recognize you when you visit our websites at{" "}
               <a href="http://www.eshodaankori.com">
                 http://www.eshodaankori.com
               </a>
-              . It explains what these technologies are and why we
-              use them, as well as your rights to control our use of them.
+              . It explains what these technologies are and why we use them, as
+              well as your rights to control our use of them.
             </p>
             <p>
               In some cases we may use cookies to collect personal information,
@@ -39,9 +39,9 @@ function Cookie() {
               more efficiently, as well as to provide reporting information.
             </p>
             <p>
-              Cookies set by the website owner (in this case, us) are
-              called "first party cookies". Cookies set by parties other than
-              the website owner are called "third party cookies". Third party
+              Cookies set by the website owner (in this case, us) are called
+              "first party cookies". Cookies set by parties other than the
+              website owner are called "third party cookies". Third party
               cookies enable third party features or functionality to be
               provided on or through the website (e.g. like advertising,
               interactive content and analytics). The parties that set these
@@ -82,7 +82,6 @@ function Cookie() {
               <br></br>Type:html_session_storage
               <br></br>Expires in:session
             </p>
-
 
             <h2>Do you use Flash cookies or Local Shared Objects?</h2>
             <p>
@@ -157,4 +156,4 @@ function Cookie() {
   );
 }
 
-export default Cookie;
+export default CookiePolicy;

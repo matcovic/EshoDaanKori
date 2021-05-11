@@ -13,7 +13,7 @@ const contactUs = () => {
               <div>
                 <input
                   name="entry.2005620554"
-                  placeholder="Email Address*"
+                  placeholder="Your Name*"
                   className="input-length"
                 />
               </div>
@@ -21,7 +21,7 @@ const contactUs = () => {
               <div>
                 <input
                   name="entry.1045781291"
-                  placeholder="Your Name*"
+                  placeholder="Your Email*"
                   className="input-length"
                   type="text"
                 />
