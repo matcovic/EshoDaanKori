@@ -47,6 +47,11 @@ app.use(passport.session());
  * -------------- ROUTES ----------------
  */
 
+// for server message
+app.get("/", (req, res) => {
+  res.send("Initializing server...");
+});
+
 app.get("/test", testController);
 
 app.use("/api", landingPageRouter);
@@ -56,6 +61,5 @@ app.use("/verify", authRouter);
 
 app.use("/api/data", dataRouter);
 app.use("/api/campaign", campaignRouter);
-
 
 export default app;
