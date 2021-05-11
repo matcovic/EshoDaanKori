@@ -468,6 +468,30 @@ i.large.icons {
 }
 /* Fund Card- ends*/
 
+/* -----------contact Us-------------------------- */
+#contactUs-section input,
+textarea {
+  border-radius: 10px;
+  background-color: var(--black-haze);
+  width: 100%;
+  font-family: var(--font-family-poppins);
+  font-size: var(--font-size-body2) !important;
+  font-weight: var(--font-size-body1) !important;
+  padding-left: 20px;
+  border: none;
+  margin-top: 20px;
+  min-height: 50px;
+}
+#contactUs-section textarea {
+  padding: 20px;
+}
+#contactUs-section input,
+textarea:focus {
+  outline: 0 !important;
+}
+#contactUs-section .signIn-box {
+  width: 50%;
+}
 /* --------------------------change semantic Input background---------------------------------- */
 .ui.input input {
   border-radius: 10px;

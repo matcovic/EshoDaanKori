@@ -23,8 +23,9 @@ import FundEditDetailsPage from "./pages/FundEditDetailsPage";
 import HowItWorks from "./pages/HowItWorks";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import Privacy from "./pages/Privacy";
-import CookiePolicy from './pages/CookiePolicy'
+import CookiePolicy from "./pages/CookiePolicy";
 
+import contactUs from "./pages/ContactUs";
 function App() {
   const [isAuthenticated, setAuthenticationStatus] = useState(false);
   const [dataChange, onDataChange] = useState(false);
@@ -85,11 +86,16 @@ function App() {
                 component={isAuthenticated ? DiscoverPage : LandingPage}
               />
               <Route path="/discover" exact component={DiscoverPage} />
-              <Route path="/terms-and-conditions" exact component={TermsAndConditions} />
+              <Route
+                path="/terms-and-conditions"
+                exact
+                component={TermsAndConditions}
+              />
               <Route path="/privacy-policy" exact component={Privacy} />
               <Route path="/cookie-policy" exact component={CookiePolicy} />
 
               <Route path="/how-it-works" exact component={HowItWorks} />
+              <Route path="/contact-us" exact component={contactUs} />
 
               <Route
                 exact
