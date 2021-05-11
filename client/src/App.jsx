@@ -20,6 +20,7 @@ import ResetPasswordPage from "./pages/ResetPasswordPage";
 import MyFundRaisersPage from "./pages/MyFundRaisersPage";
 import FundDetailsPage from "./pages/FundDetailsPage";
 import FundEditDetailsPage from "./pages/FundEditDetailsPage";
+import HowItWorks from "./pages/HowItWorks";
 import Terms from "./pages/TermsAndConditions";
 import Privacy from "./pages/Privacy";
 
@@ -64,6 +65,7 @@ function App() {
     );
   } 
  */
+
   return (
     <Router>
       <div>
@@ -84,6 +86,7 @@ function App() {
               <Route path="/discover" exact component={DiscoverPage} />
               <Route path="/terms" exact component={Terms} />
               <Route path="/privacy" exact component={Privacy} />
+              <Route path="/how-it-works" exact component={HowItWorks} />
 
               <Route
                 exact

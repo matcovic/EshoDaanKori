@@ -7,7 +7,7 @@ import {
   Select,
   TextArea,
 } from "semantic-ui-react";
-import threeDots from "../../assets/icons/ico-3dots2.svg";
+import twoDots from "../../assets/icons/ico-2dot1.svg";
 import { convertMultipleImagesToB64, getBase64 } from "../../util/util";
 import "./newCampaign.css";
 import ImageUploader from "react-images-upload";
@@ -34,7 +34,11 @@ const schema = yup.object().shape({
     .positive("Invalid goal entered. Please enter a number.")
     .integer("Invalid goal entered. Please enter a number.")
     .required("Please enter the fundraiser target amount."),
-  story: yup.string().required(),
+  story: yup
+    .string()
+    .required()
+    .min(50, "Story should be at least 50 character")
+    .max(1200, "Your Story is too big"),
 });
 //-----------for validation------------------
 
@@ -299,7 +303,7 @@ const NewCampaign = (props) => {
             <h2>START A NEW CAMPAIGN</h2>
             <Form>
               <Form.Group widths="equal">
-                <Form.Field>
+                <Form.Field required>
                   <label>What’s your fundraiser title?</label>
                   <Input
                     name="title"
@@ -308,7 +312,7 @@ const NewCampaign = (props) => {
                     placeholder="Ex: Need money for sex "
                   />
                 </Form.Field>
-                <Form.Field>
+                <Form.Field required>
                   <label>Enter your location</label>
                   <Input
                     name="location"
@@ -330,9 +334,10 @@ const NewCampaign = (props) => {
                   options={options}
                   defaultValue={category}
                   value={category}
+                  required
                 />
 
-                <Form.Field>
+                <Form.Field required>
                   <label>Set your fundraising goal</label>
                   <Input
                     name="fundraisingGoal"
@@ -352,9 +357,10 @@ const NewCampaign = (props) => {
                 value={form.story}
                 label="Tell your story"
                 placeholder="Tell us more about you..."
+                required
               />
 
-              <Form.Field>
+              <Form.Field required>
                 <label>Add a cover photo</label>
                 <ImageUploader
                   {...props}
@@ -384,7 +390,7 @@ const NewCampaign = (props) => {
                 />
               </Form.Field>
               <Form.Group>
-                <Form.Field>
+                <Form.Field required>
                   <label>Who are you fundraising for?</label>
                 </Form.Field>
                 <Form.Field>
@@ -426,7 +432,7 @@ const NewCampaign = (props) => {
               header={ErrorMessage}
             />
             <i>
-              <img alt="three dots" className="three-dots" src={threeDots} />
+              <img alt="three dots" className="three-dots" src={twoDots} />
             </i>
           </div>
         </div>

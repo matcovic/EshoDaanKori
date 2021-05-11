@@ -113,7 +113,7 @@ const FundDetailsPage = (props) => {
                       "Link copied! Share it with your friends and family."
                     );
                     navigator.clipboard.writeText(
-                      `http://localhost:3000/fundraisers/view/${fundDetails.title}`
+                      `http://localhost:3000/fundraisers/view/${fundDetails._id}`
                     );
                   }}
                   className="btn btn-type4"

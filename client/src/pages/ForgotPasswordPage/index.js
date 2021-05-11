@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Input, Message } from "semantic-ui-react";
 import "../SignInPage/SignIn.css";
 import { EmailIcon } from "../../assets/assets.js";
 import { Redirect } from "react-router";
 import axios from "axios";
-
-//-----------for validation------------------
+import LoadingBar from "react-top-loading-bar";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import * as yup from "yup";
 
 yup.setLocale({
@@ -23,6 +24,9 @@ const ForgotPassword = (props) => {
   const [email, setEmail] = useState("");
   const [ErrorMessage, setErrorMessage] = useState();
   const [ErrorBox, setErrorBox] = useState(true);
+  const ref = useRef(null); // for loading bar
+  const [buttonActivation, setButtonActivation] = useState("");
+
   console.log(props);
 
   if (!(props.location && props.location.state)) {
@@ -37,6 +41,7 @@ const ForgotPassword = (props) => {
     console.log(email);
     const isValid = await schema.isValid({ email: email });
 
+
     if (!isValid) {
       schema.validate({ email: email }).catch(function (err) {
         console.log("Error Name:");
@@ -47,6 +52,8 @@ const ForgotPassword = (props) => {
         setErrorMessage(err.errors);
       });
     } else {
+      setButtonActivation(true); // disables button
+      ref.current.continuousStart();
       setErrorBox(true);
       const sendResetPasswordLink = async () => {
         const { data } = await axios.post("/api/auth/reset-password-link", {
@@ -54,11 +61,13 @@ const ForgotPassword = (props) => {
         });
         if (data.status === 1) {
           console.log(data.message);
-          // window.location.replace("/");
+          notify(data.message, "success");
         } else {
           console.log(data.status);
           console.log(data.message);
+          notify(data.message, "error");
         }
+        ref.current.complete();
       };
 
       sendResetPasswordLink();
@@ -70,8 +79,38 @@ const ForgotPassword = (props) => {
     setEmail(value);
   }
 
+  function notify(message, type) {
+    const options = {
+      onClose: (props) => window.location.replace("/sign-in"),
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    };
+    if (type === "success") {
+      toast.success(message, options);
+    } else if (type === "error") {
+      toast.error(message, options);
+    }
+  }
+
   return (
     <div className="background-signup">
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      <LoadingBar color="#FF641A" ref={ref} shadow={true} height={4} />
       <section id="signIn-section">
         <div className="sample">
           <div className="signIn-box signIn-box-medium signIn-box-small">
@@ -93,7 +132,11 @@ const ForgotPassword = (props) => {
                 />
               </div>
               <div className="Forgot-reset-btn">
-                <button onClick={onSendClick} className=" btn btn-type1">
+                <button
+                  disabled={buttonActivation}
+                  onClick={onSendClick}
+                  className=" btn btn-type1"
+                >
                   CONTINUE
                 </button>
               </div>

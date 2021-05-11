@@ -34,7 +34,7 @@ const PaginationComponent = ({ fundCardItems }) => {
           <FundCardView
             imgURL={fundCard.coverPhoto}
             title={fundCard.title}
-            desc={fundCard.story.substring(0, 40) + ".."}
+            desc={fundCard.story.substring(0, 70) + "..."}
             currentProgress={calculateFundraisingProgress(
               fundCard.fundraisedTotal,
               fundCard.fundraisingGoal

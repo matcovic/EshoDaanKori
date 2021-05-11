@@ -13,6 +13,7 @@ import {
   generateHashPassword,
 } from "../util/util.js";
 import e from "express";
+import mongoose from "mongoose";
 
 /**
  * Registers a new user and sends a verification token to the user's email
@@ -157,7 +158,8 @@ async function resetPasswordController(req, res) {
   const token = path[2];
   const uid = path[3];
 
-  if (isNaN(uid)) {
+  // checks if the uid is a valid objectID
+  if (!mongoose.isValidObjectId(uid)) {
     res.json({
       status: -2,
       message: "The link is invalid. Please request a new link.",

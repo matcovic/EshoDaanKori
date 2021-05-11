@@ -89,16 +89,6 @@ const SignIn = ({ isAuthenticated }) => {
         <div className="sample">
           <div className="signIn-box signIn-box-medium signIn-box-small">
             <h1>SIGN IN</h1>
-            <a>
-              <img className="logo" src={facebookLogo} alt="Facebook Logo" />
-            </a>
-            <img className="logo" src={googleLogo} alt="Google Logo" />
-
-            <div className="divider-custom">
-              <div className="divider-custom-line"></div>
-              <p>OR</p>
-              <div className="divider-custom-line"></div>
-            </div>
 
             <form>
               <div>
@@ -125,7 +115,7 @@ const SignIn = ({ isAuthenticated }) => {
               </div>
 
               <div className="signIn-forgot-text">
-                <Link to="/forgot-password">FORGOT YOUR PASSWORD?</Link>
+                <Link to="/forgot-password">Forgot your password?</Link>
               </div>
               <div>
                 <button onClick={onSignInClick} className=" btn btn-type1">
@@ -140,8 +130,8 @@ const SignIn = ({ isAuthenticated }) => {
               header={ErrorMessage}
             />
             <div className="signIn-dont-text">
-              <span>DON’T HAVE AN ACCOUNT?</span>{" "}
-              <Link to="/sign-up">SIGN UP</Link>
+              <span>Don't have an account? </span>{" "}
+              <Link to="/sign-up">Sign up</Link>
             </div>
           </div>
         </div>

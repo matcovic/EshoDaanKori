@@ -3,10 +3,11 @@ import { Redirect } from "react-router";
 import "../SignInPage/SignIn.css";
 
 const RegistrationComplete = (props) => {
-  if (!(props.location && props.location.state)) {
+  console.log(props);
+  /* if (!(props.location && props.location.state)) {
     console.log("unauthorized. Redirecting to signing page...");
-    return <Redirect to="/" />;
-  }
+    //  return <Redirect to="/" />;
+  } */
   return (
     <div className="background-signup">
       <section id="signIn-section">
@@ -14,9 +15,10 @@ const RegistrationComplete = (props) => {
           <div className="signIn-box signIn-box-medium signIn-box-small">
             <h2>REGISTRATION COMPLETE!</h2>
             <p>
-              We have sent a verification email to your account. Please verify
-              yourself by clicking on the link provided in the email.
+              An email has been sent to your account with a verification link.
+              Please click on the link and we will verify you.
             </p>
+            <p className="spam">Make sure to check your spam folder</p>
 
             <form>
               <div>
