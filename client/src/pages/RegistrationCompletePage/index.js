@@ -3,10 +3,11 @@ import { Redirect } from "react-router";
 import "../SignInPage/SignIn.css";
 
 const RegistrationComplete = (props) => {
-  if (!(props.location && props.location.state)) {
+  console.log(props);
+  /* if (!(props.location && props.location.state)) {
     console.log("unauthorized. Redirecting to signing page...");
-    return <Redirect to="/" />;
-  }
+    //  return <Redirect to="/" />;
+  } */
   return (
     <div className="background-signup">
       <section id="signIn-section">
