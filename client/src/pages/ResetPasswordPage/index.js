@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Input, Message } from "semantic-ui-react";
 import "../SignInPage/SignIn.css";
 import { KeyIcon } from "../../assets/assets.js";
 import { Redirect } from "react-router";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
-
-//-----------for validation------------------
+import LoadingBar from "react-top-loading-bar";
 import * as yup from "yup";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 yup.setLocale({
   // use constant translation keys for messages without values
@@ -15,9 +16,6 @@ yup.setLocale({
     default: "Field Invalid",
   },
   // use functions to generate an error object that includes the value from the schema
-  string: {
-    min: () => "Password is too short",
-  },
   string: {
     min: () => "Password is too short",
   },
@@ -34,7 +32,6 @@ const schema = yup.object().shape({
       "Password and confirm password doesn't match"
     ),
 });
-//-----------for validation------------------
 
 const usePathname = () => {
   const location = useLocation();
@@ -45,13 +42,12 @@ const ResetPassword = ({ isAuthenticated }) => {
   const [form, setFormContent] = useState({});
   const [ErrorMessage, setErrorMessage] = useState();
   const [ErrorBox, setErrorBox] = useState(true);
-
   const location = usePathname();
+  const ref = useRef(null); // for loading bar
 
   async function onResetClick(event) {
     event.preventDefault();
     setFormContent(form);
-    console.log("RESET BUTTON CLICKED");
     console.log(form);
 
     const isValid = await schema.isValid(form);
@@ -66,22 +62,22 @@ const ResetPassword = ({ isAuthenticated }) => {
       });
     } else {
       setErrorBox(true);
-
       form.location = location;
-
+      ref.current.continuousStart();
       const sendForm = async () => {
         const { data } = await axios.post("/api/auth/reset-password", form);
         if (data.status === 1) {
           console.log(data.message);
-          setErrorMessage(data.message);
-          window.location.replace(data.redirectUrl);
+          notify(data.message, "success", "/sign-in");
         } else {
           if (data.status === -2) {
-            window.location.replace("/");
+            notify(data.message, "error", "/");
           }
           console.log(data.status);
           console.log(data.message);
+          notify(data.message, "error", "/forgot-password");
         }
+        ref.current.complete();
       };
 
       sendForm();
@@ -110,8 +106,40 @@ const ResetPassword = ({ isAuthenticated }) => {
     return <Redirect to="/" />;
   }
 
+  function notify(message, type, redirectUrl) {
+    const options = {
+      onClose: (props) =>
+        redirectUrl ? window.location.replace(redirectUrl) : "",
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    };
+    if (type === "success") {
+      toast.success(message, options);
+    } else if (type === "error") {
+      toast.error(message, options);
+    }
+  }
+
   return (
     <div className="background-signup">
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      <LoadingBar color="#FF641A" ref={ref} shadow={true} height={4} />
+
       <section id="signIn-section">
         <div className="sample">
           <div className="signIn-box signIn-box-medium signIn-box-small">

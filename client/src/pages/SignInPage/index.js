@@ -125,7 +125,7 @@ const SignIn = ({ isAuthenticated }) => {
               </div>
 
               <div className="signIn-forgot-text">
-                <Link to="/forgot-password">FORGOT YOUR PASSWORD?</Link>
+                <Link to="/forgot-password">Forgot your password?</Link>
               </div>
               <div>
                 <button onClick={onSignInClick} className=" btn btn-type1">
@@ -140,8 +140,8 @@ const SignIn = ({ isAuthenticated }) => {
               header={ErrorMessage}
             />
             <div className="signIn-dont-text">
-              <span>DON’T HAVE AN ACCOUNT?</span>{" "}
-              <Link to="/sign-up">SIGN UP</Link>
+              <span>Don't have an account? </span>{" "}
+              <Link to="/sign-up">Sign up</Link>
             </div>
           </div>
         </div>
