@@ -1,9 +1,15 @@
 import "./policy.css";
 import React from "react";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
+
 function Terms() {
   return (
     <div className="background-signup">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Terms And Conditions</title>
+      </Helmet>
       <section id="policy">
         <div className="sample">
           <div className="signIn-box signIn-box-medium signIn-box-small">

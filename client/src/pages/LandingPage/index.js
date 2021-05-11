@@ -5,9 +5,28 @@ import OurStory from "./components/OurStory";
 import OurVision from "./components/OurVision";
 import AvailFundraisers from "./components/AvaiFundraisers";
 import { landingPageInitialContent } from "./data/data";
-import { Header, Input, Modal } from "semantic-ui-react";
+import { Header, Input, Message, Modal } from "semantic-ui-react";
 import { EmailIcon } from "../../assets/assets";
 import BannerCarousel from "./components/BannerCarousel";
+import { notify } from "../../util/util";
+import * as yup from "yup";
+import { Helmet } from "react-helmet";
+
+
+yup.setLocale({
+  // use constant translation keys for messages without values
+  mixed: {
+    default: "Field Invalid",
+  },
+  email: {},
+});
+
+const schema = yup.object().shape({
+  email: yup
+    .string()
+    .email("Enter a valid email")
+    .required("Please enter your email address"),
+});
 
 function LandingPage() {
   const introSection = {
@@ -22,7 +41,9 @@ function LandingPage() {
   const [content, setContent] = useState(landingPageInitialContent);
   const [newsLetterPopup, setNewsLetterPopup] = React.useState(false);
   const [newsLetterEmail, setNewsLetterEmail] = useState();
-  const [buttonActivation, setButtonActivation] = useState("");
+  const [buttonActivation, setButtonActivation] = useState(false);
+  const [ErrorMessage, setErrorMessage] = useState();
+  const [ErrorBox, setErrorBox] = useState(true);
 
   // this is called as soon as the components load up.
   useEffect(() => {
@@ -46,30 +67,39 @@ function LandingPage() {
     }; // use effect cleanup to set flag false, if unmounted
   }, []);
 
-  function onNewsLetterConfirmClick(event) {
+  async function onNewsLetterConfirmClick(event) {
     console.log(event);
     console.log(newsLetterEmail);
-    setButtonActivation(""); // disables button
 
-    const subscribeNewsLetter = async () => {
-      const { data } = await axios.post("/api/newsletter/subscribe", {
-        email: newsLetterEmail,
+    const isValid = await schema.isValid(newsLetterEmail);
+    if (!isValid) {
+      schema.validate(newsLetterEmail).catch(function (err) {
+        setErrorBox(false);
+        setErrorMessage("Please enter a valid email address");
       });
+    } else {
+      setButtonActivation(true); // disables button
+      const subscribeNewsLetter = async () => {
+        const { data } = await axios.post("/api/newsletter/subscribe", {
+          email: newsLetterEmail,
+        });
 
-      if (data.status === 1) {
-        console.log(data.message);
-        // window.location.replace("/");
-        setButtonActivation("false"); // enables button
-        setNewsLetterPopup(false);
-      } else {
-        console.log(data.status);
-        console.log(data.message);
-        setButtonActivation("false"); // enables button
-        setNewsLetterPopup(false);
-      }
-    };
+        if (data.status === 1) {
+          console.log(data.message);
+          // window.location.replace("/");
+          setButtonActivation(false); // enables button
+          setNewsLetterPopup(false);
+          notify(data.message, "info");
+        } else {
+          console.log(data.status);
+          console.log(data.message);
+          setButtonActivation(true); // enables button
+          notify(data.message, "error");
+        }
+      };
 
-    subscribeNewsLetter();
+      subscribeNewsLetter();
+    }
   }
 
   function onChangeEmail(event) {
@@ -79,6 +109,10 @@ function LandingPage() {
 
   return (
     <div className="landing-page">
+     <Helmet>
+        <meta charSet="utf-8" />
+        <title>EshoDaanKori</title>
+      </Helmet>
       <BannerCarousel
         carouselImages={introSection.images}
         slogan={content.slogan}
@@ -117,6 +151,7 @@ function LandingPage() {
             <Input
               placeholder="Enter email"
               iconPosition="left"
+              name="email"
               onChange={onChangeEmail}
               icon={EmailIcon}
               className="input-length"
@@ -135,6 +170,12 @@ function LandingPage() {
               I’M NOT INTERESTED
             </span>
           </div>
+          <Message
+              icon="exclamation triangle"
+              hidden={ErrorBox}
+              error
+              header={ErrorMessage}
+            />
         </Modal.Content>
       </Modal>
     </div>

@@ -8,13 +8,15 @@ import NumberLists from "./components/ListofNumbers";
 import twoDots from "../../assets/icons/ico-2dots2.svg";
 import { Redirect } from "react-router";
 import axios from "axios";
-import { getBase64 } from "../../util/util";
+import { getBase64, notify } from "../../util/util";
 import { useState } from "react";
 import { Button, Modal } from "semantic-ui-react";
 import LoadingBar from "react-top-loading-bar";
 import * as yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Helmet } from "react-helmet";
+
 
 const phoneRegExp = "[0][1][1-9][0-9]{8}";
 const schema = yup.object().shape({
@@ -121,7 +123,7 @@ const PaymentOptions = (props) => {
         ref.current.complete(); // end loading
         setErrorBox(true);
         if (props.location.state.status === 69) {
-          notifyUpdated("Payment options updated successfully!");
+          notify("Payment options updated successfully!", "success");
           setButtonActivation("false");
         } else {
           setOpen(true);
@@ -149,31 +151,6 @@ const PaymentOptions = (props) => {
   function onChange(e) {
     setInputField(e.target.value);
   }
-
-  const notify = () => {
-    console.log("notifying ");
-    toast.success("Link copied! 🔗", {
-      position: "bottom-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-  };
-
-  const notifyUpdated = (message) => {
-    toast.success(message, {
-      position: "top-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-  };
 
   /**
    *
@@ -210,6 +187,10 @@ const PaymentOptions = (props) => {
 
   return (
     <div className="payment-background">
+    <Helmet>
+        <meta charSet="utf-8" />
+        <title>Payment Options</title>
+      </Helmet>
       <LoadingBar color="#FF641A" ref={ref} shadow={true} height={4} />
       <ToastContainer
         position="bottom-right"
@@ -328,7 +309,7 @@ const PaymentOptions = (props) => {
           <button
             onClick={(event) => {
               event.preventDefault();
-              notify();
+              notify("Link copied! 🔗", "info", "bottom-right");
               navigator.clipboard.writeText(
                 `http://localhost:3000/fundraisers/view/${props.location.state.title}`
               );

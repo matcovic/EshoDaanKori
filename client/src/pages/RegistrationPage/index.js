@@ -13,6 +13,8 @@ import LoadingBar from "react-top-loading-bar";
 //-----------for validation------------------
 import * as yup from "yup";
 import { useHistory } from "react-router-dom";
+import { Helmet } from "react-helmet";
+
 
 yup.setLocale({
   // use constant translation keys for messages without values
@@ -117,6 +119,10 @@ const Registration = (props) => {
 
   return (
     <div className="background-signup">
+    <Helmet>
+        <meta charSet="utf-8" />
+        <title>Registration</title>
+      </Helmet>
       <LoadingBar color="#FF641A" ref={ref} shadow={true} height={4} />
 
       <section id="signIn-section">

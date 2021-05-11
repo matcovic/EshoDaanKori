@@ -3,15 +3,20 @@ import HowItWorksType1 from "./component/HowItWorksType1";
 import FundImage1 from "./component/FundImage1";
 import HowItWorksType2 from "./component/HowItWorksType2";
 import FundImage2 from "./component/FundImage2";
-
 import fundstep1 from "../../assets/images/fundstep1.svg";
 import fundstep2 from "../../assets/images/fundstep2.svg";
 import donatestep1 from "../../assets/images/donatestep1.svg";
 import donatestep2 from "../../assets/images/donatestep2.svg";
+import { Helmet } from "react-helmet";
+
 
 const HowItWorks = () => {
   return (
     <div>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>How it Works</title>
+      </Helmet>
       {/* <!-- How to Fund Raise --> */}
       <section id="how-to-fundraise-section">
         <h2>HOW TO FUNDRAISE?</h2>

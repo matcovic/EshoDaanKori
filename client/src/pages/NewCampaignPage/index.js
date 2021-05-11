@@ -8,7 +8,7 @@ import {
   TextArea,
 } from "semantic-ui-react";
 import twoDots from "../../assets/icons/ico-2dot1.svg";
-import { convertMultipleImagesToB64, getBase64 } from "../../util/util";
+import { convertMultipleImagesToB64, getBase64, notify } from "../../util/util";
 import "./newCampaign.css";
 import ImageUploader from "react-images-upload";
 import { useHistory } from "react-router-dom";
@@ -17,6 +17,7 @@ import axios from "axios";
 import LoadingBar from "react-top-loading-bar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Helmet } from "react-helmet";
 
 const schema = yup.object().shape({
   title: yup
@@ -136,30 +137,6 @@ const NewCampaign = (props) => {
     getOptionalPhotos(props, status)
   );
 
-  const notify = (message, type) => {
-    if (type === "success") {
-      toast.success(message, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-    } else if (type === "error") {
-      toast.error(message, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-    }
-  };
-
   // cover photo change listener
   const onDropCoverPhoto = (picture, data) => {
     console.log("deleting: " + picture);
@@ -271,7 +248,6 @@ const NewCampaign = (props) => {
           editChanges();
         } else {
           ref.current.complete();
-
           history.push({
             pathname: "/payment",
             state: form,
@@ -283,6 +259,10 @@ const NewCampaign = (props) => {
 
   return (
     <div className="body-background">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Start A New Campaign</title>
+      </Helmet>
       <section id="campaign-section">
         <LoadingBar color="#FF641A" ref={ref} shadow={true} height={4} />
 

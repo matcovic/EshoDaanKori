@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 //-----------for validation------------------
 import * as yup from "yup";
 import { useHistory } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 yup.setLocale({
   // use constant translation keys for messages without values
@@ -77,6 +78,10 @@ const SignUp = ({ isAuthenticated }) => {
 
   return (
     <div className="background-signup">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Sign Up</title>
+      </Helmet>
       <section id="signIn-section">
         <div className="sample">
           <div className="signIn-box signIn-box-medium signIn-box-small">
