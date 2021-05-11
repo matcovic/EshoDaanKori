@@ -23,7 +23,7 @@ import FundEditDetailsPage from "./pages/FundEditDetailsPage";
 import HowItWorks from "./pages/HowItWorks";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import Privacy from "./pages/Privacy";
-import CookiePolicy from './pages/CookiePolicy'
+import CookiePolicy from "./pages/CookiePolicy";
 
 function App() {
   const [isAuthenticated, setAuthenticationStatus] = useState(false);
@@ -85,7 +85,11 @@ function App() {
                 component={isAuthenticated ? DiscoverPage : LandingPage}
               />
               <Route path="/discover" exact component={DiscoverPage} />
-              <Route path="/terms-and-conditions" exact component={TermsAndConditions} />
+              <Route
+                path="/terms-and-conditions"
+                exact
+                component={TermsAndConditions}
+              />
               <Route path="/privacy-policy" exact component={Privacy} />
               <Route path="/cookie-policy" exact component={CookiePolicy} />
 
@@ -122,7 +126,9 @@ function App() {
               <Route
                 path="/my-fundraisers"
                 exact
-                component={MyFundRaisersPage}
+                component={() => (
+                  <MyFundRaisersPage isAuthenticated={isAuthenticated} />
+                )}
               />
               <Route
                 path="/sign-in"
