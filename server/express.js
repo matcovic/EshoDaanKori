@@ -17,10 +17,14 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const app = express();
-app.use(cors({
-  preflightContinue: true,
-  credentials: true,
-}));app.use(express.json({ limit: "50mb" }));
+app.use(
+  cors({
+    credentials: true,
+    origin: true,
+    origin: [process.env.CLIENT_HOST, process.env.CLIENT_HOST_PRODUCTION],
+  })
+);
+app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
 //app.use(express.urlencoded({ extended: true }));

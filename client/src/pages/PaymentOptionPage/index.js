@@ -101,14 +101,18 @@ const PaymentOptions = (props) => {
       if (props.location.state.status !== 69) {
         data = await axios.post(
           `${process.env.REACT_APP_API_DOMAIN}/api/campaign/new-campaign`,
-          props.location.state
+          props.location.state,
+          { withCredentials: true }
         );
         data = data.data;
       } else {
-        data = await axios.post(`${process.env.REACT_APP_API_DOMAIN}/api/campaign/update-payment-options`, {
-          paymentOptions: paymentOptionsList,
-          _id: props.location.state.fundDetails._id,
-        });
+        data = await axios.post(
+          `${process.env.REACT_APP_API_DOMAIN}/api/campaign/update-payment-options`,
+          {
+            paymentOptions: paymentOptionsList,
+            _id: props.location.state.fundDetails._id,
+          }
+        );
 
         data = data.data;
       }
@@ -309,7 +313,7 @@ const PaymentOptions = (props) => {
           <button
             onClick={(event) => {
               event.preventDefault();
-              notify("Link copied! 🔗", "info","/", "bottom-right");
+              notify("Link copied! 🔗", "info", "/", "bottom-right");
               navigator.clipboard.writeText(
                 `http://localhost:3000/fundraisers/view/${fundraiserId}`
               );

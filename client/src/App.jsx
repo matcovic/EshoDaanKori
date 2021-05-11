@@ -40,7 +40,7 @@ function App() {
 
     const checkAuthenticationStatus = async () => {
       try {
-        const { data } = await axios.get(`${process.env.REACT_APP_API_DOMAIN}/api/auth/is-authenticated`);
+        const { data } = await axios.get(`${process.env.REACT_APP_API_DOMAIN}/api/auth/is-authenticated`, {withCredentials: true});
         console.log(data);
 
         if (isMounted) {

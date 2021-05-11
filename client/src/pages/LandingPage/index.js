@@ -41,7 +41,10 @@ function LandingPage() {
     let isMounted = true;
     // when the component loads up, send a req to the server
     const fetchContent = async () => {
-      const { data } = await axios.get(`${process.env.REACT_APP_API_DOMAIN}/api/landing`);
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_API_DOMAIN}/api/landing`,
+        { withCredentials: true }
+      );
       console.log(data);
       if (data.status === 1) {
         if (data.newsLetterShown === "shown") {
@@ -75,9 +78,13 @@ function LandingPage() {
     } else {
       setButtonActivation(true); // disables button
       const subscribeNewsLetter = async () => {
-        const { data } = await axios.post(`${process.env.REACT_APP_API_DOMAIN}/api/newsletter/subscribe`, {
-          email: newsLetterEmail,
-        });
+        const { data } = await axios.post(
+          `${process.env.REACT_APP_API_DOMAIN}/api/newsletter/subscribe`,
+          {
+            email: newsLetterEmail,
+          },
+          { withCredentials: true }
+        );
 
         if (data.status === 1) {
           console.log(data.message);
