@@ -35,7 +35,7 @@ const MyFundRaisersPage = ({ isAuthenticated }) => {
 
   if (!isAuthenticated) {
     console.log("unauthorized. Redirecting to signing page...");
-    return <Redirect to="/access-denied" />;
+    return <Redirect to="/" />;
   }
 
   return (

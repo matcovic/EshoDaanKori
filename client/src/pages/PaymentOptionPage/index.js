@@ -309,7 +309,7 @@ const PaymentOptions = (props) => {
           <button
             onClick={(event) => {
               event.preventDefault();
-              notify("Link copied! 🔗", "info","/my-fundraisers", "bottom-right");
+              notify("Link copied! 🔗", "info","/", "bottom-right");
               navigator.clipboard.writeText(
                 `http://localhost:3000/fundraisers/view/${fundraiserId}`
               );

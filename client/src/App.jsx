@@ -56,17 +56,7 @@ function App() {
       isMounted = false;
     }; // use effect cleanup to set flag false, if unmounted
   }, []);
-  /* 
-   if (!dataChange) {
-    return (
-      <Loading
-        loading={dataChange ? false : true}
-        background="#00AD7C"
-        loaderColor="#B7FE81"
-      />
-    );
-  } 
- */
+
 
   return (
     <Router>
