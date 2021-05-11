@@ -2,9 +2,16 @@ import React from "react";
 import { NavHashLink } from "react-router-hash-link";
 import "../TermsAndConditions/policy.css";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
+
+
 function Privacy() {
   return (
     <div className="background-signup">
+    <Helmet>
+        <meta charSet="utf-8" />
+        <title>Privacy Policy</title>
+      </Helmet>
       <section id="policy">
         {" "}
         <div className="sample">
