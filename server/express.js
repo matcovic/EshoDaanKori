@@ -22,6 +22,8 @@ app.use(
     credentials: true,
     origin: true,
     origin: [process.env.CLIENT_HOST, process.env.CLIENT_HOST_PRODUCTION],
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 app.use(express.json({ limit: "50mb" }));
