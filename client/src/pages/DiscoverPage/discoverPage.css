@@ -29,6 +29,8 @@
 
 .ui.secondary.pointing.menu {
   border-bottom: none;
+  /*Preventing footer from popping up*/
+  margin-top: 10rem;
 }
 
 .ui.secondary.pointing.menu li {
@@ -89,9 +91,9 @@
 }
 
 /* discover section white container */
-.white-container {
+#discover-section .white-container {
   background-color: var(--white);
-  padding: 1rem;
+  padding: 1rem 3rem;
   border-radius: 14px;
   width: 100%;
   margin: 10px 0;
@@ -189,11 +191,11 @@
 
 .discover-no-content-found {
   text-align: center;
+  padding-bottom: 10rem;
 }
 .discover-no-content-found p {
   text-align: center;
 }
-
 .discover-no-content-found img {
   margin-top: 20px;
   height: 30%;

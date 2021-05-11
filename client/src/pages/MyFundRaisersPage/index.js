@@ -53,7 +53,7 @@ const MyFundRaisersPage = (props) => {
                 <PaginationComponent fundraisers={fundraisers} />
               ) : (
                 <div className="discover-no-content-found">
-                  <img src={NoContentImage}></img>
+                  <img src={NoContentImage} alt="..." />
                   <h1>NO FUNDRAISERS FOUND</h1>
                   <p>You have no fundraisers availabel at this moment.</p>
                 </div>

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import PaginationComponent from "./PaginationComponent";
+import PaginationComponent from "./PaginationComponent.js";
 import "../DiscoverPage/discoverPage.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Loading from "react-fullscreen-loading";
 import NoContentImage from "../../assets/images/NoContentImage.svg";
 import { getCategoryList } from "../../util/util";
-
 
 const DiscoverPage = (props) => {
   var selectedCategory = props.match.params.category;
@@ -88,26 +87,16 @@ const DiscoverPage = (props) => {
                   >
                     <div className="accordion-body">
                       <ul>
-                        <li>
-                          <Link className="" to="/category/All">
-                            All
-                          </Link>
-                        </li>
-                        <li>
-                          <Link className="" to="/category/Medical">
-                            Medical
-                          </Link>
-                        </li>
-                        <li>
-                          <Link className="" to="/category/Tuition">
-                            Tuition
-                          </Link>
-                        </li>
-                        <li>
-                          <Link className="" to="/category/Entertainment">
-                            Entertainment
-                          </Link>
-                        </li>
+                        {categoryList.map((category) => {
+                          const link = `/category/${category}`;
+                          return (
+                            <li>
+                              <Link className="" to={link}>
+                                {category}
+                              </Link>
+                            </li>
+                          );
+                        })}
                       </ul>
                     </div>
                   </div>

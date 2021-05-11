@@ -35,15 +35,28 @@
   border-radius: 10px;
 }
 
-/* #fund-details-section .carousel-control-prev-icon {
+/* Fundraising details carousel image */
+#fund-details-section .carousel-item img {
+  height: auto;
+  max-height: 500px;
+  object-fit: contain;
+}
+
+#fund-details-section .carousel-control-prev-icon {
   background-color: rgba(110, 110, 110, 0.49);
   border-radius: 50%;
+  padding: 17%;
 }
 
 #fund-details-section .carousel-control-next-icon {
   background-color: rgba(110, 110, 110, 0.49);
   border-radius: 50%;
-} */
+  padding: 17%;
+}
+
+#fund-details-section h3 {
+  font-size: 18px;
+}
 
 #fund-details-section .post-time-text {
   font-size: 16px;
@@ -90,10 +103,9 @@
 
 #fund-details-section p {
   white-space: pre-line;
-  font-size: var(--font-size-body2);
+  font-size: 17.5px;
   font-weight: var(--font-weight-body2);
   color: var(--dove-gray);
-  line-height: 21px;
 }
 
 #fund-details-section .fund-btn-group {
@@ -168,12 +180,14 @@
 /* payment list mobile number  */
 .payment-list li h3 {
   font-size: 18px;
+  font-weight: var(--font-weight-body2);
+  color: var(--tundora);
   margin: 0.2rem 0.3rem 0.3rem 1rem;
 }
 /* adding +88 before mobile number  */
 .payment-list li h3::before {
   content: "+88";
-  color: black;
+  font-weight: var(--font-weight-subHeading2);
 }
 
 .payment-list-btn {
@@ -229,7 +243,7 @@
 
 .edit-fund-details .donation-statistics .edit-btn i.large.icon,
 i.large.icons {
-  font-size: 0.8em;
+  font-size: 1em;
 }
 
 .edit-fund-details .fund-btn-group .delete-btn {
