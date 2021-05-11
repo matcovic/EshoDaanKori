@@ -290,7 +290,7 @@ const NewCampaign = (props) => {
                     name="title"
                     value={form.title}
                     onChange={onChange}
-                    placeholder="Ex: Need money for sex "
+                    placeholder="Enter a title"
                   />
                 </Form.Field>
                 <Form.Field required>

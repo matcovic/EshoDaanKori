@@ -17,7 +17,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Helmet } from "react-helmet";
 
-
 const phoneRegExp = "[0][1][1-9][0-9]{8}";
 const schema = yup.object().shape({
   numb: yup
@@ -187,7 +186,7 @@ const PaymentOptions = (props) => {
 
   return (
     <div className="payment-background">
-    <Helmet>
+      <Helmet>
         <meta charSet="utf-8" />
         <title>Payment Options</title>
       </Helmet>
@@ -227,7 +226,7 @@ const PaymentOptions = (props) => {
                 <Input
                   value={inputField}
                   className="input-length"
-                  placeholder="Enter your number. Ex- 19XXXXXXXX"
+                  placeholder="Enter your number. Ex- 019XXXXXXXX"
                   onChange={onChange}
                   required
                   name="userNumber"
