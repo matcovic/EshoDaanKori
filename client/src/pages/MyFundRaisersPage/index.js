@@ -8,9 +8,8 @@ import { Input, Modal, Header } from "semantic-ui-react";
 import NoContentImage from "../../assets/images/NoContentImage.svg";
 import { Helmet } from "react-helmet";
 
-
-const MyFundRaisersPage = (props) => {
-  console.log(props);
+const MyFundRaisersPage = ({ isAuthenticated }) => {
+  // console.log(props);
 
   const [fundraisers, setFundraisers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -34,14 +33,14 @@ const MyFundRaisersPage = (props) => {
     fetchContent();
   }, []);
 
-  if (!(props.location && props.location.state)) {
+  if (!isAuthenticated) {
     console.log("unauthorized. Redirecting to signing page...");
     return <Redirect to="/access-denied" />;
   }
 
   return (
     <section id="discover-section">
-    <Helmet>
+      <Helmet>
         <meta charSet="utf-8" />
         <title>My Fundraisers</title>
       </Helmet>

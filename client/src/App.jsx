@@ -128,7 +128,9 @@ function App() {
               <Route
                 path="/my-fundraisers"
                 exact
-                component={MyFundRaisersPage}
+                component={() => (
+                  <MyFundRaisersPage isAuthenticated={isAuthenticated} />
+                )}
               />
               <Route
                 path="/sign-in"

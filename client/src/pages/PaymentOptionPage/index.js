@@ -17,7 +17,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Helmet } from "react-helmet";
 
-
 const phoneRegExp = "[0][1][1-9][0-9]{8}";
 const schema = yup.object().shape({
   numb: yup
@@ -77,9 +76,8 @@ const PaymentOptions = (props) => {
   const [buttonActivation, setButtonActivation] = useState("false"); // disables button while loading
   const [ErrorMessage, setErrorMessage] = useState();
   const [ErrorBox, setErrorBox] = useState(true);
-
-  console.log(props);
   const [open, setOpen] = React.useState(false);
+  const [fundraiserId, setFundraiserId] = useState("");
 
   if (!(props.location && props.location.state)) {
     console.log("unauthorized. Redirecting to signing page...");
@@ -88,12 +86,10 @@ const PaymentOptions = (props) => {
 
   function onStartCampaignClick(event) {
     event.preventDefault();
-    console.log("start campaign clicked");
-    console.log(paymentOptionsList);
     props.location.state.paymentOptions = paymentOptionsList;
-    console.log(props.location.state);
     ref.current.continuousStart(); // start loading
     setButtonActivation("");
+    console.log("START CAMPAIGN CLICKED: ");
     console.log(props);
 
     if (props.location.state.status === 69) {
@@ -117,6 +113,9 @@ const PaymentOptions = (props) => {
         data = data.data;
       }
 
+      console.log("Payment options updated: ");
+      console.log(data);
+
       if (data.status === 1) {
         console.log(data);
         setCampaignCreated(true);
@@ -126,6 +125,7 @@ const PaymentOptions = (props) => {
           notify("Payment options updated successfully!", "success");
           setButtonActivation("false");
         } else {
+          setFundraiserId(data.result);
           setOpen(true);
         }
       } else {
@@ -187,7 +187,7 @@ const PaymentOptions = (props) => {
 
   return (
     <div className="payment-background">
-    <Helmet>
+      <Helmet>
         <meta charSet="utf-8" />
         <title>Payment Options</title>
       </Helmet>
@@ -309,9 +309,9 @@ const PaymentOptions = (props) => {
           <button
             onClick={(event) => {
               event.preventDefault();
-              notify("Link copied! 🔗", "info", "bottom-right");
+              notify("Link copied! 🔗", "info","/my-fundraisers", "bottom-right");
               navigator.clipboard.writeText(
-                `http://localhost:3000/fundraisers/view/${props.location.state.title}`
+                `http://localhost:3000/fundraisers/view/${fundraiserId}`
               );
             }}
             className="btn btn-type4 modal-btn"

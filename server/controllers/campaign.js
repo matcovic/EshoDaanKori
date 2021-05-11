@@ -31,6 +31,7 @@ async function newCampaignController(req, res) {
     res.json({
       status: 1,
       message: "Created a new campaign. Redirecting...",
+      result: schema._id.toString(),
     });
   } else {
     res.json({
