@@ -1,22 +1,28 @@
 import React from "react";
 import "../TermsAndConditions/policy.css";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
+
 function Cookie() {
   return (
     <div className="background-signup">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Cookie Policy</title>
+      </Helmet>
       <section id="policy">
         <div className="sample">
           <div className="signIn-box signIn-box-medium signIn-box-small">
             <h1>COOKIE POLICY</h1>
             <h2>Last updated May 08, 2021</h2>
+
             <p>
-              This Cookie Policy explains how __________ ("Company", "we", "us",
-              and "our") uses cookies and similar technologies to recognize you
+              This Cookie Policy explains how we use cookies and similar technologies to recognize you
               when you visit our websites at{" "}
               <a href="http://www.eshodaankori.com">
                 http://www.eshodaankori.com
               </a>
-              , ("Websites"). It explains what these technologies are and why we
+              . It explains what these technologies are and why we
               use them, as well as your rights to control our use of them.
             </p>
             <p>
@@ -33,7 +39,7 @@ function Cookie() {
               more efficiently, as well as to provide reporting information.
             </p>
             <p>
-              Cookies set by the website owner (in this case, __________) are
+              Cookies set by the website owner (in this case, us) are
               called "first party cookies". Cookies set by parties other than
               the website owner are called "third party cookies". Third party
               cookies enable third party features or functionality to be
@@ -53,53 +59,7 @@ function Cookie() {
               track and target the interests of our users to enhance the
               experience on our Online Properties. Third parties serve cookies
               through our Websites for advertising, analytics and other
-              purposes. This is described in more detail below.
-            </p>
-
-            <h2>How can I control cookies?</h2>
-            <p>
-              You have the right to decide whether to accept or reject cookies.
-              You can exercise your cookie rights by setting your preferences in
-              the Cookie Consent Manager. The Cookie Consent Manager allows you
-              to select which categories of cookies you accept or reject.
-              Essential cookies cannot be rejected as they are strictly
-              necessary to provide you with services.
-            </p>
-            <p>
-              The Cookie Consent Manager can be found in the notification banner
-              and on our website. If you choose to reject cookies, you may still
-              use our website though your access to some functionality and areas
-              of our website may be restricted. You may also set or amend your
-              web browser controls to accept or refuse cookies. As the means by
-              which you can refuse cookies through your web browser controls
-              vary from browser-to-browser, you should visit your browser's help
-              menu for more information.
-            </p>
-            <p>
-              In addition, most advertising networks offer you a way to opt out
-              of targeted advertising. If you would like to find out more
-              information, please visit http://www.aboutads.info/choices/ or
-              http://www.youronlinechoices.com.
-            </p>
-
-            <h2>Essential website cookies:</h2>
-            <p>
-              These cookies are strictly necessary to provide you with services
-              available through our Websites and to use some of its features,
-              such as access to secure areas.
-            </p>
-            <p>
-              Name:__tlbcpv
-              <br></br>Purpose:Used to record unique visitor views of the
-              consent banner.
-              <br></br>Provider:.termly.io
-              <br></br>Service:Termly View{" "}
-              <a href="https://termly.io/our-privacy-policy">
-                Service Privacy Policy
-              </a>
-              <br></br>Country:United States
-              <br></br>Type:http_cookie
-              <br></br>Expires in:1 year
+              purposes.
             </p>
 
             <h2>Performance and functionality cookies:</h2>
@@ -123,66 +83,6 @@ function Cookie() {
               <br></br>Expires in:session
             </p>
 
-            <h2>Analytics and customization cookies:</h2>
-            <p>
-              These cookies collect information that is used either in aggregate
-              form to help us understand how our Websites are being used or how
-              effective our marketing campaigns are, or to help us customize our
-              Websites for you.
-            </p>
-            <p>
-              Name:1P_JAR
-              <br></br>Purpose:Set by Google to collect website statistics and
-              track conversion rates.
-              <br></br>Provider:.google.com
-              <br></br>Service:Google Analytics View{" "}
-              <a href="https://policies.google.com/privacy">
-                Service Privacy Policy
-              </a>
-              <br></br>Country:United States
-              <br></br>Type:server_cookie
-              <br></br>Expires in:30 days
-            </p>
-
-            <h2>Advertising cookies:</h2>
-            <p>
-              These cookies are used to make advertising messages more relevant
-              to you. They perform functions like preventing the same ad from
-              continuously reappearing, ensuring that ads are properly displayed
-              for advertisers, and in some cases selecting advertisements that
-              are based on your interests.
-            </p>
-            <p>
-              Name:ANID
-              <br></br>Purpose:Google uses this cookies to make advertising more
-              engaging to users and more valuable to publishers and advertisers
-              <br></br>Provider:.google.com
-              <br></br>Service:Google View{" "}
-              <a href="https://privacy.google.com/take-control.html">
-                Service Privacy Policy
-              </a>
-              <br></br>Country:United States
-              <br></br>Type:server_cookie
-              <br></br>Expires in:1 year 11 months 29 days
-            </p>
-
-            <h2>What about other tracking technologies, like web beacons?</h2>
-            <p>
-              Cookies are not the only way to recognize or track visitors to a
-              website. We may use other, similar technologies from time to time,
-              like web beacons (sometimes called "tracking pixels" or "clear
-              gifs"). These are tiny graphics files that contain a unique
-              identifier that enable us to recognize when someone has visited
-              our Websites or opened an e-mail including them. This allows us,
-              for example, to monitor the traffic patterns of users from one
-              page within a website to another, to deliver or communicate with
-              cookies, to understand whether you have come to the website from
-              an online advertisement displayed on a third-party website, to
-              improve site performance, and to measure the success of e-mail
-              marketing campaigns. In many instances, these technologies are
-              reliant on cookies to function properly, and so declining cookies
-              will impair their functioning.
-            </p>
 
             <h2>Do you use Flash cookies or Local Shared Objects?</h2>
             <p>
@@ -244,13 +144,9 @@ function Cookie() {
             <h2>Where can I get further information?</h2>
             <p>
               If you have any questions about our use of cookies or other
-              technologies, please email us at __________ or by post to:
+              technologies, please email us at eshodaankori.bd@gmail.com
             </p>
-            <p>Phone:</p>
-            <p>
-              This cookie policy was created using Termly’s Cookie Consent
-              Manager.
-            </p>
+
             <Link to="/" className="btn btn-type1 input-length">
               HOME
             </Link>
