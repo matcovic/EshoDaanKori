@@ -103,7 +103,15 @@ const FundEditDetailsPage = (props) => {
 
               {/* Fund posted time ago  */}
               <h3 className="post-time-text">
-                {new Date(fundDetails.createdAt).toUTCString()}
+                {`Posted on: ${new Date(fundDetails.createdAt).toLocaleDateString(
+                  "en-US",
+                  {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  }
+                )}`}
               </h3>
 
               {/* tags and labels */}

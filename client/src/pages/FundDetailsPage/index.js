@@ -14,7 +14,6 @@ import Loading from "react-fullscreen-loading";
 import { notify } from "../../util/util";
 import { Helmet } from "react-helmet";
 
-
 const FundDetailsPage = (props) => {
   console.log(props);
   const fundraiserId = props.match.params.fundraiserId;
@@ -55,7 +54,7 @@ const FundDetailsPage = (props) => {
 
   return (
     <section id="fund-details-section">
-    <Helmet>
+      <Helmet>
         <meta charSet="utf-8" />
         <title>{fundDetails.title}</title>
       </Helmet>
@@ -81,7 +80,15 @@ const FundDetailsPage = (props) => {
 
               {/* Fund posted time ago  */}
               <h3 className="post-time-text">
-                {new Date(fundDetails.createdAt).toUTCString()}
+                {`Posted on: ${new Date(fundDetails.createdAt).toLocaleDateString(
+                  "en-US",
+                  {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  }
+                )}`}
               </h3>
 
               {/* tags and labels */}
