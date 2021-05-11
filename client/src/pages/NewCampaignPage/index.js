@@ -34,7 +34,11 @@ const schema = yup.object().shape({
     .positive("Invalid goal entered. Please enter a number.")
     .integer("Invalid goal entered. Please enter a number.")
     .required("Please enter the fundraiser target amount."),
-  story: yup.string().required(),
+  story: yup
+    .string()
+    .required()
+    .min(50, "Story should be at least 50 character")
+    .max(1200, "Your Story is too big"),
 });
 //-----------for validation------------------
 
