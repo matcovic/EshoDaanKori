@@ -59,7 +59,7 @@ const SignIn = ({ isAuthenticated }) => {
     } else {
       console.log(form);
       const loginUser = async () => {
-        const { data } = await axios.post("/api/auth/login-email", form);
+        const { data } = await axios.post(`${process.env.REACT_APP_API_DOMAIN}/api/auth/login-email`, form);
         if (data.status === 1) {
           setErrorBox(true);
           window.location.replace("/");

@@ -27,7 +27,7 @@ const FundEditDetailsPage = (props) => {
   useEffect(() => {
     // when the component loads up, send a req to the server
     const fetchContent = async () => {
-      const { data } = await axios.post("/api/campaign/get-campaign-by-id", {
+      const { data } = await axios.post(`${process.env.REACT_APP_API_DOMAIN}/api/campaign/get-campaign-by-id`, {
         fundraiserId: fundraiserId,
       });
       if (data.status === 1) {
@@ -50,7 +50,7 @@ const FundEditDetailsPage = (props) => {
     e.preventDefault();
 
     const deleteFundraiser = async () => {
-      const { data } = await axios.post("/api/campaign/delete-campaign", {
+      const { data } = await axios.post(`${process.env.REACT_APP_API_DOMAIN}/api/campaign/delete-campaign`, {
         fundraiserId: fundraiserId,
       });
       if (data.status === 1) {

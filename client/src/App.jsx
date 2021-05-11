@@ -24,8 +24,8 @@ import HowItWorks from "./pages/HowItWorks";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import Privacy from "./pages/Privacy";
 import CookiePolicy from "./pages/CookiePolicy";
-
 import contactUs from "./pages/ContactUs";
+
 function App() {
   const [isAuthenticated, setAuthenticationStatus] = useState(false);
   const [dataChange, onDataChange] = useState(false);
@@ -40,7 +40,7 @@ function App() {
 
     const checkAuthenticationStatus = async () => {
       try {
-        const { data } = await axios.get("/api/auth/is-authenticated");
+        const { data } = await axios.get(`${process.env.REACT_APP_API_DOMAIN}/api/auth/is-authenticated`);
         console.log(data);
 
         if (isMounted) {

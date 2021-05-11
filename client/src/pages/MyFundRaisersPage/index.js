@@ -18,7 +18,7 @@ const MyFundRaisersPage = ({ isAuthenticated }) => {
   useEffect(() => {
     // when the component loads up, send a req to the server
     const fetchContent = async () => {
-      const { data } = await axios.post("/api/campaign/get-my-campaigns");
+      const { data } = await axios.post(`${process.env.REACT_APP_API_DOMAIN}/api/campaign/get-my-campaigns`);
       if (data.status === 1) {
         console.log(data);
         setFundraisers(data.result);

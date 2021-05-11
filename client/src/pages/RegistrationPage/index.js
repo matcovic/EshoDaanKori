@@ -86,7 +86,7 @@ const Registration = (props) => {
       ref.current.continuousStart();
       setErrorBox(true);
       const registerUser = async () => {
-        const { data } = await axios.post("/api/auth/register-user", form);
+        const { data } = await axios.post(`${process.env.REACT_APP_API_DOMAIN}/api/auth/register-user`, form);
         if (data.status === 1) {
           ref.current.complete();
           console.log(data.message);

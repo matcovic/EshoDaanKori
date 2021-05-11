@@ -68,7 +68,7 @@ const ResetPassword = ({ isAuthenticated }) => {
       form.location = location;
       ref.current.continuousStart();
       const sendForm = async () => {
-        const { data } = await axios.post("/api/auth/reset-password", form);
+        const { data } = await axios.post(`${process.env.REACT_APP_API_DOMAIN}/api/auth/reset-password`, form);
         if (data.status === 1) {
           console.log(data.message);
           notify(data.message, "success", "/sign-in");

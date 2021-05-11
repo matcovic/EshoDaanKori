@@ -58,7 +58,7 @@ const ForgotPassword = (props) => {
       ref.current.continuousStart();
       setErrorBox(true);
       const sendResetPasswordLink = async () => {
-        const { data } = await axios.post("/api/auth/reset-password-link", {
+        const { data } = await axios.post(`${process.env.REACT_APP_API_DOMAIN}/api/auth/reset-password-link`, {
           email,
         });
         if (data.status === 1) {

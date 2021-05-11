@@ -230,7 +230,7 @@ const NewCampaign = (props) => {
           // save changes to database
           const editChanges = async () => {
             const { data } = await axios.post(
-              "/api/campaign/edit-campaign",
+              `${process.env.REACT_APP_API_DOMAIN}/api/campaign/edit-campaign`,
               form
             );
             if (data.status === 1) {

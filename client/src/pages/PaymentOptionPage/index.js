@@ -100,12 +100,12 @@ const PaymentOptions = (props) => {
       var data;
       if (props.location.state.status !== 69) {
         data = await axios.post(
-          "/api/campaign/new-campaign",
+          `${process.env.REACT_APP_API_DOMAIN}/api/campaign/new-campaign`,
           props.location.state
         );
         data = data.data;
       } else {
-        data = await axios.post("/api/campaign/update-payment-options", {
+        data = await axios.post(`${process.env.REACT_APP_API_DOMAIN}/api/campaign/update-payment-options`, {
           paymentOptions: paymentOptionsList,
           _id: props.location.state.fundDetails._id,
         });
