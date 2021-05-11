@@ -227,7 +227,7 @@ const PaymentOptions = (props) => {
                 <Input
                   value={inputField}
                   className="input-length"
-                  placeholder="Enter your number. Ex- 19XXXXXXXX"
+                  placeholder="Enter your number. Ex- 019XXXXXXXX"
                   onChange={onChange}
                   required
                   name="userNumber"
