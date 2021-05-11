@@ -1,7 +1,7 @@
 {
   "name": "asho-daan-kori",
   "version": "0.1.0",
-  "proxy": "https://eshodaankori.netlify.app",
+  "proxy": "https://esho-daan-kori.herokuapp.com",
   "description": "fundraiser website for bangladeshis",
   "private": true,
   "dependencies": {

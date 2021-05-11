@@ -10,12 +10,14 @@ import MongoStore from "connect-mongo";
 import { config } from "dotenv";
 import { campaignRouter } from "./routes/campaign.js";
 import { testController } from "./controllers/test.js";
+import cors from "cors";
 
 if (process.env.NODE_ENV !== "production") {
   config();
 }
 
 const app = express();
+app.use(cors());
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
