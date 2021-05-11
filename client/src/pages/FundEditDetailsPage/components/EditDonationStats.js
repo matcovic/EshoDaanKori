@@ -19,7 +19,6 @@ const EditDonationStats = ({ fundDetails }) => {
 
   function onChange(e) {
     console.log(e.target.value);
-
     setAmount(e.target.value);
   }
 
@@ -74,15 +73,14 @@ const EditDonationStats = ({ fundDetails }) => {
       <div className="row">
         <div className="col-sm-6 amount-box">
           <h3>DONATION RECEIVED:</h3>
-          <h3 className="amount-text">{amount}</h3>
-          {/* edit button */}
+          <h3 className="amount-text">{`৳${amount}`}</h3>
           <button onClick={onDonationEditClick} className="btn edit-btn">
             <i aria-hidden="true" className="pencil large icon"></i>
           </button>
         </div>
         <div className="col-sm-6 amount-box amount-goal-box">
           <h3>GOAL:</h3>
-          <h3 className="amount-text">{fundDetails.fundraisingGoal}</h3>
+          <h3 className="amount-text">{`৳${fundDetails.fundraisingGoal}`}</h3>
         </div>
       </div>
       {/* progress in percentage */}

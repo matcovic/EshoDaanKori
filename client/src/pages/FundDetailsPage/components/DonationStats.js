@@ -11,11 +11,11 @@ const DonationStats = ({ fundDetails }) => {
       <div className="row">
         <div className="col-sm-6 amount-box">
           <h3>DONATION RECEIVED:</h3>
-          <h3 className="amount-text">{fundDetails.fundraisedTotal}</h3>
+          <h3 className="amount-text">{`৳${fundDetails.fundraisedTotal}`}</h3>
         </div>
         <div className="col-sm-6 amount-box amount-goal-box">
           <h3>GOAL:</h3>
-          <h3 className="amount-text">{fundDetails.fundraisingGoal}</h3>
+          <h3 className="amount-text">{`৳${fundDetails.fundraisingGoal}`}</h3>
         </div>
       </div>
       {/* progress in percentage */}

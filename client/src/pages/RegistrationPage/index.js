@@ -12,6 +12,7 @@ import { Redirect } from "react-router";
 import LoadingBar from "react-top-loading-bar";
 //-----------for validation------------------
 import * as yup from "yup";
+import { useHistory } from "react-router-dom";
 
 yup.setLocale({
   // use constant translation keys for messages without values
@@ -20,9 +21,6 @@ yup.setLocale({
   },
   email: {},
   // use functions to generate an error object that includes the value from the schema
-  string: {
-    min: () => "Password is too short",
-  },
   string: {
     min: () => "Password is too short",
   },
@@ -38,8 +36,9 @@ const schema = yup.object().shape({
     .matches(phoneRegExp, "Phone number is not valid")
     .max(11, "Phone number is too long")
     .min(11, "Phone number is too short")
-    .required(),
-  dob: yup.date("Date must be dd/mm/yyyy").required(),
+    .required("Field cannot be empty!"),
+
+  dob: yup.string().required("Field cannot be empty!"),
 });
 //-----------for validation------------------
 
@@ -48,6 +47,7 @@ const Registration = (props) => {
   const [ErrorMessage, setErrorMessage] = useState();
   const [ErrorBox, setErrorBox] = useState(true);
   const [registrationStatus, setRegistrationStatus] = useState(false);
+  const history = useHistory();
 
   const ref = useRef(null); // for loading bar
   console.log("props: ");
@@ -69,7 +69,6 @@ const Registration = (props) => {
 
     console.log("on continue click");
     console.log(form);
-    ref.current.continuousStart();
     const isValid = await schema.isValid(form);
 
     if (!isValid) {
@@ -82,6 +81,7 @@ const Registration = (props) => {
         setErrorMessage(err.errors);
       });
     } else {
+      ref.current.continuousStart();
       setErrorBox(true);
       const registerUser = async () => {
         const { data } = await axios.post("/api/auth/register-user", form);

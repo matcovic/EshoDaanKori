@@ -130,7 +130,7 @@ const SignUp = ({ isAuthenticated }) => {
             />
 
             <div className="signIn-dont-text">
-              <span>Already have an account?</span>
+              <span>Already have an account? </span>
               <a href="/sign-in">SIGN IN</a>
             </div>
           </div>
