@@ -9,7 +9,6 @@ import donatestep1 from "../../assets/images/donatestep1.svg";
 import donatestep2 from "../../assets/images/donatestep2.svg";
 import { Helmet } from "react-helmet";
 
-
 const HowItWorks = () => {
   return (
     <div>
@@ -47,7 +46,7 @@ const HowItWorks = () => {
 
       {/* <!-- How to Donate --> */}
       <section id="how-to-donate-section">
-        <h2>HOW TO FUNDRAISE?</h2>
+        <h2>HOW TO DONATE?</h2>
         <div className="container-fluid">
           <div className="row row-flex">
             <h2 className="step-no-text">Step 01</h2>
