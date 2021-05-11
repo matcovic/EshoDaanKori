@@ -12,7 +12,6 @@ import { notify } from "../../util/util";
 import * as yup from "yup";
 import { Helmet } from "react-helmet";
 
-
 yup.setLocale({
   // use constant translation keys for messages without values
   mixed: {
@@ -43,14 +42,18 @@ function LandingPage() {
     const fetchContent = async () => {
       const { data } = await axios.get("/api/landing");
       console.log(data);
-      console.log(data.result.slogan);
-      if (data.newsLetterShown === "shown") {
-        console.log("news letter shown");
-        setNewsLetterPopup(false);
+      if (data.status === 1) {
+        if (data.newsLetterShown === "shown") {
+          console.log("news letter shown");
+          setNewsLetterPopup(false);
+        } else {
+          setNewsLetterPopup(true);
+        }
+        data.result.result.fundraisers = data.result.fundraisers;
+        if (isMounted) setContent(data.result.result);
       } else {
-        setNewsLetterPopup(true);
+        console.log(data.message);
       }
-      if (isMounted) setContent(data.result);
     };
     fetchContent();
     return () => {
@@ -100,7 +103,7 @@ function LandingPage() {
 
   return (
     <div className="landing-page">
-     <Helmet>
+      <Helmet>
         <meta charSet="utf-8" />
         <title>EshoDaanKori</title>
       </Helmet>
@@ -117,7 +120,7 @@ function LandingPage() {
         ourVision={content.ourVision}
       />
 
-      <AvailFundraisers />
+      <AvailFundraisers fundraisers={content.fundraisers} />
 
       <WhyUs />
       <Modal
@@ -162,11 +165,11 @@ function LandingPage() {
             </span>
           </div>
           <Message
-              icon="exclamation triangle"
-              hidden={ErrorBox}
-              error
-              header={ErrorMessage}
-            />
+            icon="exclamation triangle"
+            hidden={ErrorBox}
+            error
+            header={ErrorMessage}
+          />
         </Modal.Content>
       </Modal>
     </div>

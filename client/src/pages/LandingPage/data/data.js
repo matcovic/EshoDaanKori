@@ -60,6 +60,7 @@ const landingPageInitialContent = {
     "https://res.cloudinary.com/pixieum-studios/image/upload/v1620670988/landing_page/4_dzl4zq.png",
     "https://res.cloudinary.com/pixieum-studios/image/upload/v1620697099/landing_page/2_ot7mic.png",
   ],
+  fundraisers: [],
 };
 
 export { landingPageInitialContent, whyUs };
