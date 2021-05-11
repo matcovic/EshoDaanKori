@@ -2,9 +2,16 @@ import React from "react";
 import { NavHashLink } from "react-router-hash-link";
 import "../TermsAndConditions/policy.css";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
+
+
 function Privacy() {
   return (
     <div className="background-signup">
+    <Helmet>
+        <meta charSet="utf-8" />
+        <title>Privacy Policy</title>
+      </Helmet>
       <section id="policy">
         {" "}
         <div className="sample">
@@ -12,13 +19,13 @@ function Privacy() {
             <h1>PRIVACY POLICY</h1>
             <h2>Last updated May 08, 2021</h2>
             <p>
-              Thank you for choosing to be part of our community at Eshodaankori
-              ("Company", "we", "us", "our"). We are committed to protecting
+              Thank you for choosing to be part of our community at Eshodaankori .
+              We are committed to protecting
               your personal information and your right to privacy. If you have
               any questions or concerns about this privacy notice, or our
               practices with regards to your personal information, please
               contact us at{" "}
-              <a href="http://www.eshodaankori.com">www.eshodaankori.com</a>.
+              <a href="/contact-us"> here</a>.
             </p>
             <p>
               When you visit our website{" "}
@@ -137,12 +144,11 @@ function Privacy() {
               information.
             </p>
             <p>
-              Payment Data. We may collect data necessary to process your
+              Payment Data. We *may* collect data necessary to process your
               payment if you make purchases, such as your payment instrument
               number (such as a credit card number), and the security code
               associated with your payment instrument. All payment data is
-              stored by bKash. You may find their privacy notice link(s) here:
-              __________.
+              stored by bKash.
             </p>
             <p>
               Social Media Login Data. We may provide you with the option to
@@ -197,7 +203,7 @@ function Privacy() {
             </p>
             <p>We use the information we collect or receive:</p>
             <p>
-              To facilitate account creation and logon process. If you choose to
+              To facilitate account creation and login process. If you choose to
               link your account with us to a third-party account (such as your
               Google or Facebook account), we use the information you allowed us
               to collect from those third parties to facilitate account creation
@@ -207,7 +213,7 @@ function Privacy() {
               our Website that may contain personal information. Prior to
               posting a testimonial, we will obtain your consent to use your
               name and the content of the testimonial. If you wish to update, or
-              delete your testimonial, please contact us at __________ and be
+              delete your testimonial, please contact us at eshodaankori.bd@gmail.com and be
               sure to include your name, testimonial location, and contact
               information. Request feedback. We may use your information to
               request feedback and to contact you about your use of our Website.
@@ -495,7 +501,7 @@ function Privacy() {
 
             <p>
               If you have questions or comments about this notice, you may email
-              us at __________ or by post to:
+              us at eshodaankori.bd@gmail.com or by post to:
             </p>
             <p>Bangladesh</p>
 
@@ -509,7 +515,7 @@ function Privacy() {
               right to request access to the personal information we collect
               from you, change that information, or delete it in some
               circumstances. To request to review, update, or delete your
-              personal information, please visit: __________.
+              personal information, please contact us at eshodaankori.bd@gmail.com.
             </p>
 
             <p>

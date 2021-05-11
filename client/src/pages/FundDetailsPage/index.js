@@ -11,6 +11,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import Loading from "react-fullscreen-loading";
+import { notify } from "../../util/util";
+import { Helmet } from "react-helmet";
 
 const FundDetailsPage = (props) => {
   console.log(props);
@@ -44,18 +46,6 @@ const FundDetailsPage = (props) => {
     fetchContent();
   }, [fundraiserId]);
 
-  const notify = (message) => {
-    toast.info(message, {
-      position: "top-center",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-  };
-
   if (loading) {
     return (
       <Loading loading={loading} background="#00AD7C" loaderColor="#B7FE81" />
@@ -64,6 +54,10 @@ const FundDetailsPage = (props) => {
 
   return (
     <section id="fund-details-section">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>{fundDetails.title}</title>
+      </Helmet>
       <div className="white-container">
         <ToastContainer
           position="top-center"
@@ -86,7 +80,15 @@ const FundDetailsPage = (props) => {
 
               {/* Fund posted time ago  */}
               <h3 className="post-time-text">
-                {new Date(fundDetails.createdAt).toUTCString()}
+                {`Posted on: ${new Date(fundDetails.createdAt).toLocaleDateString(
+                  "en-US",
+                  {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  }
+                )}`}
               </h3>
 
               {/* tags and labels */}
@@ -110,7 +112,8 @@ const FundDetailsPage = (props) => {
                   onClick={(event) => {
                     event.preventDefault();
                     notify(
-                      "Link copied! Share it with your friends and family."
+                      "Link copied! 🔗 Share it with your friends and family.",
+                      "info"
                     );
                     navigator.clipboard.writeText(
                       `http://localhost:3000/fundraisers/view/${fundDetails._id}`

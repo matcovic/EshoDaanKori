@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import Loading from "react-fullscreen-loading";
 import NoContentImage from "../../assets/images/NoContentImage.svg";
 import { getCategoryList } from "../../util/util";
+import { Helmet } from "react-helmet";
 
 const DiscoverPage = (props) => {
   var selectedCategory = props.match.params.category;
@@ -37,6 +38,10 @@ const DiscoverPage = (props) => {
 
   return (
     <section id="discover-section">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Discover</title>
+      </Helmet>
       {loading ? (
         <Loading loading={true} background="#00AD7C" loaderColor="#B7FE81" />
       ) : (

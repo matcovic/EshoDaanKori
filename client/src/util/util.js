@@ -61,7 +61,6 @@ function calculateFundraisingProgress(current, goal) {
   }
 }
 
-
 function getCategoryList() {
   const list = [
     "All",
@@ -76,22 +75,39 @@ function getCategoryList() {
   return list;
 }
 
-const notifyError = (message) => {
-  toast.error(message, {
-    position: "top-center",
-    autoClose: 5000,
+/**
+ *
+ * @param {*} message the message to show on the toas
+ * @param {*} type possible types: "error", "success"
+ * @param {*} redirectUrl the url to redirect to after the toast is closed
+ * @param {*} position posible positions: "top-center", "top-left", "top-right", "bottom-right", "bottom-left", "bottom-center", default is "top-center"
+ */
+function notify(message, type, redirectUrl, position) {
+  console.log(position);
+  const options = {
+    onClose: (props) =>
+      redirectUrl ? window.location.replace(redirectUrl) : "",
+    position: position ? position : "top-center",
+    autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
     draggable: true,
     progress: undefined,
-  });
-};
+  };
+  if (type === "success") {
+    toast.success(message, options);
+  } else if (type === "error") {
+    toast.error(message, options);
+  } else if (type === "info") {
+    toast.info(message, options);
+  }
+}
 
 export {
   getBase64,
   convertMultipleImagesToB64,
   calculateFundraisingProgress,
   getCategoryList,
-  notifyError,
+  notify,
 };

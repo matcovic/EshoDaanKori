@@ -6,6 +6,12 @@ import icoUnverified from "../../../assets/icons/ico-unverified.svg";
 import icoVerified from "../../../assets/icons/ico-verified.svg";
 
 const FundTags = ({ tags }) => {
+  var fundraisingFor;
+  if (tags.fundraisingFor === "Yourself") {
+    fundraisingFor = `Fundraising for: Themselves`;
+  } else {
+    fundraisingFor = `Fundraising for: Others`;
+  }
   return (
     <div className="row fund-tags-container">
       <ul>
@@ -13,7 +19,7 @@ const FundTags = ({ tags }) => {
         <li>
           <div className="fund-tags">
             <img src={icoFundFor} alt="..." />
-            <h4>{tags.fundraisingFor}</h4>
+            <h4>{fundraisingFor}</h4>
           </div>
         </li>
         {/* category */}

@@ -21,8 +21,10 @@ import MyFundRaisersPage from "./pages/MyFundRaisersPage";
 import FundDetailsPage from "./pages/FundDetailsPage";
 import FundEditDetailsPage from "./pages/FundEditDetailsPage";
 import HowItWorks from "./pages/HowItWorks";
-import Terms from "./pages/TermsAndConditions";
+import TermsAndConditions from "./pages/TermsAndConditions";
 import Privacy from "./pages/Privacy";
+import CookiePolicy from './pages/CookiePolicy'
+
 import contactUs from "./pages/ContactUs";
 function App() {
   const [isAuthenticated, setAuthenticationStatus] = useState(false);
@@ -72,7 +74,7 @@ function App() {
         <div id="container">
           <div id="main">
             <Loading
-              loading={dataChange ? false : true}
+              loading={!dataChange}
               background="#00AD7C"
               loaderColor="#B7FE81"
             />
@@ -84,8 +86,10 @@ function App() {
                 component={isAuthenticated ? DiscoverPage : LandingPage}
               />
               <Route path="/discover" exact component={DiscoverPage} />
-              <Route path="/terms" exact component={Terms} />
-              <Route path="/privacy" exact component={Privacy} />
+              <Route path="/terms-and-conditions" exact component={TermsAndConditions} />
+              <Route path="/privacy-policy" exact component={Privacy} />
+              <Route path="/cookie-policy" exact component={CookiePolicy} />
+
               <Route path="/how-it-works" exact component={HowItWorks} />
               <Route path="/contact-us" exact component={contactUs} />
 

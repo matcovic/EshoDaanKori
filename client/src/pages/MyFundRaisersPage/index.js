@@ -6,6 +6,8 @@ import { Redirect } from "react-router";
 import Loading from "react-fullscreen-loading";
 import { Input, Modal, Header } from "semantic-ui-react";
 import NoContentImage from "../../assets/images/NoContentImage.svg";
+import { Helmet } from "react-helmet";
+
 
 const MyFundRaisersPage = (props) => {
   console.log(props);
@@ -39,6 +41,10 @@ const MyFundRaisersPage = (props) => {
 
   return (
     <section id="discover-section">
+    <Helmet>
+        <meta charSet="utf-8" />
+        <title>My Fundraisers</title>
+      </Helmet>
       {loading ? (
         <Loading loading={true} background="#00AD7C" loaderColor="#B7FE81" />
       ) : (

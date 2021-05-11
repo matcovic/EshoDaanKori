@@ -9,6 +9,9 @@ import LoadingBar from "react-top-loading-bar";
 import * as yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { notify } from "../../util/util";
+import { Helmet } from "react-helmet";
+
 
 yup.setLocale({
   // use constant translation keys for messages without values
@@ -106,27 +109,14 @@ const ResetPassword = ({ isAuthenticated }) => {
     return <Redirect to="/" />;
   }
 
-  function notify(message, type, redirectUrl) {
-    const options = {
-      onClose: (props) =>
-        redirectUrl ? window.location.replace(redirectUrl) : "",
-      position: "top-center",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    };
-    if (type === "success") {
-      toast.success(message, options);
-    } else if (type === "error") {
-      toast.error(message, options);
-    }
-  }
+  
 
   return (
     <div className="background-signup">
+    <Helmet>
+        <meta charSet="utf-8" />
+        <title>Reset Password</title>
+      </Helmet>
       <ToastContainer
         position="top-center"
         autoClose={5000}

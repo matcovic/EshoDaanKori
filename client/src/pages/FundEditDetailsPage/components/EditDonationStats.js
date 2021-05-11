@@ -6,10 +6,6 @@ import { calculateFundraisingProgress } from "../../../util/util";
 import * as yup from "yup";
 import axios from "axios";
 
-const schema = yup.object().shape({
-  taka: yup.number().integer().positive().required("Enter Some amount"),
-});
-
 const EditDonationStats = ({ fundDetails }) => {
   const [open, setOpen] = React.useState(false);
   const [ErrorMessage, setErrorMessage] = useState();
@@ -21,6 +17,18 @@ const EditDonationStats = ({ fundDetails }) => {
     console.log(e.target.value);
     setAmount(e.target.value);
   }
+
+  const schema = yup.object().shape({
+    taka: yup
+      .number()
+      .integer()
+      .positive()
+      .required("Enter Some amount")
+      .max(
+        fundDetails.fundraisingGoal,
+        "Amount entered cannot exceed the fundraising goal!"
+      ),
+  });
 
   async function onClick() {
     const isValid = await schema.isValid({ taka: amount });
@@ -99,8 +107,8 @@ const EditDonationStats = ({ fundDetails }) => {
         onOpen={() => setOpen(true)}
         open={open}
         onClose={() => {
-          console.log("MODAL CLOSED");
-          setOpen(false);
+          setErrorBox(false);
+          setErrorMessage("Please enter an amount and press confirm.");
         }}
       >
         <Modal.Content>

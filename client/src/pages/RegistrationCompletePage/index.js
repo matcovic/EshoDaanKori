@@ -1,6 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router";
 import "../SignInPage/SignIn.css";
+import { Helmet } from "react-helmet";
 
 const RegistrationComplete = (props) => {
   console.log(props);
@@ -10,6 +11,10 @@ const RegistrationComplete = (props) => {
   } */
   return (
     <div className="background-signup">
+    <Helmet>
+        <meta charSet="utf-8" />
+        <title>Registration Success</title>
+      </Helmet>
       <section id="signIn-section">
         <div className="sample">
           <div className="signIn-box signIn-box-medium signIn-box-small">

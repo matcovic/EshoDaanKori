@@ -12,6 +12,9 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loading from "react-fullscreen-loading";
+import { notify } from "../../util/util";
+import { Helmet } from "react-helmet";
+
 
 const FundEditDetailsPage = (props) => {
   const fundraiserId = props.location.state.id;
@@ -52,32 +55,17 @@ const FundEditDetailsPage = (props) => {
       });
       if (data.status === 1) {
         console.log(data);
-        notify(data.message);
+        notify(data.message, "success", "/");
         setOpen(false);
         console.log("deleted success");
       } else {
         console.log("couldn't delete fundraiser");
-        notify(data.message);
+        notify(data.message, "error");
         setOpen(false);
       }
     };
 
     deleteFundraiser();
-  }
-
-  function notify(message) {
-    const options = {
-      onClose: (props) => window.location.replace("/"),
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    };
-
-    toast.success(message, options);
   }
 
   if (loading) {
@@ -88,6 +76,11 @@ const FundEditDetailsPage = (props) => {
 
   return (
     <section id="fund-details-section">
+    <Helmet>
+        <meta charSet="utf-8" />
+        <title>Fundraiser Edit</title>
+      </Helmet>
+
       <ToastContainer
         position="top-center"
         autoClose={5000}
@@ -110,7 +103,15 @@ const FundEditDetailsPage = (props) => {
 
               {/* Fund posted time ago  */}
               <h3 className="post-time-text">
-                {new Date(fundDetails.createdAt).toUTCString()}
+                {`Posted on: ${new Date(fundDetails.createdAt).toLocaleDateString(
+                  "en-US",
+                  {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  }
+                )}`}
               </h3>
 
               {/* tags and labels */}

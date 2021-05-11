@@ -8,6 +8,9 @@ import LoadingBar from "react-top-loading-bar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import * as yup from "yup";
+import { notify } from "../../util/util";
+import { Helmet } from "react-helmet";
+
 
 yup.setLocale({
   // use constant translation keys for messages without values
@@ -41,7 +44,6 @@ const ForgotPassword = (props) => {
     console.log(email);
     const isValid = await schema.isValid({ email: email });
 
-
     if (!isValid) {
       schema.validate({ email: email }).catch(function (err) {
         console.log("Error Name:");
@@ -61,11 +63,11 @@ const ForgotPassword = (props) => {
         });
         if (data.status === 1) {
           console.log(data.message);
-          notify(data.message, "success");
+          notify(data.message, "success", "/sign-in");
         } else {
           console.log(data.status);
           console.log(data.message);
-          notify(data.message, "error");
+          notify(data.message, "error", "/sign-in");
         }
         ref.current.complete();
       };
@@ -79,26 +81,12 @@ const ForgotPassword = (props) => {
     setEmail(value);
   }
 
-  function notify(message, type) {
-    const options = {
-      onClose: (props) => window.location.replace("/sign-in"),
-      position: "top-center",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    };
-    if (type === "success") {
-      toast.success(message, options);
-    } else if (type === "error") {
-      toast.error(message, options);
-    }
-  }
-
   return (
     <div className="background-signup">
+    <Helmet>
+        <meta charSet="utf-8" />
+        <title>Forgot Password</title>
+      </Helmet>
       <ToastContainer
         position="top-center"
         autoClose={5000}
