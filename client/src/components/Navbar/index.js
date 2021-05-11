@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { NavHashLink } from "react-router-hash-link";
 import "./privateNavBar.css";
 import "./utilities/navBarHide";
+import DefaultLogo from "../../assets/logo/default-logo.png";
+import WhiteLogo from "../../assets/logo/white-logo.png";
 
 const Navbar = ({ isAuthenticated }) => {
   const [userInfo, setUserInfo] = useState({});
@@ -62,8 +64,8 @@ const Navbar = ({ isAuthenticated }) => {
         }`}
       >
         <div className="container-fluid navbar-container">
-          <NavHashLink className="navbar-brand abs nav-bar-title" to="/">
-            AshoDaanKori
+          <NavHashLink className="navbar-brand abs" to="/">
+            <img src={DefaultLogo} alt="" width="170" height="50" />
           </NavHashLink>
           <button
             className="navbar-toggler ms-auto custom-toggler"
