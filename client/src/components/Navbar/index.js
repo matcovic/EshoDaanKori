@@ -65,7 +65,7 @@ const Navbar = ({ isAuthenticated }) => {
       >
         <div className="container-fluid navbar-container">
           <NavHashLink className="navbar-brand abs" to="/">
-            <img src={DefaultLogo} alt="" width="170" height="50" />
+            <img src={DefaultLogo} alt="" width="160" height="50" />
           </NavHashLink>
           <button
             className="navbar-toggler ms-auto custom-toggler"
