@@ -12,20 +12,20 @@ const Footer = () => {
           </div>
           {/* Footer links */}
           <div className="col-lg-4 col-md-12 footer-links">
-            <Link to="/terms">TERMS</Link>
-            <Link to="/privacy">PRIVACY POLICY</Link>
-            <Link to="#!">CONTACT US</Link>
-            <Link to="#!">FAQ</Link>
+            <Link to="/terms-and-conditions">TERMS</Link>
+            <Link to="/privacy-policy">PRIVACY POLICY</Link>
+            <Link to="/contact-us">CONTACT US</Link>
+            <Link to="/cookie-policy">COOKIE</Link>
           </div>
           {/* Footer Social */}
           <div className="col-lg-4 col-md-12 footer-social-links">
-            <Link to="#!">
+            <Link to="/">
               <i className="fab fa-facebook-f"></i>
             </Link>
-            <Link to="#!">
+            <Link to="/not-found?">
               <i className="fab fa-youtube"></i>
             </Link>
-            <Link to="#!">
+            <Link to="/not-found?">
               <i className="fab fa-instagram"></i>
             </Link>
           </div>
