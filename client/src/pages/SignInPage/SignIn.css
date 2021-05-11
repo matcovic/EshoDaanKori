@@ -149,6 +149,9 @@ span {
   font-family: var(--font-family-poppins);
   color: var(--jade);
 }
+.spam {
+  font-weight: bold !important;
+}
 
 /* -------------------------modal design-------------------------- */
 .ui.input > input {

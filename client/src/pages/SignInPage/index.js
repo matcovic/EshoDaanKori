@@ -89,16 +89,6 @@ const SignIn = ({ isAuthenticated }) => {
         <div className="sample">
           <div className="signIn-box signIn-box-medium signIn-box-small">
             <h1>SIGN IN</h1>
-            <a>
-              <img className="logo" src={facebookLogo} alt="Facebook Logo" />
-            </a>
-            <img className="logo" src={googleLogo} alt="Google Logo" />
-
-            <div className="divider-custom">
-              <div className="divider-custom-line"></div>
-              <p>OR</p>
-              <div className="divider-custom-line"></div>
-            </div>
 
             <form>
               <div>
