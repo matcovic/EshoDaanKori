@@ -14,7 +14,7 @@ const Footer = () => {
           <div className="col-lg-4 col-md-12 footer-links">
             <Link to="/terms">TERMS</Link>
             <Link to="/privacy">PRIVACY POLICY</Link>
-            <Link to="#!">CONTACT US</Link>
+            <Link to="/contact-us">CONTACT US</Link>
             <Link to="#!">FAQ</Link>
           </div>
           {/* Footer Social */}

@@ -17,6 +17,7 @@ import axios from "axios";
 import LoadingBar from "react-top-loading-bar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { TakaIcon } from "../../assets/assets.js";
 
 const schema = yup.object().shape({
   title: yup
@@ -343,7 +344,7 @@ const NewCampaign = (props) => {
                     name="fundraisingGoal"
                     value={form.fundraisingGoal}
                     onChange={onChange}
-                    icon="dollar"
+                    icon={TakaIcon}
                     iconPosition="left"
                     placeholder="Enter your location "
                   />

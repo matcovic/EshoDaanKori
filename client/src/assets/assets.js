@@ -4,6 +4,7 @@ import profileicon from "./icons/ico-profile.svg";
 import phoneicon from "./icons/ico-phone.svg";
 import calendaricon from "./icons/ico-calendar.svg";
 import nidicon from "./icons/ico-nid.svg";
+import takaIcon from "./icons/ico-taka.svg";
 
 const EmailIcon = (
   <i className="icon">
@@ -17,6 +18,17 @@ const EmailIcon = (
   </i>
 );
 
+const TakaIcon = (
+  <i className="icon">
+    <img
+      alt="takaIcon"
+      className="input-icon"
+      width={38}
+      height={38}
+      src={takaIcon}
+    />
+  </i>
+);
 const KeyIcon = (
   <i className="icon">
     <img
@@ -74,4 +86,12 @@ const NidIcon = (
     />
   </i>
 );
-export { EmailIcon, KeyIcon, NidIcon, CalendarIcon, PhoneIcon, ProfileIcon };
+export {
+  EmailIcon,
+  KeyIcon,
+  NidIcon,
+  CalendarIcon,
+  PhoneIcon,
+  ProfileIcon,
+  TakaIcon,
+};

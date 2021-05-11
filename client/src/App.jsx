@@ -23,7 +23,7 @@ import FundEditDetailsPage from "./pages/FundEditDetailsPage";
 import HowItWorks from "./pages/HowItWorks";
 import Terms from "./pages/TermsAndConditions";
 import Privacy from "./pages/Privacy";
-
+import contactUs from "./pages/ContactUs";
 function App() {
   const [isAuthenticated, setAuthenticationStatus] = useState(false);
   const [dataChange, onDataChange] = useState(false);
@@ -87,6 +87,7 @@ function App() {
               <Route path="/terms" exact component={Terms} />
               <Route path="/privacy" exact component={Privacy} />
               <Route path="/how-it-works" exact component={HowItWorks} />
+              <Route path="/contact-us" exact component={contactUs} />
 
               <Route
                 exact
