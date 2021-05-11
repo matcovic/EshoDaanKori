@@ -31,7 +31,7 @@ const HowItWorks = () => {
               <h2 className="step-no-text">Step 02</h2>
               <div className="divider-custom-line"></div>
             </div>
-            <FundImage2 Image={fundstep1} />
+            <FundImage2 Image={fundstep2} />
             <HowItWorksType2
               description="Press the “START A NEW CAMPAIGN” Button once you are in.
             Enter necessary information into a form. And you are done!"
