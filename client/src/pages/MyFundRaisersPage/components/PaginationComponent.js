@@ -21,7 +21,7 @@ const PaginationComponent = ({ fundraisers }) => {
     ) {
       history.push({
         pathname: `/fundraisers/edit-post/${fundraiserId}`,
-        state: {id: fundraiserId, status: 2},
+        state: { id: fundraiserId, status: 2 },
       });
     } else {
       console.log("card clicked");

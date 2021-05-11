@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import PaginationComponent from "./PaginationComponent";
+import PaginationComponent from "./PaginationComponent.js";
 import "../DiscoverPage/discoverPage.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Loading from "react-fullscreen-loading";
 import NoContentImage from "../../assets/images/NoContentImage.svg";
 import { getCategoryList } from "../../util/util";
-
 
 const DiscoverPage = (props) => {
   var selectedCategory = props.match.params.category;
@@ -59,6 +58,48 @@ const DiscoverPage = (props) => {
                       );
                     })}
                   </ul>
+                </div>
+              </div>
+              {/*Categorical accordion */}
+              <div
+                className="accordion query-box categorical-box-accordion"
+                id="accordionExample"
+              >
+                <div className="accordion-item">
+                  <h2 className="accordion-header" id="headingTwo">
+                    <button
+                      className="accordion-button collapsed query-box-accordion-btn"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseTwo"
+                      aria-expanded="false"
+                      aria-controls="collapseTwo"
+                      style={{ margin: "0" }}
+                    >
+                      CATEGORIES
+                    </button>
+                  </h2>
+                  <div
+                    id="collapseTwo"
+                    className="accordion-collapse collapse"
+                    aria-labelledby="headingTwo"
+                    data-bs-parent="#accordionExample"
+                  >
+                    <div className="accordion-body">
+                      <ul>
+                        {categoryList.map((category) => {
+                          const link = `/category/${category}`;
+                          return (
+                            <li>
+                              <Link className="" to={link}>
+                                {category}
+                              </Link>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

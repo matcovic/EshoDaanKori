@@ -14,7 +14,7 @@ import Loading from "react-fullscreen-loading";
 
 const FundDetailsPage = (props) => {
   console.log(props);
-  const fundraiserId = props.match.params.fundraiserId;  
+  const fundraiserId = props.match.params.fundraiserId;
   const [fundDetails, setFundDetails] = useState();
   const [loading, setLoading] = useState(true);
 
@@ -103,7 +103,7 @@ const FundDetailsPage = (props) => {
 
               {/* contact & share button  */}
               <div className="fund-btn-group">
-             {/*    <Link to="/#" className="btn btn-type1">
+                {/*    <Link to="/#" className="btn btn-type1">
                   CONTACT
                 </Link> */}
                 <button
