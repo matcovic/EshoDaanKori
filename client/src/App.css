@@ -162,14 +162,6 @@ body {
   margin-bottom: 0.43rem;
 }
 
-.nav-bar-title {
-  color: var(--jade);
-  font-family: var(--font-family-just_me_again_down_here);
-  font-size: var(--font-size-title);
-  font-style: normal;
-  font-weight: var(--font-weight-title);
-}
-
 .nav-link {
   color: var(--jade);
   font-family: var(--font-family-poppins);
@@ -180,7 +172,7 @@ body {
   text-transform: uppercase;
   text-align: center;
 }
-.nav-bar-title:hover,
+
 .nav-link:hover {
   color: var(--btn-hover-color);
 }
