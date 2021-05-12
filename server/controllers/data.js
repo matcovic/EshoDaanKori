@@ -3,9 +3,11 @@ import { getUserById } from "../util/dao.js";
 
 const userInfoController = (req, res) => {
   log("preparing to fetch user info");
-  if (req.cookies.session) {
+  if (req.cookies.session == "active") {
     log("user authenticated. Returning data");
-    res.json(getUserById(req.cookies.sessionID));
+    const user = getUserById(req.cookies.sessionID);
+    console.log(user.fullName);
+    res.json(user);
   } else {
     res.json(
       respond(-1, "Couldn't fetch user data. Request not authenticated")
