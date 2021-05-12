@@ -14,7 +14,6 @@ const EditDonationStats = ({ fundDetails }) => {
   var previousDonationAmount = amount;
 
   function onChange(e) {
-    console.log(e.target.value);
     setAmount(e.target.value);
   }
 
@@ -32,14 +31,9 @@ const EditDonationStats = ({ fundDetails }) => {
 
   async function onClick() {
     const isValid = await schema.isValid({ taka: amount });
-    console.log(isValid);
 
     if (!isValid) {
       schema.validate({ taka: amount }).catch(function (err) {
-        console.log("Error Name:");
-        console.log(err.name); // => 'ValidationError'
-        console.log("Error error");
-        console.log(err.errors); // => [{ key: 'field_too_short', values: { min: 18 } }]
         setErrorBox(false);
         setErrorMessage(err.errors);
       });
@@ -55,10 +49,8 @@ const EditDonationStats = ({ fundDetails }) => {
           { withCredentials: true }
         );
         if (data.status === 1) {
-          console.log(data);
         } else {
           setAmount(previousDonationAmount);
-          console.log(data);
         }
         setOpen(false);
       };
@@ -68,7 +60,6 @@ const EditDonationStats = ({ fundDetails }) => {
 
   function onDonationEditClick(event) {
     event.preventDefault();
-    console.log("Edit Clicked");
     setOpen(true);
   }
 

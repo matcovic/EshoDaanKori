@@ -29,26 +29,11 @@ const ForgotPassword = (props) => {
   const ref = useRef(null); // for loading bar
   const [buttonActivation, setButtonActivation] = useState("");
 
-  console.log(props);
-
-  if (!(props.location && props.location.state)) {
-    console.log("unauthorized. Redirecting to signing page...");
-    // return <Redirect to="/sign-in" />;
-  }
-
   async function onSendClick(event) {
     event.preventDefault();
-    console.log("sending reset pass link");
-
-    console.log(email);
     const isValid = await schema.isValid({ email: email });
-
     if (!isValid) {
       schema.validate({ email: email }).catch(function (err) {
-        console.log("Error Name:");
-        console.log(err.name); // => 'ValidationError'
-        console.log("Error error");
-        console.log(err.errors); // => [{ key: 'field_too_short', values: { min: 18 } }]
         setErrorBox(false);
         setErrorMessage(err.errors);
       });
@@ -65,11 +50,8 @@ const ForgotPassword = (props) => {
           { withCredentials: true }
         );
         if (data.status === 1) {
-          console.log(data.message);
           notify(data.message, "success", "/sign-in");
         } else {
-          console.log(data.status);
-          console.log(data.message);
           notify(data.message, "error", "/sign-in");
         }
         ref.current.complete();

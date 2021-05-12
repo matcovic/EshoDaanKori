@@ -40,26 +40,15 @@ const SignIn = ({ isAuthenticated }) => {
 
   async function onSignInClick(event) {
     event.preventDefault();
-
-    console.log("sign in clicked");
-    console.log(form);
-
     const isValid = await schema.isValid(form);
-    console.log("to mama");
-    console.log(isValid);
-
+    
     if (!isValid) {
       schema.validate(form).catch(function (err) {
-        console.log("Error Name:");
-        console.log(err.name); // => 'ValidationError'
-        console.log("Error error");
-        console.log(err.errors); // => [{ key: 'field_too_short', values: { min: 18 } }]
         setErrorBox(false);
         setErrorMessage(err.errors);
       });
     } else {
       setButtonActivation(true);
-      console.log(form);
       const loginUser = async () => {
         const { data } = await axios.post(
           `${process.env.REACT_APP_API_DOMAIN}/api/auth/login-email`,
@@ -72,8 +61,6 @@ const SignIn = ({ isAuthenticated }) => {
         } else {
           setButtonActivation(false);
           setErrorBox(false);
-          console.log(data.status);
-          console.log(data.message);
           setErrorMessage(data.message);
         }
       };

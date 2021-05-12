@@ -15,12 +15,11 @@ const Navbar = ({ isAuthenticated }) => {
     // when the component loads up, send a req to the server
     const fetchContent = async () => {
       const { data } = await axios.get(
-        `${process.env.REACT_APP_API_DOMAIN}/api/data/user-profile`, {withCredentials:true}
+        `${process.env.REACT_APP_API_DOMAIN}/api/data/user-profile`,
+        { withCredentials: true }
       );
       if (data.status === -1) {
-        console.log(data.message);
       } else {
-        console.log(data);
         if (isMounted) setUserInfo(data);
       }
     };
@@ -33,18 +32,16 @@ const Navbar = ({ isAuthenticated }) => {
 
   function onSignOutClick(event) {
     event.preventDefault();
-    console.log("sign out clicked");
 
     const signOut = async () => {
       const { data } = await axios.post(
-        `${process.env.REACT_APP_API_DOMAIN}/api/auth/sign-out`,"",
+        `${process.env.REACT_APP_API_DOMAIN}/api/auth/sign-out`,
+        "",
         { withCredentials: true }
       );
       if (data.status === 1) {
-        console.log(data.message);
         window.location.replace("/");
       } else {
-        console.log(data.message);
       }
     };
 

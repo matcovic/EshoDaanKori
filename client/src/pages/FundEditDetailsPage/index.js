@@ -34,15 +34,11 @@ const FundEditDetailsPage = (props) => {
         { withCredentials: true }
       );
       if (data.status === 1) {
-        console.log(data);
         const images = [data.result.coverPhoto, ...data.result.optionalPhotos];
         data.result.images = images;
         setFundDetails(data.result);
         setLoading(false);
-        console.log("result returned ");
       } else {
-        console.log("coudlnt get result");
-        console.log(data.message);
         setLoading(false);
       }
     };
@@ -61,12 +57,9 @@ const FundEditDetailsPage = (props) => {
         { withCredentials: true }
       );
       if (data.status === 1) {
-        console.log(data);
         notify(data.message, "success", "/");
         setOpen(false);
-        console.log("deleted success");
       } else {
-        console.log("couldn't delete fundraiser");
         notify(data.message, "error");
         setOpen(false);
       }
@@ -170,7 +163,6 @@ const FundEditDetailsPage = (props) => {
         onOpen={() => setOpen(true)}
         open={open}
         onClose={() => {
-          console.log("MODAL CLOSED");
           setOpen(false);
         }}
       >

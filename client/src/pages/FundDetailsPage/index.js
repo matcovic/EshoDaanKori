@@ -15,12 +15,10 @@ import { notify } from "../../util/util";
 import { Helmet } from "react-helmet";
 
 const FundDetailsPage = (props) => {
-  console.log(props);
   const fundraiserId = props.match.params.fundraiserId;
   const [fundDetails, setFundDetails] = useState();
   const [loading, setLoading] = useState(true);
 
-  console.log("fundraiserID: " + fundraiserId);
 
   useEffect(() => {
     // when the component loads up, send a req to the server
@@ -33,17 +31,11 @@ const FundDetailsPage = (props) => {
         { withCredentials: true }
       );
       if (data.status === 1) {
-        console.log(data);
-        console.log(typeof data.result.optionalPhotos);
-
         const images = [data.result.coverPhoto, ...data.result.optionalPhotos];
         data.result.images = images;
         setFundDetails(data.result);
         setLoading(false);
-        console.log("result returned ");
       } else {
-        console.log("coudlnt get result");
-        console.log(data.message);
         setLoading(false);
       }
     };

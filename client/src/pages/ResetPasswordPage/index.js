@@ -50,15 +50,10 @@ const ResetPassword = ({ isAuthenticated }) => {
   async function onResetClick(event) {
     event.preventDefault();
     setFormContent(form);
-    console.log(form);
 
     const isValid = await schema.isValid(form);
     if (!isValid) {
       schema.validate(form).catch(function (err) {
-        console.log("Error Name:");
-        console.log(err.name); // => 'ValidationError'
-        console.log("Error error");
-        console.log(err.errors); // => [{ key: 'field_too_short', values: { min: 18 } }]
         setErrorBox(false);
         setErrorMessage(err.errors);
       });
@@ -73,14 +68,12 @@ const ResetPassword = ({ isAuthenticated }) => {
           { withCredentials: true }
         );
         if (data.status === 1) {
-          console.log(data.message);
           notify(data.message, "success", "/sign-in");
         } else {
           if (data.status === -2) {
             notify(data.message, "error", "/");
           }
-          console.log(data.status);
-          console.log(data.message);
+        
           notify(data.message, "error", "/forgot-password");
         }
         ref.current.complete();

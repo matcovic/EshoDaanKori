@@ -28,7 +28,6 @@ const schema = yup.object().shape({
 });
 
 function LandingPage() {
-  console.log(process.env.REACT_APP_API_DOMAIN);
   const [content, setContent] = useState(landingPageInitialContent);
   const [newsLetterPopup, setNewsLetterPopup] = React.useState(false);
   const [newsLetterEmail, setNewsLetterEmail] = useState();
@@ -45,10 +44,8 @@ function LandingPage() {
         `${process.env.REACT_APP_API_DOMAIN}/api/landing`,
         { withCredentials: true }
       );
-      console.log(data);
       if (data.status === 1) {
         if (data.newsLetterShown === "shown") {
-          console.log("news letter shown");
           setNewsLetterPopup(false);
         } else {
           setNewsLetterPopup(true);
@@ -56,7 +53,6 @@ function LandingPage() {
         data.result.result.fundraisers = data.result.fundraisers;
         if (isMounted) setContent(data.result.result);
       } else {
-        console.log(data.message);
       }
     };
     fetchContent();
@@ -66,9 +62,6 @@ function LandingPage() {
   }, []);
 
   async function onNewsLetterConfirmClick(event) {
-    console.log(event);
-    console.log(newsLetterEmail);
-
     const isValid = await schema.isValid(newsLetterEmail);
     if (!isValid) {
       schema.validate(newsLetterEmail).catch(function (err) {
@@ -87,14 +80,11 @@ function LandingPage() {
         );
 
         if (data.status === 1) {
-          console.log(data.message);
           // window.location.replace("/");
           setButtonActivation(false); // enables button
           setNewsLetterPopup(false);
           notify(data.message, "info");
         } else {
-          console.log(data.status);
-          console.log(data.message);
           setButtonActivation(true); // enables button
           notify(data.message, "error");
         }
@@ -136,7 +126,6 @@ function LandingPage() {
         onOpen={() => setNewsLetterPopup(true)}
         open={newsLetterPopup}
         onClose={() => {
-          console.log("MODAL CLOSED");
           setNewsLetterPopup(false);
         }}
       >

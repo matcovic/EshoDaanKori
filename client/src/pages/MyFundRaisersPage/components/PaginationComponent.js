@@ -14,7 +14,6 @@ const PaginationComponent = ({ fundraisers }) => {
   function onCardClick(event) {
     event.preventDefault();
     const fundraiserId = event.currentTarget.id;
-    console.log(fundraiserId);
     if (
       event.target.className === "btn edit-btn" ||
       event.target.className === "pencil large icon"
@@ -24,7 +23,6 @@ const PaginationComponent = ({ fundraisers }) => {
         state: { id: fundraiserId, status: 2 },
       });
     } else {
-      console.log("card clicked");
       history.push({
         pathname: `/fundraisers/view/${fundraiserId}`,
       });

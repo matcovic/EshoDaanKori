@@ -6,7 +6,6 @@ import { Helmet } from "react-helmet";
 
 
 const Error = (props) => {
-  console.log(props);
   return (
     <div className="background-signup">
     <Helmet>

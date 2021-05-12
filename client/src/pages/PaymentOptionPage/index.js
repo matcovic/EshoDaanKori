@@ -80,7 +80,6 @@ const PaymentOptions = (props) => {
   const [fundraiserId, setFundraiserId] = useState("");
 
   if (!(props.location && props.location.state)) {
-    console.log("unauthorized. Redirecting to signing page...");
     window.location.replace("/");
   }
 
@@ -89,9 +88,7 @@ const PaymentOptions = (props) => {
     props.location.state.paymentOptions = paymentOptionsList;
     ref.current.continuousStart(); // start loading
     setButtonActivation("");
-    console.log("START CAMPAIGN CLICKED: ");
-    console.log(props);
-
+  
     if (props.location.state.status === 69) {
       props.location.state.updatePayment = true;
     }
@@ -118,11 +115,7 @@ const PaymentOptions = (props) => {
         data = data.data;
       }
 
-      console.log("Payment options updated: ");
-      console.log(data);
-
       if (data.status === 1) {
-        console.log(data);
         setCampaignCreated(true);
         ref.current.complete(); // end loading
         setErrorBox(true);
@@ -134,7 +127,6 @@ const PaymentOptions = (props) => {
           setOpen(true);
         }
       } else {
-        console.log(data);
         ref.current.complete(); // end loading
         setErrorBox(false);
         setErrorMessage(data.message);
@@ -152,7 +144,6 @@ const PaymentOptions = (props) => {
     setPaymentOptionsList(newList);
   }
 
-  // console.log(props.location);
   function onChange(e) {
     setInputField(e.target.value);
   }
@@ -166,10 +157,6 @@ const PaymentOptions = (props) => {
     const isValid = await schema.isValid({ numb: inputField });
     if (!isValid) {
       schema.validate({ numb: inputField }).catch(function (err) {
-        console.log("Error Name:");
-        console.log(err.name); // => 'ValidationError'
-        console.log("Error error");
-        console.log(err.errors); // => [{ key: 'field_too_short', values: { min: 18 } }]
         setErrorBox(false);
         setErrorMessage(err.errors);
       });
@@ -180,13 +167,11 @@ const PaymentOptions = (props) => {
       });
       setErrorBox(true);
       setPaymentOptionsList(newList);
-      console.log(paymentIconKey);
       setInputField("");
     }
   }
 
   function dropDownSelect(e, data) {
-    console.log("Dropdown:" + data.value);
     setPaymentIcon(data.value);
   }
 
@@ -298,7 +283,6 @@ const PaymentOptions = (props) => {
         onOpen={() => setOpen(true)}
         open={open}
         onClose={() => {
-          console.log("MODAL CLOSED");
           window.location.replace("/");
           setOpen(false);
         }}

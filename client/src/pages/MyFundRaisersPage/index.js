@@ -9,8 +9,6 @@ import NoContentImage from "../../assets/images/NoContentImage.svg";
 import { Helmet } from "react-helmet";
 
 const MyFundRaisersPage = ({ isAuthenticated }) => {
-  // console.log(props);
-
   const [fundraisers, setFundraisers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = React.useState(false);
@@ -24,21 +22,16 @@ const MyFundRaisersPage = ({ isAuthenticated }) => {
         { withCredentials: true }
       );
       if (data.status === 1) {
-        console.log(data);
         setFundraisers(data.result);
         setLoading(false);
-        console.log("result returned after category press: ");
-        console.log(data.result.length);
       } else {
         setLoading(false);
-        console.log(data);
       }
     };
     fetchContent();
   }, []);
 
   if (!isAuthenticated) {
-    console.log("unauthorized. Redirecting to signing page...");
     return <Redirect to="/" />;
   }
 
@@ -77,7 +70,6 @@ const MyFundRaisersPage = ({ isAuthenticated }) => {
         onOpen={() => setOpen(true)}
         open={open}
         onClose={() => {
-          console.log("MODAL CLOSED");
           setOpen(false);
         }}
       >

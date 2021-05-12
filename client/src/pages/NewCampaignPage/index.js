@@ -61,9 +61,7 @@ const options = [
 function getPreviousValues(props) {
   // if status is 2, it means that the campaign page is opened for editing only
   if (props.location.state.status === 2) {
-    console.log(props);
     const title = props.match.params.fundraiserTitle;
-    console.log(title);
 
     const post = props.location.state.props;
     const form = {
@@ -76,7 +74,6 @@ function getPreviousValues(props) {
       category: post.category,
     };
 
-    console.log(form);
     return form;
   } else {
     return {};
@@ -108,11 +105,6 @@ const NewCampaign = (props) => {
   // status === 1 means it came from discover window
   const status = props.location.state.status;
 
-  if (status === 2) {
-    console.log("OPTIONAL PHOTOS: ");
-    console.log(props.location.state.props.optionalPhotos);
-  }
-
   const [buttonActivation, setButtonActivation] = useState(false);
   const [fundraisingFor, setFundraisingFor] = useState(
     getPreviousFundraisingFor(props)
@@ -140,7 +132,6 @@ const NewCampaign = (props) => {
 
   // cover photo change listener
   const onDropCoverPhoto = (picture, data) => {
-    console.log("deleting: " + picture);
     setCoverPicture(picture);
     setCoverPictureDefault(data);
   };
@@ -153,15 +144,12 @@ const NewCampaign = (props) => {
 
   // sets dropdown category
   const onDropdownChange = (event) => {
-    console.log(event.target.textContent);
     setCategory(event.target.textContent);
   };
 
   function onDelete(event) {
-    console.log("delete clicked");
   }
   if (!(props.location && props.location.state)) {
-    console.log("unauthorized. Redirecting to signing page...");
     window.location.replace("/");
   }
 
@@ -184,7 +172,6 @@ const NewCampaign = (props) => {
 
     const isValid = await schema.isValid(form);
     // const isValid = true; //for debug
-    console.log("optional picture count: " + pictureCount);
     if (pictureCount > 5) {
       setErrorBox(false);
       setErrorMessage("Only 5 Photos are allowed");
@@ -192,10 +179,6 @@ const NewCampaign = (props) => {
       setErrorBox(true);
       if (!isValid) {
         schema.validate(form).catch(function (err) {
-          console.log("Error Name:");
-          console.log(err.name); // => 'ValidationError'
-          console.log("Error error");
-          console.log(err.errors); // => [{ key: 'field_too_short', values: { min: 18 } }]
           setErrorBox(false);
           setErrorMessage(err.errors);
         });
@@ -204,13 +187,8 @@ const NewCampaign = (props) => {
 
         form.fundraisingFor = fundraisingFor;
         form.category = category;
-        console.log("coverpic:");
-        console.log(coverPicture);
-        console.log(typeof coverPicture[0]);
-
         // means user selected a new picture
         if (coverPicture[0] instanceof File) {
-          console.log("converting coverpic to b64:");
           form.coverPhoto = await getBase64(
             coverPicture ? coverPicture[0] : undefined
           );
@@ -221,8 +199,6 @@ const NewCampaign = (props) => {
         );
 
         form.previousOptionalImages = optionalPicturesDefault;
-        console.log("Form: ");
-        console.log(form);
         // status == 2 means editing post
         if (status === 2) {
           setButtonActivation(true); // disables button
@@ -235,12 +211,9 @@ const NewCampaign = (props) => {
               { withCredentials: true }
             );
             if (data.status === 1) {
-              console.log(data.message);
               notify(data.message, "success");
               setButtonActivation(false);
             } else {
-              console.log(data.status);
-              console.log(data.message);
               notify(data.message, "error");
             }
             setButtonActivation(true); // disables button
