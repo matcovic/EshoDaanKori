@@ -1,7 +1,7 @@
 import { respond } from "../util/util.js";
 import { getUserById } from "../util/dao.js";
 
-async const userInfoController = (req, res) => {
+async function userInfoController(req, res) {
   log("preparing to fetch user info");
   if (req.cookies.session == "active") {
     log("user authenticated. Returning data");
@@ -13,7 +13,7 @@ async const userInfoController = (req, res) => {
       respond(-1, "Couldn't fetch user data. Request not authenticated")
     );
   }
-};
+}
 
 function log(msg) {
   console.log(msg);
