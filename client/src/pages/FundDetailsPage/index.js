@@ -119,7 +119,7 @@ const FundDetailsPage = (props) => {
                       "info"
                     );
                     navigator.clipboard.writeText(
-                      `http://localhost:3000/fundraisers/view/${fundDetails._id}`
+                      `${process.env.REACT_DOMAIN}/fundraisers/view/${fundDetails._id}`
                     );
                   }}
                   className="btn btn-type4"

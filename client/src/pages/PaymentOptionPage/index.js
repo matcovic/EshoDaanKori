@@ -316,7 +316,7 @@ const PaymentOptions = (props) => {
               event.preventDefault();
               notify("Link copied! 🔗", "info", "/", "bottom-right");
               navigator.clipboard.writeText(
-                `http://localhost:3000/fundraisers/view/${fundraiserId}`
+                `${process.env.REACT_DOMAIN}/fundraisers/view/${fundraiserId}`
               );
             }}
             className="btn btn-type4 modal-btn"
