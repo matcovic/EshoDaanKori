@@ -24,6 +24,8 @@ passport.use(
           log("user not found");
           return cb(null, false);
         }
+        console.log("user found");
+        console.log(user);
         const isValid = validPassword(password, user.hash, user.salt);
         log("password validation: " + isValid);
         if (isValid && user.verified) {

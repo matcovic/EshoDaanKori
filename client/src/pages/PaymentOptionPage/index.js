@@ -111,7 +111,8 @@ const PaymentOptions = (props) => {
           {
             paymentOptions: paymentOptionsList,
             _id: props.location.state.fundDetails._id,
-          }
+          },
+          { withCredentials: true }
         );
 
         data = data.data;

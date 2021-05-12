@@ -12,7 +12,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { notify } from "../../util/util";
 import { Helmet } from "react-helmet";
 
-
 yup.setLocale({
   // use constant translation keys for messages without values
   mixed: {
@@ -68,7 +67,11 @@ const ResetPassword = ({ isAuthenticated }) => {
       form.location = location;
       ref.current.continuousStart();
       const sendForm = async () => {
-        const { data } = await axios.post(`${process.env.REACT_APP_API_DOMAIN}/api/auth/reset-password`, form);
+        const { data } = await axios.post(
+          `${process.env.REACT_APP_API_DOMAIN}/api/auth/reset-password`,
+          form,
+          { withCredentials: true }
+        );
         if (data.status === 1) {
           console.log(data.message);
           notify(data.message, "success", "/sign-in");
@@ -109,11 +112,9 @@ const ResetPassword = ({ isAuthenticated }) => {
     return <Redirect to="/" />;
   }
 
-  
-
   return (
     <div className="background-signup">
-    <Helmet>
+      <Helmet>
         <meta charSet="utf-8" />
         <title>Reset Password</title>
       </Helmet>

@@ -231,7 +231,8 @@ const NewCampaign = (props) => {
           const editChanges = async () => {
             const { data } = await axios.post(
               `${process.env.REACT_APP_API_DOMAIN}/api/campaign/edit-campaign`,
-              form
+              form,
+              { withCredentials: true }
             );
             if (data.status === 1) {
               console.log(data.message);

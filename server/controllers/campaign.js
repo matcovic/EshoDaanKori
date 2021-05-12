@@ -9,15 +9,15 @@ import { respond } from "../util/util.js";
 import date from "date-and-time";
 
 async function newCampaignController(req, res) {
-  if (!req.isAuthenticated()) {
+  if (!req.cookies.session) {
     res.json({ status: -2, message: "You are unauthorized. Redirecting" });
     return;
   }
-  const schema = createFundraiserSchema(req.body, req.user._id);
+  const schema = createFundraiserSchema(req.body, req.cookies.sessionID);
   const result = await saveImages(
     req.body.coverPhoto,
     req.body.optionalPhotos,
-    req.user._id.toString(),
+    req.cookies.sessionID,
     schema._id.toString()
   );
 
@@ -65,7 +65,7 @@ async function getAllFundraiserController(req, res) {
 }
 
 async function getMyFundraiserController(req, res) {
-  if (!req.isAuthenticated()) {
+  if (!req.cookies.session) {
     res.json({
       status: -2,
       message: "User is not authenticated. Redirecting...",
@@ -74,7 +74,7 @@ async function getMyFundraiserController(req, res) {
   }
   try {
     const result = await Fundraiser.find({
-      uid: req.user._id,
+      uid: req.cookies.sessionID,
     });
     log(`${result.length} results found`);
     res.json({ status: 1, message: "results found", result });
@@ -90,12 +90,14 @@ async function editCampaignController(req, res) {
   console.log(typeof req.body.title);
 
   console.log(fundraiserId);
+  console.log("edit campaign: ");
+  console.log(req.cookies);
 
-  if (req.isAuthenticated()) {
+  if (req.cookies.session === "active") {
     try {
       req.body.optionalPhotos = await saveMultipleImages(
         req.body.optionalPhotos,
-        req.user._id,
+        req.cookies.sessionID,
         req.body._id
       );
 

@@ -5,12 +5,14 @@ import {
   setUserToken,
   findUserByEmail,
   changeUserPassword,
+  getUserById,
 } from "../util/dao.js";
 import randomstring from "randomstring";
 import {
   respond,
   sendVerificationEmail,
   generateHashPassword,
+  clearCookies,
 } from "../util/util.js";
 import e from "express";
 import mongoose from "mongoose";
@@ -55,9 +57,10 @@ async function registerController(req, res, next) {
 }
 
 function authenticationController(req, res) {
+  // console.log(req);
   var result;
   // checking authentication status
-  if (req.isAuthenticated()) {
+  if (req.cookies.session == "active") {
     log("user logged in! Authenticated");
     result = { status: 1, message: "User is logged in already" };
   } else {
@@ -84,7 +87,7 @@ async function verificationController(req, res) {
 }
 
 function loginSuccessController(req, res) {
-  if (!req.user) {
+  if (!req.cookies.session) {
     res.json(
       respond(
         -2,
@@ -92,7 +95,7 @@ function loginSuccessController(req, res) {
       )
     );
   } else {
-    if (req.user.verified) {
+    if (getUserById(req.cookies.sessionID).verified) {
       log("logged in success.");
       res.json(respond(1, "Logged in!"));
     } else {
@@ -113,6 +116,8 @@ function loginFailureController(req, res) {
 }
 
 function signOutController(req, res) {
+  console.log(req.cookies);
+  clearCookies(res);
   req.logout();
   res.json(respond(1, "Successfully logged out. Redirecting..."));
 }

@@ -15,7 +15,6 @@ import Loading from "react-fullscreen-loading";
 import { notify } from "../../util/util";
 import { Helmet } from "react-helmet";
 
-
 const FundEditDetailsPage = (props) => {
   const fundraiserId = props.location.state.id;
   const [open, setOpen] = React.useState(false);
@@ -27,9 +26,13 @@ const FundEditDetailsPage = (props) => {
   useEffect(() => {
     // when the component loads up, send a req to the server
     const fetchContent = async () => {
-      const { data } = await axios.post(`${process.env.REACT_APP_API_DOMAIN}/api/campaign/get-campaign-by-id`, {
-        fundraiserId: fundraiserId,
-      });
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_API_DOMAIN}/api/campaign/get-campaign-by-id`,
+        {
+          fundraiserId: fundraiserId,
+        },
+        { withCredentials: true }
+      );
       if (data.status === 1) {
         console.log(data);
         const images = [data.result.coverPhoto, ...data.result.optionalPhotos];
@@ -50,9 +53,13 @@ const FundEditDetailsPage = (props) => {
     e.preventDefault();
 
     const deleteFundraiser = async () => {
-      const { data } = await axios.post(`${process.env.REACT_APP_API_DOMAIN}/api/campaign/delete-campaign`, {
-        fundraiserId: fundraiserId,
-      });
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_API_DOMAIN}/api/campaign/delete-campaign`,
+        {
+          fundraiserId: fundraiserId,
+        },
+        { withCredentials: true }
+      );
       if (data.status === 1) {
         console.log(data);
         notify(data.message, "success", "/");
@@ -76,7 +83,7 @@ const FundEditDetailsPage = (props) => {
 
   return (
     <section id="fund-details-section">
-    <Helmet>
+      <Helmet>
         <meta charSet="utf-8" />
         <title>Fundraiser Edit</title>
       </Helmet>
@@ -103,15 +110,14 @@ const FundEditDetailsPage = (props) => {
 
               {/* Fund posted time ago  */}
               <h3 className="post-time-text">
-                {`Posted on: ${new Date(fundDetails.createdAt).toLocaleDateString(
-                  "en-US",
-                  {
-                    weekday: "long",
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  }
-                )}`}
+                {`Posted on: ${new Date(
+                  fundDetails.createdAt
+                ).toLocaleDateString("en-US", {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}`}
               </h3>
 
               {/* tags and labels */}

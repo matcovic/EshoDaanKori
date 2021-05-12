@@ -51,7 +51,8 @@ const EditDonationStats = ({ fundDetails }) => {
           {
             _id: fundDetails._id,
             donation: amount,
-          }
+          },
+          { withCredentials: true }
         );
         if (data.status === 1) {
           console.log(data);

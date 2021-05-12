@@ -18,9 +18,13 @@ const DiscoverPage = (props) => {
   useEffect(() => {
     // when the component loads up, send a req to the server
     const fetchContent = async () => {
-      const { data } = await axios.post(`${process.env.REACT_APP_API_DOMAIN}/api/campaign/get-campaigns`, {
-        selectedCategory,
-      });
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_API_DOMAIN}/api/campaign/get-campaigns`,
+        {
+          selectedCategory,
+        },
+        { withCredentials: true }
+      );
       if (data.status === 1) {
         console.log(data);
         setFundCardItems(data.result);

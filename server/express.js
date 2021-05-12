@@ -17,20 +17,19 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const app = express();
+app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
     origin: true,
     origin: [process.env.CLIENT_HOST, process.env.CLIENT_HOST_PRODUCTION],
-    methods: ["GET", "POST"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    allowedHeaders: "Content-Type, Authorization",
   })
 );
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
 //app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
 
 /**
  * -------------- SESSION ----------------
@@ -45,8 +44,13 @@ app.use(
       mongoUrl: process.env.DB_URI,
       collection: "sessions",
     }),
+    /* Note be careful when setting secure to true, as compliant clients will not send 
+    the cookie back to the server in the future if the browser does not have an HTTPS connection. */
     cookie: {
       maxAge: 30 * 1000 * 60 * 60 * 24, // Equals 30 days
+      sameSite: "none",
+      secure: true,
+      httpOnly: true,
     },
   })
 );
