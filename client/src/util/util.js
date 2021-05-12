@@ -15,9 +15,12 @@ function getBase64(file) {
     // on reader load somthing...
     reader.onload = () => {
       // Make a fileInfo Object
+      console.log("Called", reader);
       baseURL = reader.result;
+      console.log(baseURL);
       resolve(baseURL);
     };
+    console.log(fileInfo);
   });
 }
 
@@ -40,6 +43,7 @@ async function convertMultipleImagesToB64(images) {
   try {
     // Promise.all will fire when all promises are resolved
     await Promise.all(res_promises);
+    console.log("list length =" + list.length);
     if (list.length === 0) {
       return undefined;
     }
@@ -79,6 +83,7 @@ function getCategoryList() {
  * @param {*} position posible positions: "top-center", "top-left", "top-right", "bottom-right", "bottom-left", "bottom-center", default is "top-center"
  */
 function notify(message, type, redirectUrl, position) {
+  console.log(position);
   const options = {
     onClose: (props) =>
       redirectUrl ? window.location.replace(redirectUrl) : "",

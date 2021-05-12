@@ -30,6 +30,7 @@ function App() {
   const [isAuthenticated, setAuthenticationStatus] = useState(false);
   const [dataChange, onDataChange] = useState(false);
 
+  console.log("App.jsx");
   /**
    * @GET request
    * Checks if the user is authenticated
@@ -40,12 +41,14 @@ function App() {
     const checkAuthenticationStatus = async () => {
       try {
         const { data } = await axios.get(`${process.env.REACT_APP_API_DOMAIN}/api/auth/is-authenticated`, {withCredentials: true});
+        console.log(data);
 
         if (isMounted) {
           onDataChange(true);
           setAuthenticationStatus(data.status);
         }
       } catch (error) {
+        console.log(error);
       }
     };
     checkAuthenticationStatus();

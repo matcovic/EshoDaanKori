@@ -51,8 +51,11 @@ const Registration = (props) => {
   const history = useHistory();
 
   const ref = useRef(null); // for loading bar
+  console.log("props: ");
+  console.log(props);
 
   if (!(props.location && props.location.state)) {
+    console.log("unauthorized. Redirecting to signing page...");
     return <Redirect to="/sign-in" />;
   }
   const { username, password, confirmPassword } =
@@ -64,10 +67,17 @@ const Registration = (props) => {
     form.username = username;
     form.password = password;
     form.confirmPassword = confirmPassword;
+
+    console.log("on continue click");
+    console.log(form);
     const isValid = await schema.isValid(form);
 
     if (!isValid) {
       schema.validate(form).catch(function (err) {
+        console.log("Error Name:");
+        console.log(err.name); // => 'ValidationError'
+        console.log("Error error");
+        console.log(err.errors); // => [{ key: 'field_too_short', values: { min: 18 } }]
         setErrorBox(false);
         setErrorMessage(err.errors);
       });
@@ -82,9 +92,11 @@ const Registration = (props) => {
         );
         if (data.status === 1) {
           ref.current.complete();
+          console.log(data.message);
           window.location.replace("/registration-complete");
           setRegistrationStatus(true);
         } else {
+          console.log(data.message);
           ref.current.complete();
           setErrorBox(false);
           setErrorMessage(data.message);

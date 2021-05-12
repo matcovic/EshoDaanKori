@@ -26,9 +26,14 @@ const DiscoverPage = (props) => {
         { withCredentials: true }
       );
       if (data.status === 1) {
+        console.log(data);
         setFundCardItems(data.result);
         setLoading(false);
+        console.log("result returned after category press: ");
+        console.log(data.result.length);
       } else {
+        console.log("sucerdddd");
+        console.log(data);
         setLoading(false);
       }
     };

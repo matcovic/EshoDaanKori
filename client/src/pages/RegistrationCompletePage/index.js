@@ -4,7 +4,11 @@ import "../SignInPage/SignIn.css";
 import { Helmet } from "react-helmet";
 
 const RegistrationComplete = (props) => {
- 
+  console.log(props);
+  /* if (!(props.location && props.location.state)) {
+    console.log("unauthorized. Redirecting to signing page...");
+    //  return <Redirect to="/" />;
+  } */
   return (
     <div className="background-signup">
     <Helmet>

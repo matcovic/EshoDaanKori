@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // var nav = document.querySelector("nav");
     // var navTitle = document.querySelector(".navbar-brand.abs.nav-bar-title");
     // var navLinks = document.querySelectorAll(".collapse li a");
+    // console.log(navLinks);
 
     // window.addEventListener("scroll", function () {
     //   if (window.pageYOffset > 70) {
@@ -43,5 +44,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // /* adjusting transparent navbar  */
     // document.body.style.paddingTop = "0";
   } catch (error) {
+    console.log(`Ignore this: ${error.message}`);
   }
 });

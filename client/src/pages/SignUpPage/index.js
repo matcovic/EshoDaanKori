@@ -47,10 +47,15 @@ const SignUp = ({ isAuthenticated }) => {
 
   async function OnSignUpClick(event) {
     event.preventDefault();
+    console.log(state);
 
     const isValid = await schema.isValid(state);
     if (!isValid) {
       schema.validate(state).catch(function (err) {
+        console.log("Error Name:");
+        console.log(err.name); // => 'ValidationError'
+        console.log("Error error");
+        console.log(err.errors); // => [{ key: 'field_too_short', values: { min: 18 } }]
         setErrorBox(false);
         setErrorMessage(err.errors);
       });

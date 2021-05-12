@@ -9,7 +9,9 @@ function AvailFundraisers({ fundraisers }) {
   //function for mapping top-funds
   function availFunds(availFundsBox) {
     function onCardClick(event) {
+      console.log(event);
       event.preventDefault();
+      console.log("card clicked");
       const fundraiserId = event.currentTarget.id;
       history.push({
         pathname: `/fundraisers/view/${fundraiserId}`,

@@ -13,6 +13,7 @@ const PaginationComponent = ({ fundCardItems }) => {
 
   function onCardClick(event) {
     event.preventDefault();
+    console.log("card clicked");
     const fundraiserId = event.currentTarget.id;
     history.push({
       pathname: `/fundraisers/view/${fundraiserId}`,

@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const EditFundCardView = (props) => { 
+const EditFundCardView = (props) => {
+  console.log(props);
+ 
   return (
     // fund-card template
     <div className="fund-card-box">
@@ -12,6 +14,7 @@ const EditFundCardView = (props) => {
           id="editButton"
           onClick={(e) => {
             e.preventDefault();
+            console.log("button edit");
           }}
           className="btn edit-btn"
         >
