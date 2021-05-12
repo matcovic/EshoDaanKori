@@ -1,7 +1,7 @@
 import { respond } from "../util/util.js";
 import { getUserById } from "../util/dao.js";
 
-const userInfoController = (req, res) => {
+async const userInfoController = (req, res) => {
   log("preparing to fetch user info");
   if (req.cookies.session == "active") {
     log("user authenticated. Returning data");

@@ -86,7 +86,7 @@ async function verificationController(req, res) {
   res.redirect(`${process.env.CLIENT_HOST}/sign-in`);
 }
 
-function loginSuccessController(req, res) {
+async function loginSuccessController(req, res) {
   if (!req.cookies.session) {
     res.json(
       respond(
