@@ -119,7 +119,7 @@ const FundDetailsPage = (props) => {
                       "info"
                     );
                     navigator.clipboard.writeText(
-                      `${process.env.REACT_DOMAIN}/fundraisers/view/${fundDetails._id}`
+                      `https://eshodaankori.netlify.app/fundraisers/view/${fundDetails._id}`
                     );
                   }}
                   className="btn btn-type4"
