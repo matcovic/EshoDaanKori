@@ -483,6 +483,15 @@ textarea:focus {
 }
 #contactUs-section .signIn-box {
   width: 50%;
+  padding-bottom: 5%;
+}
+#contactUs-section .btn-type1 {
+  margin-top: 2em;
+}
+@media only screen and (max-width: 1200px) {
+  #contactUs-section .signIn-box {
+    width: 90%;
+  }
 }
 /* --------------------------change semantic Input background---------------------------------- */
 .ui.input input {
