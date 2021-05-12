@@ -67,9 +67,16 @@ function generateHashPassword(password) {
   return { salt, hash };
 }
 
-
 function respond(status, message) {
   return { status, message };
+}
+
+function clearCookies(res) {
+  console.log("clearing cookies..");
+  const options = { expires: new Date(0), sameSite: "none", secure: true };
+  res.cookie("session", "", options);
+  res.cookie("sessionID", "", options);
+ // res.cookie("newsLetterShown", "", options);
 }
 
 function log(msg) {
@@ -82,4 +89,5 @@ export {
   sendVerificationEmail,
   respond,
   generateHashPassword,
+  clearCookies,
 };

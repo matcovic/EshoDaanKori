@@ -47,11 +47,12 @@ const EditDonationStats = ({ fundDetails }) => {
       setErrorBox(true);
       const fetchContent = async () => {
         const { data } = await axios.post(
-          "/api/campaign/update-donation-received",
+          `${process.env.REACT_APP_API_DOMAIN}/api/campaign/update-donation-received`,
           {
             _id: fundDetails._id,
             donation: amount,
-          }
+          },
+          { withCredentials: true }
         );
         if (data.status === 1) {
           console.log(data);

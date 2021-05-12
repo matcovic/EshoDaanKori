@@ -11,7 +11,6 @@ import * as yup from "yup";
 import { notify } from "../../util/util";
 import { Helmet } from "react-helmet";
 
-
 yup.setLocale({
   // use constant translation keys for messages without values
   mixed: {
@@ -58,9 +57,13 @@ const ForgotPassword = (props) => {
       ref.current.continuousStart();
       setErrorBox(true);
       const sendResetPasswordLink = async () => {
-        const { data } = await axios.post("/api/auth/reset-password-link", {
-          email,
-        });
+        const { data } = await axios.post(
+          `${process.env.REACT_APP_API_DOMAIN}/api/auth/reset-password-link`,
+          {
+            email,
+          },
+          { withCredentials: true }
+        );
         if (data.status === 1) {
           console.log(data.message);
           notify(data.message, "success", "/sign-in");
@@ -83,7 +86,7 @@ const ForgotPassword = (props) => {
 
   return (
     <div className="background-signup">
-    <Helmet>
+      <Helmet>
         <meta charSet="utf-8" />
         <title>Forgot Password</title>
       </Helmet>

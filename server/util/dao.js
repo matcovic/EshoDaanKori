@@ -28,6 +28,17 @@ async function createNewUser(form, token) {
   return user;
 }
 
+async function getUserById(id) {
+  try {
+    const user = await User.findById({ _id: id });
+    console.log("find user by id: ");
+    console.log(user);
+    return user;
+  } catch (err) {
+    return undefined;
+  }
+}
+
 /**
  * creates a schema with all the form data except the images
  * @param {*} form
@@ -141,7 +152,6 @@ async function saveMultipleImages(images, uid, fundraiserId) {
     return null;
   }
 }
-
 
 /**
  *
@@ -296,4 +306,5 @@ export {
   createFundraiserSchema,
   saveImages,
   saveMultipleImages,
+  getUserById,
 };

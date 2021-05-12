@@ -100,15 +100,20 @@ const PaymentOptions = (props) => {
       var data;
       if (props.location.state.status !== 69) {
         data = await axios.post(
-          "/api/campaign/new-campaign",
-          props.location.state
+          `${process.env.REACT_APP_API_DOMAIN}/api/campaign/new-campaign`,
+          props.location.state,
+          { withCredentials: true }
         );
         data = data.data;
       } else {
-        data = await axios.post("/api/campaign/update-payment-options", {
-          paymentOptions: paymentOptionsList,
-          _id: props.location.state.fundDetails._id,
-        });
+        data = await axios.post(
+          `${process.env.REACT_APP_API_DOMAIN}/api/campaign/update-payment-options`,
+          {
+            paymentOptions: paymentOptionsList,
+            _id: props.location.state.fundDetails._id,
+          },
+          { withCredentials: true }
+        );
 
         data = data.data;
       }
@@ -309,9 +314,9 @@ const PaymentOptions = (props) => {
           <button
             onClick={(event) => {
               event.preventDefault();
-              notify("Link copied! 🔗", "info","/", "bottom-right");
+              notify("Link copied! 🔗", "info", "/", "bottom-right");
               navigator.clipboard.writeText(
-                `http://localhost:3000/fundraisers/view/${fundraiserId}`
+                `https://eshodaankori.netlify.app/fundraisers/view/${fundraiserId}`
               );
             }}
             className="btn btn-type4 modal-btn"

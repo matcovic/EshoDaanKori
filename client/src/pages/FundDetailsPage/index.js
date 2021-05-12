@@ -25,9 +25,13 @@ const FundDetailsPage = (props) => {
   useEffect(() => {
     // when the component loads up, send a req to the server
     const fetchContent = async () => {
-      const { data } = await axios.post("/api/campaign/get-campaign-by-id", {
-        fundraiserId: fundraiserId,
-      });
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_API_DOMAIN}/api/campaign/get-campaign-by-id`,
+        {
+          fundraiserId: fundraiserId,
+        },
+        { withCredentials: true }
+      );
       if (data.status === 1) {
         console.log(data);
         console.log(typeof data.result.optionalPhotos);
@@ -80,15 +84,14 @@ const FundDetailsPage = (props) => {
 
               {/* Fund posted time ago  */}
               <h3 className="post-time-text">
-                {`Posted on: ${new Date(fundDetails.createdAt).toLocaleDateString(
-                  "en-US",
-                  {
-                    weekday: "long",
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  }
-                )}`}
+                {`Posted on: ${new Date(
+                  fundDetails.createdAt
+                ).toLocaleDateString("en-US", {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}`}
               </h3>
 
               {/* tags and labels */}
@@ -116,7 +119,7 @@ const FundDetailsPage = (props) => {
                       "info"
                     );
                     navigator.clipboard.writeText(
-                      `http://localhost:3000/fundraisers/view/${fundDetails._id}`
+                      `https://eshodaankori.netlify.app/fundraisers/view/${fundDetails._id}`
                     );
                   }}
                   className="btn btn-type4"

@@ -113,7 +113,7 @@ const NewCampaign = (props) => {
     console.log(props.location.state.props.optionalPhotos);
   }
 
-  const [buttonActivation, setButtonActivation] = useState("");
+  const [buttonActivation, setButtonActivation] = useState(false);
   const [fundraisingFor, setFundraisingFor] = useState(
     getPreviousFundraisingFor(props)
   );
@@ -225,24 +225,25 @@ const NewCampaign = (props) => {
         console.log(form);
         // status == 2 means editing post
         if (status === 2) {
-          setButtonActivation("true"); // disables button
+          setButtonActivation(true); // disables button
 
           // save changes to database
           const editChanges = async () => {
             const { data } = await axios.post(
-              "/api/campaign/edit-campaign",
-              form
+              `${process.env.REACT_APP_API_DOMAIN}/api/campaign/edit-campaign`,
+              form,
+              { withCredentials: true }
             );
             if (data.status === 1) {
               console.log(data.message);
               notify(data.message, "success");
-              setButtonActivation("");
+              setButtonActivation(false);
             } else {
               console.log(data.status);
               console.log(data.message);
               notify(data.message, "error");
             }
-            setButtonActivation("true"); // disables button
+            setButtonActivation(true); // disables button
             ref.current.complete();
           };
 

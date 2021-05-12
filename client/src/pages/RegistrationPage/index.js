@@ -15,7 +15,6 @@ import * as yup from "yup";
 import { useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
-
 yup.setLocale({
   // use constant translation keys for messages without values
   mixed: {
@@ -86,7 +85,11 @@ const Registration = (props) => {
       ref.current.continuousStart();
       setErrorBox(true);
       const registerUser = async () => {
-        const { data } = await axios.post("/api/auth/register-user", form);
+        const { data } = await axios.post(
+          `${process.env.REACT_APP_API_DOMAIN}/api/auth/register-user`,
+          form,
+          { withCredentials: true }
+        );
         if (data.status === 1) {
           ref.current.complete();
           console.log(data.message);
@@ -119,7 +122,7 @@ const Registration = (props) => {
 
   return (
     <div className="background-signup">
-    <Helmet>
+      <Helmet>
         <meta charSet="utf-8" />
         <title>Registration</title>
       </Helmet>

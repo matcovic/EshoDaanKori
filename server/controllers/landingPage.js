@@ -4,9 +4,7 @@ import NewsLetter from "../models/newsletter.js";
 
 async function landingPageController(req, res) {
   console.log(req.cookies);
-
   console.log("preparing to fetch landing page content...");
-
   try {
     const result = await LandingPage.find();
     // fetch 3 fundraisers from db
@@ -20,7 +18,10 @@ async function landingPageController(req, res) {
         newsLetterShown: "shown",
       });
     } else {
-      res.cookie("newsLetterShown", "shown");
+      res.cookie("newsLetterShown", "shown", {
+        sameSite: "none",
+        secure: true,
+      });
       res.json({
         status: 1,
         message: "Success.",
