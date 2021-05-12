@@ -5,7 +5,7 @@ const userInfoController = (req, res) => {
   log("preparing to fetch user info");
   if (req.cookies.session == "active") {
     log("user authenticated. Returning data");
-    const user = getUserById(req.cookies.sessionID);
+    const user = await getUserById(req.cookies.sessionID);
     console.log(user.fullName);
     res.json(user);
   } else {

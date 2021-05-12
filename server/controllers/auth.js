@@ -95,7 +95,8 @@ function loginSuccessController(req, res) {
       )
     );
   } else {
-    if (getUserById(req.cookies.sessionID).verified) {
+    const user = await getUserById(req.cookies.sessionID);
+    if (user.verified) {
       log("logged in success.");
       res.json(respond(1, "Logged in!"));
     } else {
