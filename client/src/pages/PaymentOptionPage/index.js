@@ -73,7 +73,7 @@ const PaymentOptions = (props) => {
   const [paymentIconKey, setPaymentIcon] = useState("Bkash");
   const [inputField, setInputField] = useState("");
   const [campaignCreated, setCampaignCreated] = useState(false);
-  const [buttonActivation, setButtonActivation] = useState("false"); // disables button while loading
+  const [buttonActivation, setButtonActivation] = useState(false); // disables button while loading
   const [ErrorMessage, setErrorMessage] = useState();
   const [ErrorBox, setErrorBox] = useState(true);
   const [open, setOpen] = React.useState(false);
@@ -88,7 +88,7 @@ const PaymentOptions = (props) => {
     event.preventDefault();
     props.location.state.paymentOptions = paymentOptionsList;
     ref.current.continuousStart(); // start loading
-    setButtonActivation("");
+    setButtonActivation(true);
     console.log("START CAMPAIGN CLICKED: ");
     console.log(props);
 
@@ -128,7 +128,7 @@ const PaymentOptions = (props) => {
         setErrorBox(true);
         if (props.location.state.status === 69) {
           notify("Payment options updated successfully!", "success");
-          setButtonActivation("false");
+          setButtonActivation(false);
         } else {
           setFundraiserId(data.result);
           setOpen(true);
@@ -138,7 +138,7 @@ const PaymentOptions = (props) => {
         ref.current.complete(); // end loading
         setErrorBox(false);
         setErrorMessage(data.message);
-        setButtonActivation("false");
+        setButtonActivation(false);
       }
     };
 

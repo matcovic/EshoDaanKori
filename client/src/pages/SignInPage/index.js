@@ -32,6 +32,7 @@ const SignIn = ({ isAuthenticated }) => {
   const [form, setFormContent] = useState({});
   const [ErrorMessage, setErrorMessage] = useState();
   const [ErrorBox, setErrorBox] = useState(true);
+  const [buttonActivation, setButtonActivation] = useState(false);
 
   if (isAuthenticated) {
     return <Redirect to="/" />;
@@ -57,6 +58,7 @@ const SignIn = ({ isAuthenticated }) => {
         setErrorMessage(err.errors);
       });
     } else {
+      setButtonActivation(true);
       console.log(form);
       const loginUser = async () => {
         const { data } = await axios.post(
@@ -68,6 +70,7 @@ const SignIn = ({ isAuthenticated }) => {
           setErrorBox(true);
           window.location.replace("/");
         } else {
+          setButtonActivation(false);
           setErrorBox(false);
           console.log(data.status);
           console.log(data.message);
@@ -127,7 +130,11 @@ const SignIn = ({ isAuthenticated }) => {
                 <Link to="/forgot-password">Forgot your password?</Link>
               </div>
               <div>
-                <button onClick={onSignInClick} className=" btn btn-type1">
+                <button
+                  onClick={onSignInClick}
+                  disabled={buttonActivation}
+                  className=" btn btn-type1"
+                >
                   SIGN IN
                 </button>
               </div>
