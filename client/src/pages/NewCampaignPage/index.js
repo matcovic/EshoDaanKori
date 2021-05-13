@@ -319,10 +319,10 @@ const NewCampaign = (props) => {
                 <label>Add a cover photo</label>
                 <ImageUploader
                   {...props}
-                  label="Max file size: 5MB. Accepted extensions: PNG | JPG"
+                  label="Max file size: 10MB. Accepted extensions: PNG | JPG"
                   buttonText="Choose image"
-                  imgExtension={[".jpg", ".png"]}
-                  maxFileSize={5242880}
+                  imgExtension={[".jpg", ".png", ".jpeg"]}
+                  maxFileSize={5242880*2}
                   onChange={onDropCoverPhoto}
                   withPreview={coverPicture === "" ? false : true}
                   singleImage={true}
@@ -337,7 +337,7 @@ const NewCampaign = (props) => {
                   label="Max file count: 5. Accepted extensions: PNG | JPG"
                   buttonText="Choose images"
                   imgExtension={[".jpg", ".png"]}
-                  maxFileSize={5242880}
+                  maxFileSize={5242880*2}
                   onChange={onDropOptionalPhotos}
                   onDelete={onDelete}
                   withPreview={true}

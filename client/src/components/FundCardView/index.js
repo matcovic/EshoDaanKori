@@ -23,7 +23,7 @@ const FundCardView = (props) => {
         ></div>
       </div>
       <div className="card-amount">
-        <p>৳ {props.currentAmountRaised} raised of {props.goal}</p>
+        <p>৳ {props.currentAmountRaised} raised of {props.fundraisingGoal || props.goal}</p>
       </div>
     </div>
   );

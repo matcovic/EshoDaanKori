@@ -6,16 +6,16 @@ import Nagad from "../../assets/icons/ico-nagad.svg";
 import Rocket from "../../assets/icons/ico-rocket.svg";
 import NumberLists from "./components/ListofNumbers";
 import twoDots from "../../assets/icons/ico-2dots2.svg";
-import { Redirect } from "react-router";
 import axios from "axios";
-import { getBase64, notify } from "../../util/util";
+import { notify } from "../../util/util";
 import { useState } from "react";
-import { Button, Modal } from "semantic-ui-react";
+import { Modal } from "semantic-ui-react";
 import LoadingBar from "react-top-loading-bar";
 import * as yup from "yup";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Helmet } from "react-helmet";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 const phoneRegExp = "[0][1][1-9][0-9]{8}";
 const schema = yup.object().shape({
@@ -26,6 +26,7 @@ const schema = yup.object().shape({
     .min(11, "Phone number is too short")
     .required(),
 });
+
 //-----------for validation------------------
 
 const MobileBankingOptions = [
@@ -72,12 +73,14 @@ const PaymentOptions = (props) => {
   ); // holds the final numbers
   const [paymentIconKey, setPaymentIcon] = useState("Bkash");
   const [inputField, setInputField] = useState("");
-  const [campaignCreated, setCampaignCreated] = useState(false);
   const [buttonActivation, setButtonActivation] = useState("false"); // disables button while loading
   const [ErrorMessage, setErrorMessage] = useState();
   const [ErrorBox, setErrorBox] = useState(true);
   const [open, setOpen] = React.useState(false);
-  const [fundraiserId, setFundraiserId] = useState("");
+  const [shareableLink, setShareableLink] = useState({
+    value: ``,
+    copied: false,
+  });
 
   if (!(props.location && props.location.state)) {
     window.location.replace("/");
@@ -88,7 +91,7 @@ const PaymentOptions = (props) => {
     props.location.state.paymentOptions = paymentOptionsList;
     ref.current.continuousStart(); // start loading
     setButtonActivation("");
-  
+
     if (props.location.state.status === 69) {
       props.location.state.updatePayment = true;
     }
@@ -116,14 +119,16 @@ const PaymentOptions = (props) => {
       }
 
       if (data.status === 1) {
-        setCampaignCreated(true);
         ref.current.complete(); // end loading
         setErrorBox(true);
         if (props.location.state.status === 69) {
           notify("Payment options updated successfully!", "success");
           setButtonActivation("false");
         } else {
-          setFundraiserId(data.result);
+          setShareableLink({
+            value: `https://eshodaankori.netlify.app/fundraisers/view/${data.result}`,
+            copied: false,
+          });
           setOpen(true);
         }
       } else {
@@ -174,6 +179,20 @@ const PaymentOptions = (props) => {
   function dropDownSelect(e, data) {
     setPaymentIcon(data.value);
   }
+
+  const onCopy = () => {
+    setShareableLink((prevState) => ({
+      ...prevState,
+      copied: true,
+    }));
+
+    notify(
+      "Link copied! 🔗 Share it with your friends and family.",
+      "info",
+      "/",
+      "bottom-right"
+    );
+  };
 
   return (
     <div className="payment-background">
@@ -295,18 +314,11 @@ const PaymentOptions = (props) => {
               friends and family!
             </p>
           </Modal.Description>
-          <button
-            onClick={(event) => {
-              event.preventDefault();
-              notify("Link copied! 🔗", "info", "/", "bottom-right");
-              navigator.clipboard.writeText(
-                `https://eshodaankori.netlify.app/fundraisers/view/${fundraiserId}`
-              );
-            }}
-            className="btn btn-type4 modal-btn"
-          >
-            COPY LINK
-          </button>
+
+          <CopyToClipboard onCopy={onCopy} text={shareableLink.value}>
+            <button className="btn btn-type4 modal-btn">COPY LINK</button>
+          </CopyToClipboard>
+
           <button
             onClick={(event) => {
               event.preventDefault();

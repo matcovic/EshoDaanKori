@@ -32,6 +32,7 @@ function AvailFundraisers({ fundraisers }) {
             availFundsBox.fundraisingGoal
           )}
           currentAmountRaised={availFundsBox.fundraisedTotal}
+          fundraisingGoal={availFundsBox.fundraisingGoal}
         />
       </div>
     );
@@ -49,8 +50,8 @@ function AvailFundraisers({ fundraisers }) {
         </Link>
       </section>
     );
-  }else{
-    return <div></div>
+  } else {
+    return <div></div>;
   }
 }
 

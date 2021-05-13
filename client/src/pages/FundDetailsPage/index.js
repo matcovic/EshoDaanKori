@@ -13,12 +13,16 @@ import axios from "axios";
 import Loading from "react-fullscreen-loading";
 import { notify } from "../../util/util";
 import { Helmet } from "react-helmet";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 const FundDetailsPage = (props) => {
   const fundraiserId = props.match.params.fundraiserId;
   const [fundDetails, setFundDetails] = useState();
   const [loading, setLoading] = useState(true);
-
+  const [shareableLink, setShareableLink] = useState({
+    value: `https://eshodaankori.netlify.app/fundraisers/view/${fundraiserId}`,
+    copied: false,
+  });
 
   useEffect(() => {
     // when the component loads up, send a req to the server
@@ -47,6 +51,15 @@ const FundDetailsPage = (props) => {
       <Loading loading={loading} background="#00AD7C" loaderColor="#B7FE81" />
     );
   }
+
+  const onCopy = () => {
+    setShareableLink((prevState) => ({
+      ...prevState,
+      copied: true,
+    }));
+
+    notify("Link copied! 🔗 Share it with your friends and family.", "info");
+  };
 
   return (
     <section id="fund-details-section">
@@ -103,21 +116,9 @@ const FundDetailsPage = (props) => {
                 {/*    <Link to="/#" className="btn btn-type1">
                   CONTACT
                 </Link> */}
-                <button
-                  onClick={(event) => {
-                    event.preventDefault();
-                    notify(
-                      "Link copied! 🔗 Share it with your friends and family.",
-                      "info"
-                    );
-                    navigator.clipboard.writeText(
-                      `https://eshodaankori.netlify.app/fundraisers/view/${fundDetails._id}`
-                    );
-                  }}
-                  className="btn btn-type4"
-                >
-                  SHARE
-                </button>
+                <CopyToClipboard onCopy={onCopy} text={shareableLink.value}>
+                  <button className="btn btn-type4">SHARE</button>
+                </CopyToClipboard>
               </div>
             </div>
 
