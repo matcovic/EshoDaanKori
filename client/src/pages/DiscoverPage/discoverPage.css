@@ -93,7 +93,7 @@
 /* discover section white container */
 #discover-section .white-container {
   background-color: var(--white);
-  padding: 1rem 3rem;
+  padding: 1rem;
   border-radius: 14px;
   width: 100%;
   margin: 10px 0;
@@ -107,11 +107,12 @@
   color: var(--dove-gray);
   margin-bottom: 0;
   text-align: left;
+  padding: 0 4%;
 }
 
 /* custom line for discover page */
 #discover-section .white-container .divider-custom {
-  padding-top: 1%;
+  padding: 1% 4% 0 4%;
 }
 
 .query-box {

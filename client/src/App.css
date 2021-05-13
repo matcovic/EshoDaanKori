@@ -483,6 +483,15 @@ textarea:focus {
 }
 #contactUs-section .signIn-box {
   width: 50%;
+  padding-bottom: 5%;
+}
+#contactUs-section .btn-type1 {
+  margin-top: 2em;
+}
+@media only screen and (max-width: 1200px) {
+  #contactUs-section .signIn-box {
+    width: 90%;
+  }
 }
 /* --------------------------change semantic Input background---------------------------------- */
 .ui.input input {
@@ -595,19 +604,26 @@ textarea:focus {
 }
 
 .step-box p {
-  color: var(--tundora);
+  color: var(--dove-gray);
   font-family: var(--font-family-poppins);
   font-size: var(--font-size-body1);
   font-weight: 500;
+  line-height: 2;
 }
 
 /* -----------------------------------How It Works------------------------------------------- */
 #how-to-fundraise-section {
   background-color: var(--black-haze);
 }
+#how-to-fundraise-section p {
+  white-space: pre-line;
+}
 
 #how-to-donate-section {
   background-color: var(--white);
+}
+#how-to-donate-section p {
+  white-space: pre-line;
 }
 
 /* Step no text */

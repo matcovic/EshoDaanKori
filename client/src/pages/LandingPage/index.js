@@ -11,6 +11,7 @@ import BannerCarousel from "./components/BannerCarousel";
 import { notify } from "../../util/util";
 import * as yup from "yup";
 import { Helmet } from "react-helmet";
+import { ToastContainer } from "react-toastify";
 
 yup.setLocale({
   // use constant translation keys for messages without values
@@ -62,9 +63,9 @@ function LandingPage() {
   }, []);
 
   async function onNewsLetterConfirmClick(event) {
-    const isValid = await schema.isValid(newsLetterEmail);
+    const isValid = await schema.isValid({ email: newsLetterEmail });
     if (!isValid) {
-      schema.validate(newsLetterEmail).catch(function (err) {
+      schema.validate({ email: newsLetterEmail }).catch(function (err) {
         setErrorBox(false);
         setErrorMessage("Please enter a valid email address");
       });
@@ -169,6 +170,17 @@ function LandingPage() {
           />
         </Modal.Content>
       </Modal>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 }

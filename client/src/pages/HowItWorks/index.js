@@ -23,9 +23,11 @@ const HowItWorks = () => {
           <div className="row row-flex">
             <h2 className="step-no-text">Step 01</h2>
             <HowItWorksType1
-              desctiption="Create an account.
-                           All you need is a valid email address and your
-                           national ID card number or birth certificate number"
+              desctiption="1. Create an account.
+2. Enter a valid email address 
+3. A verification email will be sent. 
+4. Press on the link given to verify your account.
+5. Log into your account!"
             />
             <FundImage1 Image={fundstep1} />
 
@@ -38,7 +40,7 @@ const HowItWorks = () => {
             <FundImage2 Image={fundstep2} />
             <HowItWorksType2
               description="Press the “START A NEW CAMPAIGN” Button once you are in.
-            Enter necessary information into a form. And you are done!"
+Enter necessary information into a form. And you are done!"
             />
           </div>
         </div>
@@ -51,7 +53,10 @@ const HowItWorks = () => {
           <div className="row row-flex">
             <h2 className="step-no-text">Step 01</h2>
 
-            <HowItWorksType1 desctiption="Click on the fundraiser you wish to donate." />
+            <HowItWorksType1
+              desctiption="1. Visit the discover page
+2. Choose a fundraiser of your choice to donate to "
+            />
             <FundImage1 Image={donatestep1} />
 
             {/* <!-- step 2 --> */}
@@ -62,8 +67,8 @@ const HowItWorks = () => {
             </div>
             <FundImage2 Image={donatestep2} />
             <HowItWorksType2
-              description="A new window will open containing the details of the fundraiser.
-            Press on the Donate button to start donating!"
+              description="1. View the available payment options
+2. Send the money from your phone!"
             />
           </div>
         </div>

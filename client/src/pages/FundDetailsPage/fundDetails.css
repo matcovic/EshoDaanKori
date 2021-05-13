@@ -105,6 +105,7 @@
   font-size: 17.5px;
   font-weight: var(--font-weight-body2);
   color: var(--dove-gray);
+  padding: 0;
 }
 
 #fund-details-section .fund-btn-group {
